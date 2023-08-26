@@ -12,7 +12,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-const Otp = ({navigation}) => {
+const Otp = ({navigation, route}) => {
+  const [code, setCode] = useState('');
   const [otp, setOtp] = useState(['', '', '', '']);
   const refs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
@@ -34,6 +35,14 @@ const Otp = ({navigation}) => {
     }
   };
 
+  // async function confirmCode() {
+  //   try {
+  //     await route.params.confirm.confirm(code);
+  //     setCode('');
+  //   } catch (error) {
+  //     console.log('Invalid code.');
+  //   }
+  // }
   return (
     <View style={styles.container}>
       <Image
@@ -163,6 +172,7 @@ const styles = StyleSheet.create({
     marginTop: hp(3),
     marginBottom: hp(3),
   },
+
   otpInput: {
     borderWidth: 1,
     borderColor: '#ccc',

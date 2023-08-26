@@ -12,12 +12,17 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import Button from '../../components/Button';
+import auth from '@react-native-firebase/auth';
 
 const Profile = ({navigation}) => {
   const handleButtonPress = buttonTitle => {
     navigation.navigate(buttonTitle);
   };
-
+  const Signout = () => {
+    auth()
+      .signOut()
+      .then(() => navigation.replace('SignIn'));
+  };
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -93,6 +98,7 @@ const Profile = ({navigation}) => {
           paddingHorizontal: wp(3),
         }}>
         <TouchableOpacity
+          onPress={() => Signout()}
           style={{
             justifyContent: 'center',
             alignItems: 'center',

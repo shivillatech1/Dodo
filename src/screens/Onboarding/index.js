@@ -5,13 +5,25 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import auth from '@react-native-firebase/auth';
 const Onboarding = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('SignIn');
+      const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+      return subscriber; // unsubscribe on unmount
     }, 1000);
   }, [navigation]);
+  useEffect(() => {}, []);
 
+  function onAuthStateChanged(user) {
+    if (user) {
+      // Handle successful authentication
+      // For example, you can navigate to the main screen
+      navigation.navigate('Main');
+    } else {
+      navigation.navigate('SignIn');
+    }
+  }
   return (
     <View style={styles.container}>
       <Text style={[styles.text, {color: '#14578b'}]}>DODO</Text>

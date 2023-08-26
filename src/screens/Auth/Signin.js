@@ -7,14 +7,24 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Button,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-
+import auth from '@react-native-firebase/auth';
 const Signin = ({navigation}) => {
+  const [confirm, setConfirm] = useState(null);
+  console.log(confirm);
+
+  async function signInWithPhoneNumber(phoneNumber) {
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    setConfirm(confirmation);
+    navigation.navigate('Otp', {confirm: confirmation});
+  }
+
   return (
     <ImageBackground
       source={require('../../assets/Images/bg.jpeg')}
@@ -55,23 +65,25 @@ const Signin = ({navigation}) => {
             maxLength={14}
           />
         </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Otp')}>
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: '600',
-              textAlign: 'center',
-              paddingHorizontal: 8,
-            }}>
-            Sign up
-          </Text>
-          <Image
-            source={require('../../assets/Icons/sign-in.png')}
-            style={{height: wp(5), width: wp(5), tintColor: 'white'}}
-          />
-        </TouchableOpacity>
+        {!confirm && (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Otp')}>
+            <Text
+              style={{
+                color: 'white',
+                fontWeight: '600',
+                textAlign: 'center',
+                paddingHorizontal: 8,
+              }}>
+              Sign up
+            </Text>
+            <Image
+              source={require('../../assets/Icons/sign-in.png')}
+              style={{height: wp(5), width: wp(5), tintColor: 'white'}}
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </ImageBackground>
   );
