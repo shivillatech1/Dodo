@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "87571216262",
+    "project_id": "dodo-6f0d3",
+    "storage_bucket": "dodo-6f0d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87571216262:android:4a0d7f2db19616e7991e07",
+        "android_client_info": {
+          "package_name": "com.dodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87571216262-e78d54fg2u3eps9su0q3pblu9mc1i3mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJtxyMqQbxq7xD6a0_TKzEyvq1U6lYkrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87571216262-e78d54fg2u3eps9su0q3pblu9mc1i3mm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
