@@ -39,6 +39,7 @@ const WatchVideo = ({navigation, route}) => {
           <View style={styles.movieInfoContainer}>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
+                onPress={() => navigation.navigate('Video', {item: item})}
                 style={[styles.button, {backgroundColor: '#4845f6'}]}>
                 <Image
                   source={require('../../assets/Icons/play.png')}
@@ -54,15 +55,19 @@ const WatchVideo = ({navigation, route}) => {
                 alignItems: 'center',
                 marginTop: hp(1.3),
               }}>
-              <Text style={styles.buttonText}>{item.title}</Text>
+              <Text style={styles.buttonText}>
+                {item.title.length > 10
+                  ? item.title.slice(0, 10) + '...'
+                  : item.title}
+              </Text>
               <TouchableOpacity
                 style={{
                   paddingVertical: 8,
                   paddingHorizontal: 16,
                   borderRadius: 5,
-                  marginRight: hp(8),
+
                   width: wp(50),
-                  left: hp(8),
+
                   alignItems: 'center',
                   flexDirection: 'row',
                 }}>
@@ -77,7 +82,6 @@ const WatchVideo = ({navigation, route}) => {
                   color: '#fff',
                   fontSize: hp(1.6),
                   fontWeight: 'bold',
-                  left: hp(3),
                 }}>
                 {item.rating}
               </Text>
