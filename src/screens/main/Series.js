@@ -74,6 +74,7 @@ const Series = ({navigation}) => {
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {dummyData1.map(item => (
                     <TouchableOpacity
+                      onPress={() => navigation.navigate('Watch', {item: item})}
                       style={{
                         marginRight: 10,
                         position: 'relative',
@@ -135,6 +136,7 @@ const Series = ({navigation}) => {
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {dummyData1.map(item => (
                     <TouchableOpacity
+                      onPress={() => navigation.navigate('Watch', {item: item})}
                       style={{
                         marginRight: 10,
                         position: 'relative',
@@ -267,27 +269,40 @@ const Series = ({navigation}) => {
 const dummyData1 = [
   {
     id: 1,
-    title: 'Movie Funtush',
     Episode: 'S1 Ep1',
+    title: 'Movie Funtush',
     image: require('../../assets/Images/bg.jpeg'),
+    description: 'A hilarious comedy that will keep you laughing.',
+    rating: 4.8,
+    genres: ['Comedy', 'Adventure'],
   },
   {
     id: 2,
     title: 'Movie 2',
     Episode: 'S1 Ep1',
     image: require('../../assets/Images/bg.jpeg'),
+    description:
+      'An action-packed thriller that will keep you on the edge of your seat.',
+    rating: 4.5,
+    genres: ['Action', 'Drama'],
   },
   {
     id: 3,
     title: 'Movie 3',
     Episode: 'S1 Ep1',
     image: require('../../assets/Images/bg.jpeg'),
+    description: 'A heartwarming romance that will touch your soul.',
+    rating: 4.7,
+    genres: ['Romance', 'Drama'],
   },
   {
     id: 4,
     title: 'Movie 4',
     Episode: 'S1 Ep1',
     image: require('../../assets/Images/bg.jpeg'),
+    description: 'A mind-bending science fiction journey.',
+    rating: 4.9,
+    genres: ['Science Fiction', 'Mystery'],
   },
 ];
 

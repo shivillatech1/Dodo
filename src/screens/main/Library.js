@@ -53,7 +53,7 @@ const Library = ({navigation}) => {
               DODO<Text style={[styles.text, {color: '#fff'}]}>FLIX</Text>
             </Text>
             <TouchableOpacity
-            onPress={() => navigation.navigate('Subscription')}>
+              onPress={() => navigation.navigate('Subscription')}>
               <Image
                 source={require('../../assets/Icons/crown.png')}
                 style={{height: wp(6.5), width: wp(6.5), resizeMode: 'contain'}}
@@ -181,6 +181,7 @@ const Library = ({navigation}) => {
         }}
         renderItem={({item}) => (
           <TouchableOpacity
+            onPress={() => navigation.navigate('Watch', {item: item})}
             style={{
               marginRight: 10,
               position: 'relative',
@@ -208,65 +209,39 @@ const Library = ({navigation}) => {
 const dummyData1 = [
   {
     id: 1,
-    title: 'Movie Funtush ',
-    Episode: 'S1 Ep1',
+    title: 'Movie Funtush',
     image: require('../../assets/Images/bg.jpeg'),
+    description: 'A hilarious comedy that will keep you laughing.',
+    rating: 4.8,
+    genres: ['Comedy', 'Adventure'],
   },
   {
-    id: 452,
+    id: 2,
     title: 'Movie 2',
-    Episode: 'S1 Ep1',
     image: require('../../assets/Images/bg.jpeg'),
+    description:
+      'An action-packed thriller that will keep you on the edge of your seat.',
+    rating: 4.5,
+    genres: ['Action', 'Drama'],
   },
   {
-    id: 375,
+    id: 3,
     title: 'Movie 3',
-    Episode: 'S1 Ep1',
     image: require('../../assets/Images/bg.jpeg'),
+    description: 'A heartwarming romance that will touch your soul.',
+    rating: 4.7,
+    genres: ['Romance', 'Drama'],
   },
   {
-    id: 477,
+    id: 4,
     title: 'Movie 4',
-    Episode: 'S1 Ep1',
     image: require('../../assets/Images/bg.jpeg'),
-  },
-  {
-    id: 12,
-    title: 'Movie 2',
-    Episode: 'S1 Ep1',
-    image: require('../../assets/Images/bg.jpeg'),
-  },
-  {
-    id: 33,
-    title: 'Movie 3',
-    Episode: 'S1 Ep1',
-    image: require('../../assets/Images/bg.jpeg'),
-  },
-  {
-    id: 44,
-    title: 'Movie 4',
-    Episode: 'S1 Ep1',
-    image: require('../../assets/Images/bg.jpeg'),
-  },
-  {
-    id: 72,
-    title: 'Movie 2',
-    Episode: 'S1 Ep1',
-    image: require('../../assets/Images/bg.jpeg'),
-  },
-  {
-    id: 38,
-    title: 'Movie 3',
-    Episode: 'S1 Ep1',
-    image: require('../../assets/Images/bg.jpeg'),
-  },
-  {
-    id: 74,
-    title: 'Movie 4',
-    Episode: 'S1 Ep1',
-    image: require('../../assets/Images/bg.jpeg'),
+    description: 'A mind-bending science fiction journey.',
+    rating: 4.9,
+    genres: ['Science Fiction', 'Mystery'],
   },
 ];
+
 export default Library;
 const styles = StyleSheet.create({
   container: {

@@ -12,6 +12,7 @@ import Search from '../components/Search';
 import Profile from '../screens/Profile/Profile';
 import AppSettings from '../screens/Profile/AppSettings';
 import Subscription from '../screens/Subscription';
+import WatchVideo from '../screens/Watchvideo';
 const {NavigationContainer} = require('@react-navigation/native');
 const {createNativeStackNavigator} = require('@react-navigation/native-stack');
 const {default: Onboarding} = require('../screens/Onboarding');
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Appsetting" component={AppSettings} />
         <Stack.Screen name="Subscription" component={Subscription} />
+        <Stack.Screen name="Watch" component={WatchVideo} />
       </Stack.Navigator>
     </NavigationContainer>
   );

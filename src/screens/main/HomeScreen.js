@@ -54,6 +54,7 @@ const HomeScreen = ({navigation}) => {
                 <Text style={styles.buttonText}>Watch later</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                onPress={() => navigation.navigate('Watch')}
                 style={[styles.button, {backgroundColor: '#4845f6'}]}>
                 <Image
                   source={require('../../assets/Icons/play.png')}
@@ -74,6 +75,7 @@ const HomeScreen = ({navigation}) => {
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {dummyData1.map(item => (
                     <TouchableOpacity
+                      onPress={() => navigation.navigate('Watch', {item: item})}
                       style={{
                         marginRight: 10,
                         position: 'relative',
@@ -125,6 +127,7 @@ const HomeScreen = ({navigation}) => {
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {dummyData1.map(item => (
                     <TouchableOpacity
+                      onPress={() => navigation.navigate('Watch', {item: item})}
                       style={{
                         marginRight: 10,
                         position: 'relative',
@@ -259,21 +262,34 @@ const dummyData1 = [
     id: 1,
     title: 'Movie Funtush',
     image: require('../../assets/Images/bg.jpeg'),
+    description: 'A hilarious comedy that will keep you laughing.',
+    rating: 4.8,
+    genres: ['Comedy', 'Adventure'],
   },
   {
     id: 2,
     title: 'Movie 2',
     image: require('../../assets/Images/bg.jpeg'),
+    description:
+      'An action-packed thriller that will keep you on the edge of your seat.',
+    rating: 4.5,
+    genres: ['Action', 'Drama'],
   },
   {
     id: 3,
     title: 'Movie 3',
     image: require('../../assets/Images/bg.jpeg'),
+    description: 'A heartwarming romance that will touch your soul.',
+    rating: 4.7,
+    genres: ['Romance', 'Drama'],
   },
   {
     id: 4,
     title: 'Movie 4',
     image: require('../../assets/Images/bg.jpeg'),
+    description: 'A mind-bending science fiction journey.',
+    rating: 4.9,
+    genres: ['Science Fiction', 'Mystery'],
   },
 ];
 
