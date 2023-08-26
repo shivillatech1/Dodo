@@ -234,7 +234,7 @@ const Series = ({navigation}) => {
         <TouchableOpacity
           onPress={toggleDropdown}
           style={styles.dropdownButton}>
-          <Text style={{fontSize: hp(1.5), fontWeight: '800'}}>
+          <Text style={{fontSize: hp(1.5), fontWeight: '800', color: 'white'}}>
             {selectedValue || ' Category'}
           </Text>
           <Image
@@ -254,7 +254,12 @@ const Series = ({navigation}) => {
                 key={index}
                 onPress={() => handleOptionSelect(option)}
                 style={styles.dropdownItem}>
-                <Text style={{fontSize: hp(1.3), fontWeight: '500'}}>
+                <Text
+                  style={{
+                    fontSize: hp(1.3),
+                    fontWeight: '500',
+                    color: 'white',
+                  }}>
                   {option}
                 </Text>
               </TouchableOpacity>

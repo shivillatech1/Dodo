@@ -84,33 +84,38 @@ const Profile = ({navigation}) => {
           clear="Clear"
         />
       </View>
-      <TouchableOpacity
+      <View
         style={{
-          justifyContent: 'center',
-          alignItems: 'center',
           borderTopColor: '#fff',
           borderTopWidth: 1,
           marginTop: hp(8),
           paddingVertical: hp(1.5),
           paddingHorizontal: wp(3),
-          backgroundColor: '#000',
-          borderRadius: 10,
-          flexDirection: 'row',
-          gap: 5,
         }}>
-        <Image
-          source={require('../../assets/Icons/sign-in.png')}
+        <TouchableOpacity
           style={{
-            width: wp(6),
-            height: wp(6),
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: hp(1.2),
+            backgroundColor: '#000',
+            borderRadius: 10,
+            flexDirection: 'row',
+            gap: 5,
+          }}>
+          <Image
+            source={require('../../assets/Icons/sign-in.png')}
+            style={{
+              width: wp(6),
+              height: wp(6),
 
-            tintColor: 'white',
-          }}
-        />
-        <Text style={{color: '#fff', fontWeight: 'bold', fontSize: hp(2.1)}}>
-          Logout
-        </Text>
-      </TouchableOpacity>
+              tintColor: 'white',
+            }}
+          />
+          <Text style={{color: '#fff', fontWeight: 'bold', fontSize: hp(2.1)}}>
+            Logout
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

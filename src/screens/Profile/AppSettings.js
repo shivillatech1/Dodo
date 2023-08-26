@@ -35,8 +35,8 @@ const AppSettings = ({navigation}) => {
         <Image
           source={require('../../assets/Icons/back.png')}
           style={{
-            width: wp(7),
-            height: wp(7),
+            width: wp(6),
+            height: wp(6),
 
             tintColor: 'white',
           }}
@@ -45,7 +45,7 @@ const AppSettings = ({navigation}) => {
       </TouchableOpacity>
       <View style={{marginTop: hp(6)}}>
         <Text style={styles.smtext}>Notifications</Text>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
               source={require('../../assets/Icons/notification.png')}
@@ -63,7 +63,7 @@ const AppSettings = ({navigation}) => {
             onValueChange={toggleSwitch}
             value={isEnabled}
           />
-        </TouchableOpacity>
+        </View>
       </View>
       <View style={{marginTop: hp(3)}}>
         <Text style={styles.smtext}>Network</Text>
@@ -139,33 +139,38 @@ const AppSettings = ({navigation}) => {
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
+      <View
         style={{
-          justifyContent: 'center',
-          alignItems: 'center',
           borderTopColor: '#fff',
           borderTopWidth: 1,
-          marginTop: hp(2.5),
+          marginTop: hp(3.5),
           paddingVertical: hp(1.5),
           paddingHorizontal: wp(3),
-          backgroundColor: '#000',
-          borderRadius: 10,
-          flexDirection: 'row',
-          gap: 5,
         }}>
-        <Image
-          source={require('../../assets/Icons/sign-in.png')}
+        <TouchableOpacity
           style={{
-            width: wp(6),
-            height: wp(6),
+            justifyContent: 'center',
+            alignItems: 'center',
 
-            tintColor: 'white',
-          }}
-        />
-        <Text style={{color: '#fff', fontWeight: 'bold', fontSize: hp(2.1)}}>
-          Logout
-        </Text>
-      </TouchableOpacity>
+            backgroundColor: '#000',
+            borderRadius: 10,
+            flexDirection: 'row',
+            gap: 5,
+          }}>
+          <Image
+            source={require('../../assets/Icons/sign-in.png')}
+            style={{
+              width: wp(6),
+              height: wp(6),
+
+              tintColor: 'white',
+            }}
+          />
+          <Text style={{color: '#fff', fontWeight: 'bold', fontSize: hp(2.1)}}>
+            Logout
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

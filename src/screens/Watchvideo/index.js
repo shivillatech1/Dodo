@@ -89,6 +89,7 @@ const WatchVideo = ({navigation, route}) => {
                 color: '#fff',
                 fontSize: hp(1.6),
                 fontWeight: '300',
+                marginLeft: hp(1),
               }}>
               {item.description}
             </Text>
@@ -97,6 +98,7 @@ const WatchVideo = ({navigation, route}) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginTop: hp(1.3),
+                marginLeft: hp(1),
               }}>
               <Text
                 style={{
@@ -127,7 +129,10 @@ const WatchVideo = ({navigation, route}) => {
               source={require('../../assets/Icons/heart.png')}
               style={{width: wp(5), height: wp(5), tintColor: 'white'}}
             />
-            <Text style={{fontSize: hp(1.4), fontWeight: '300'}}>Favorite</Text>
+            <Text
+              style={{fontSize: hp(1.4), fontWeight: '300', color: 'white'}}>
+              Favorite
+            </Text>
           </View>
           <View
             style={{
@@ -140,7 +145,10 @@ const WatchVideo = ({navigation, route}) => {
               source={require('../../assets/Icons/share.png')}
               style={{width: wp(5), height: wp(5), tintColor: 'white'}}
             />
-            <Text style={{fontSize: hp(1.4), fontWeight: '300'}}>Share</Text>
+            <Text
+              style={{fontSize: hp(1.4), fontWeight: '300', color: 'white'}}>
+              Share
+            </Text>
           </View>
           <View
             style={{
@@ -153,7 +161,10 @@ const WatchVideo = ({navigation, route}) => {
               source={require('../../assets/Icons/question.png')}
               style={{width: wp(5), height: wp(5), tintColor: 'white'}}
             />
-            <Text style={{fontSize: hp(1.4), fontWeight: '300'}}>Report</Text>
+            <Text
+              style={{fontSize: hp(1.4), fontWeight: '300', color: 'white'}}>
+              Report
+            </Text>
           </View>
           <View
             style={{
@@ -166,7 +177,10 @@ const WatchVideo = ({navigation, route}) => {
               source={require('../../assets/Icons/download.png')}
               style={{width: wp(5), height: wp(5), tintColor: 'white'}}
             />
-            <Text style={{fontSize: hp(1.4), fontWeight: '300'}}>Download</Text>
+            <Text
+              style={{fontSize: hp(1.4), fontWeight: '300', color: 'white'}}>
+              Download
+            </Text>
           </View>
         </View>
         <View
