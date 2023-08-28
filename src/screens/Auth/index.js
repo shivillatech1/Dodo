@@ -3,7 +3,7 @@ import {
   Image,
   StyleSheet,
   Text,
-  TextInput,
+  ActivityIndicator,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -12,37 +12,32 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {
+  CodeField,
+  Cursor,
+  useBlurOnFulfill,
+  useClearByFocusCell,
+} from 'react-native-confirmation-code-field';
 const Otp = ({navigation, route}) => {
-  const [code, setCode] = useState('');
-  const [otp, setOtp] = useState(['', '', '', '']);
-  const refs = [useRef(null), useRef(null), useRef(null), useRef(null)];
-
-  const handleOtpChange = (text, index) => {
-    if (text.length <= 1) {
-      const newOtp = [...otp];
-      newOtp[index] = text;
-      setOtp(newOtp);
-
-      if (text.length === 1 && index < 3) {
-        refs[index + 1].current.focus();
-      }
+  const CELL_COUNT = 6;
+  const [value, setValue] = useState('');
+  const [loading, SetLoading] = useState(false);
+  console.log(value);
+  const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+    value,
+    setValue,
+  });
+  async function confirmCode() {
+    try {
+      SetLoading(true);
+      await route.params.confirm.confirm(value);
+      setValue('');
+      SetLoading(false);
+    } catch (error) {
+      console.log('Invalid code.');
     }
-  };
-
-  const handleKeyPress = (e, index) => {
-    if (e.nativeEvent.key === 'Backspace' && index > 0 && !otp[index]) {
-      refs[index - 1].current.focus();
-    }
-  };
-
-  // async function confirmCode() {
-  //   try {
-  //     await route.params.confirm.confirm(code);
-  //     setCode('');
-  //   } catch (error) {
-  //     console.log('Invalid code.');
-  //   }
-  // }
+  }
   return (
     <View style={styles.container}>
       <Image
@@ -63,19 +58,30 @@ const Otp = ({navigation, route}) => {
         </Text>
       </View>
       <View style={styles.Otpcontainer}>
-        {otp.map((digit, index) => (
-          <TextInput
-            key={index}
-            style={styles.otpInput}
-            onChangeText={text => handleOtpChange(text, index)}
-            onKeyPress={e => handleKeyPress(e, index)}
-            value={digit}
-            keyboardType="number-pad"
-            maxLength={1}
-            secureTextEntry // To hide the entered digits
-            ref={refs[index]}
-          />
-        ))}
+        <CodeField
+          ref={ref}
+          {...props}
+          value={value}
+          onChangeText={setValue}
+          cellCount={CELL_COUNT}
+          rootStyle={styles.codeFieldRoot}
+          keyboardType="number-pad"
+          textContentType="oneTimeCode"
+          renderCell={({index, symbol, isFocused}) => (
+            <View
+              key={index}
+              style={[
+                styles.cell,
+                isFocused && styles.focusCell,
+                index !== 0 && styles.cellGap,
+              ]}
+              onLayout={getCellOnLayoutHandler(index)}>
+              <Text style={{textAlign: 'center'}}>
+                {symbol || (isFocused ? <Cursor /> : null)}
+              </Text>
+            </View>
+          )}
+        />
       </View>
 
       <View
@@ -105,20 +111,30 @@ const Otp = ({navigation, route}) => {
         </Text>
         <TouchableOpacity
           style={[styles.button, {backgroundColor: '#100bfa'}]}
-          onPress={() => navigation.navigate('Main')}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
-            Complete
-          </Text>
-          <Image
-            source={require('../../assets/Icons/checked.png')}
-            style={{
-              width: wp(5),
-              height: wp(5),
-              marginLeft: 8,
+          onPress={() => confirmCode()}>
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              color="#fff"
+              style={{justifyContent: 'center', alignItems: 'center'}}
+            />
+          ) : (
+            <>
+              <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                Complete
+              </Text>
+              <Image
+                source={require('../../assets/Icons/checked.png')}
+                style={{
+                  width: wp(5),
+                  height: wp(5),
+                  marginLeft: 8,
 
-              tintColor: 'white',
-            }}
-          />
+                  tintColor: 'white',
+                }}
+              />
+            </>
+          )}
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, {backgroundColor: '#1b1b19'}]}>
           <Text style={{color: 'white', fontWeight: '500', fontSize: hp(1.8)}}>
@@ -183,5 +199,25 @@ const styles = StyleSheet.create({
     width: wp(13),
     textAlign: 'center',
     marginRight: 10,
+  },
+  codeFieldRoot: {
+    marginTop: 20,
+  },
+  cell: {
+    width: hp(5),
+    height: wp(10),
+    lineHeight: 38,
+    fontSize: hp(2.8),
+    borderWidth: 2,
+    borderColor: '#fff',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  focusCell: {
+    borderColor: '#fff',
+  },
+  cellGap: {
+    marginLeft: 20,
   },
 });

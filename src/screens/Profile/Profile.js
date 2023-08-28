@@ -1,5 +1,6 @@
 import {
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -24,7 +25,7 @@ const Profile = ({navigation}) => {
       .then(() => navigation.replace('SignIn'));
   };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Image
           source={require('../../assets/Icons/back.png')}
@@ -122,7 +123,7 @@ const Profile = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

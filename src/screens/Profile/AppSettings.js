@@ -1,5 +1,6 @@
 import {
   Image,
+  ScrollView,
   StyleSheet,
   Switch,
   Text,
@@ -22,7 +23,7 @@ const AppSettings = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{
@@ -148,6 +149,7 @@ const AppSettings = ({navigation}) => {
           paddingHorizontal: wp(3),
         }}>
         <TouchableOpacity
+          onPress={() => navigation.navigate('SignIn')}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
@@ -171,7 +173,7 @@ const AppSettings = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

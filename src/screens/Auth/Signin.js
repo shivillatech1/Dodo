@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Button,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
@@ -15,14 +16,29 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
+import {PhoneInput} from 'react-native-international-phone-number';
 const Signin = ({navigation}) => {
-  const [confirm, setConfirm] = useState(null);
-  console.log(confirm);
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [loading, SetLoading] = useState(false);
 
-  async function signInWithPhoneNumber(phoneNumber) {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    setConfirm(confirmation);
+  async function signInWithPhoneNumber() {
+    SetLoading(true);
+    const confirmation = await auth().signInWithPhoneNumber(
+      selectedCountry?.callingCode + inputValue,
+    );
+    setInputValue('');
     navigation.navigate('Otp', {confirm: confirmation});
+    SetLoading(false);
+  }
+
+  console.log(selectedCountry?.callingCode + inputValue);
+  function handleInputValue(phoneNumber) {
+    setInputValue(phoneNumber);
+  }
+
+  function handleSelectedCountry(country) {
+    setSelectedCountry(country);
   }
 
   return (
@@ -58,32 +74,46 @@ const Signin = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.containerText}>
-          <TextInput
-            style={styles.input}
-            placeholder="(123) 456-7890"
-            keyboardType="phone-pad"
-            maxLength={14}
+          <PhoneInput
+            value={inputValue}
+            onChangePhoneNumber={handleInputValue}
+            selectedCountry={selectedCountry}
+            onChangeSelectedCountry={handleSelectedCountry}
+            inputStyle={styles.inputStyle}
+            containerStyle={styles.containerStyle}
+            flagContainerStyle={styles.flagContainerStyle}
+            placeholder="Enter Your Number"
           />
         </View>
-        {!confirm && (
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('Otp')}>
-            <Text
-              style={{
-                color: 'white',
-                fontWeight: '600',
-                textAlign: 'center',
-                paddingHorizontal: 8,
-              }}>
-              Sign up
-            </Text>
-            <Image
-              source={require('../../assets/Icons/sign-in.png')}
-              style={{height: wp(5), width: wp(5), tintColor: 'white'}}
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => signInWithPhoneNumber()}
+          disabled={!inputValue}>
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              color="#fff"
+              style={{justifyContent: 'center', alignItems: 'center'}}
             />
-          </TouchableOpacity>
-        )}
+          ) : (
+            <>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: '600',
+                  textAlign: 'center',
+                  paddingHorizontal: 8,
+                }}>
+                Sign up
+              </Text>
+              <Image
+                source={require('../../assets/Icons/sign-in.png')}
+                style={{height: wp(5), width: wp(5), tintColor: 'white'}}
+              />
+            </>
+          )}
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -117,7 +147,7 @@ const styles = StyleSheet.create({
     marginTop: hp(1.7),
   },
   input: {
-    backgroundColor: '#1E1E1E', // Input field background color
+    backgroundColor: '#1E1E1E',
     padding: 10,
     borderRadius: 8,
   },
@@ -129,5 +159,22 @@ const styles = StyleSheet.create({
     left: hp(24),
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputStyle: {
+    color: '#F3F3F3',
+  },
+  containerStyle: {
+    backgroundColor: '#1E1E1E',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#F3F3F3',
+    marginVertical: 16,
+  },
+  flagContainerStyle: {
+    borderTopLeftRadius: 7,
+    borderBottomLeftRadius: 7,
+    backgroundColor: '#808080',
+    justifyContent: 'center',
   },
 });

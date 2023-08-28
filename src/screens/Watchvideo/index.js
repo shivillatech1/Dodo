@@ -54,6 +54,9 @@ const WatchVideo = ({navigation, route}) => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginTop: hp(1.3),
+                position: 'absolute',
+                top: hp(3.2),
+                gap: hp(4.6),
               }}>
               <Text style={styles.buttonText}>
                 {item.title.length > 10
@@ -94,6 +97,8 @@ const WatchVideo = ({navigation, route}) => {
                 fontSize: hp(1.6),
                 fontWeight: '300',
                 marginLeft: hp(1),
+                position: 'absolute',
+                top: hp(9),
               }}>
               {item.description}
             </Text>
@@ -101,8 +106,9 @@ const WatchVideo = ({navigation, route}) => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginTop: hp(1.3),
-                marginLeft: hp(1),
+                top: hp(16),
+                left: hp(1),
+                position: 'absolute',
               }}>
               <Text
                 style={{
@@ -121,7 +127,7 @@ const WatchVideo = ({navigation, route}) => {
             flexDirection: 'row',
             alignItems: 'center',
             marginLeft: hp(2),
-            marginTop: hp(2),
+            marginTop: hp(3.6),
           }}>
           <View
             style={{
@@ -321,8 +327,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 5,
     marginRight: hp(8),
-    left: hp(1),
-    width: wp(50),
+    left: hp(1.2),
+    width: wp(52),
     alignItems: 'center',
     flexDirection: 'row',
   },
@@ -330,7 +336,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    marginLeft: wp(2),
+    marginLeft: wp(1.5),
   },
   categoryLabel: {
     fontSize: 20,

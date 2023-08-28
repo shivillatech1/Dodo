@@ -274,7 +274,7 @@ const dummyData1 = [
   },
   {
     id: 2,
-    title: 'Movie 2',
+    title: 'Movie Funtush',
     image: require('../../assets/Images/bg.jpeg'),
     description:
       'An action-packed thriller that will keep you on the edge of your seat.',
@@ -283,7 +283,7 @@ const dummyData1 = [
   },
   {
     id: 3,
-    title: 'Movie 3',
+    title: 'Movie Funtush',
     image: require('../../assets/Images/bg.jpeg'),
     description: 'A heartwarming romance that will touch your soul.',
     rating: 4.7,
@@ -291,7 +291,7 @@ const dummyData1 = [
   },
   {
     id: 4,
-    title: 'Movie 4',
+    title: 'Movie Funtush',
     image: require('../../assets/Images/bg.jpeg'),
     description: 'A mind-bending science fiction journey.',
     rating: 4.9,
