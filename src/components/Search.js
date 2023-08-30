@@ -13,141 +13,63 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {useLayoutEffect} from 'react';
 
 const Search = ({navigation}) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'Demo',
+      headerStyle: {
+        backgroundColor: 'black',
+        height: hp(10.5),
+      },
 
-  const options = ['Option 1', 'Option 2', 'Option 3'];
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  const handleOptionSelect = option => {
-    setSelectedValue(option);
-    setDropdownOpen(false);
-  };
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
+          <Image
+            source={require('../assets/Icons/hamburger.png')}
+            style={{
+              height: wp(5.5),
+              width: wp(5.5),
+              resizeMode: 'contain',
+              tintColor: 'white',
+              marginLeft: hp(1.8),
+            }}
+          />
+        </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <TouchableOpacity onPress={() => console.log('Right Icon Pressed')}>
+          <Image
+            source={require('../assets/Icons/search.png')}
+            style={{
+              height: wp(5.5),
+              width: wp(5.5),
+              resizeMode: 'contain',
+              tintColor: 'white',
+              marginRight: hp(1.8),
+            }}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   const [Input, setInput] = useState('');
 
   return (
     <View style={styles.container}>
-      <View style={{marginTop: hp(2.5), paddingHorizontal: hp(2.2)}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginTop: 5,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: 5,
-              alignItems: 'center',
-            }}>
-            <Text style={[styles.text, {color: '#14578b'}]}>
-              DODO<Text style={[styles.text, {color: '#fff'}]}>FLIX</Text>
-            </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Subscription')}>
-              <Image
-                source={require('../assets/Icons/crown.png')}
-                style={{height: wp(6.5), width: wp(6.5), resizeMode: 'contain'}}
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: hp(1.8),
-              alignItems: 'center',
-            }}>
-            <TouchableOpacity>
-              <Image
-                source={require('../assets/Icons/cast.png')}
-                style={{
-                  height: wp(5.5),
-                  width: wp(5.5),
-                  resizeMode: 'contain',
-                  tintColor: 'white',
-                }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Image
-                source={require('../assets/Icons/search.png')}
-                style={{
-                  height: wp(5.5),
-                  width: wp(5.5),
-                  resizeMode: 'contain',
-                  tintColor: 'white',
-                }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-              <Image
-                source={require('../assets/Icons/man.png')}
-                style={{height: wp(9), width: wp(9), resizeMode: 'contain'}}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <TouchableOpacity
-          onPress={toggleDropdown}
-          style={styles.dropdownButton}>
-          <Text style={{fontSize: hp(1.5), fontWeight: '800'}}>
-            {selectedValue || ' Category'}
-          </Text>
-          <Image
-            source={require('../assets/Icons/down-arrow.png')}
-            style={{
-              height: wp(5),
-              width: wp(5),
-              resizeMode: 'contain',
-              tintColor: 'white',
-            }}
-          />
-        </TouchableOpacity>
-        {dropdownOpen && (
-          <View style={styles.dropdownList}>
-            {options.map((option, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => handleOptionSelect(option)}
-                style={styles.dropdownItem}>
-                <Text style={{fontSize: hp(1.3), fontWeight: '500'}}>
-                  {option}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
-      </View>
       <View style={styles.container1}>
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            width: wp(90),
+            width: wp(96),
             height: hp(7),
             alignItems: 'center',
 
             backgroundColor: '#111010',
           }}>
-          <TextInput
-            onChangeText={setInput}
-            value={Input}
-            style={{
-              width: wp(70),
-
-              borderRadius: 5,
-              paddingHorizontal: hp(1.5),
-            }}
-            placeholder="Search ..."
-            placeholderTextColor="white"
-          />
           <TouchableOpacity onPress={() => console.log('pressed')}>
             <Image
               source={require('../assets/Icons/search.png')}
@@ -156,7 +78,30 @@ const Search = ({navigation}) => {
                 width: wp(5.5),
                 resizeMode: 'contain',
                 tintColor: 'white',
-                marginRight: 8,
+                marginLeft: 11,
+              }}
+            />
+          </TouchableOpacity>
+          <TextInput
+            onChangeText={setInput}
+            value={Input}
+            style={{
+              width: wp(75),
+              marginLeft: hp(1),
+              borderRadius: 5,
+            }}
+            // placeholder="Search ..."
+            placeholderTextColor="white"
+          />
+          <TouchableOpacity onPress={() => console.log('pressed')}>
+            <Image
+              source={require('../assets/Icons/close.png')}
+              style={{
+                height: wp(4.5),
+                width: wp(4.5),
+                resizeMode: 'contain',
+                tintColor: 'white',
+                marginRight: 6,
               }}
             />
           </TouchableOpacity>
@@ -179,11 +124,11 @@ const Search = ({navigation}) => {
             contentContainerStyle={styles.contentContainer}
             renderItem={({item}) => (
               <TouchableOpacity style={styles.itemContainer} key={item.id}>
-                <Image
-                  source={require('../assets/Images/bg.jpeg')}
-                  style={styles.image}
-                />
                 <View style={styles.infoContainer}>
+                  <Image
+                    source={require('../assets/Images/bg.jpeg')}
+                    style={styles.image}
+                  />
                   <Text style={styles.titleText} numberOfLines={2}>
                     {item.title}
                   </Text>
@@ -262,7 +207,7 @@ const styles = StyleSheet.create({
   },
   container1: {
     marginTop: hp(3),
-    paddingHorizontal: hp(3),
+    paddingHorizontal: hp(1.2),
     marginBottom: 8,
   },
   contentContainer: {
@@ -276,13 +221,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    height: wp(25),
-    width: wp(30),
+    height: wp(23),
+    width: wp(35),
     resizeMode: 'cover',
-    borderRadius: hp(2),
-    marginBottom: 8,
+    borderRadius: hp(1),
+    marginBottom: wp(3),
   },
-  infoContainer: {},
+  infoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: wp(4),
+  },
   titleText: {
     color: '#fff', // Change to your desired text color
     fontSize: hp(1.8),

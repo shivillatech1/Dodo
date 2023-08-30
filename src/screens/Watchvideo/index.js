@@ -13,6 +13,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+
 const WatchVideo = ({navigation, route}) => {
   const {item} = route.params;
   console.log(item);
@@ -261,11 +262,13 @@ const WatchVideo = ({navigation, route}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             marginTop: 5,
+            gap: 8,
           }}>
-          <View
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
             style={{
               flexDirection: 'row',
-              gap: 8,
+
               alignItems: 'center',
             }}>
             <Image
@@ -277,17 +280,16 @@ const WatchVideo = ({navigation, route}) => {
                 tintColor: 'white',
               }}
             />
-            <Text style={[styles.text, {color: '#14578b'}]}>
-              DODO<Text style={[styles.text, {color: '#fff'}]}>FLIX</Text>
-            </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Subscription')}>
-              <Image
-                source={require('../../assets/Icons/crown.png')}
-                style={{height: wp(6.5), width: wp(6.5), resizeMode: 'contain'}}
-              />
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
+          <Text style={[styles.text, {color: '#14578b'}]}>
+            DODO<Text style={[styles.text, {color: '#fff'}]}>FLIX</Text>
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Subscription')}>
+            <Image
+              source={require('../../assets/Icons/crown.png')}
+              style={{height: wp(6.5), width: wp(6.5), resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </>

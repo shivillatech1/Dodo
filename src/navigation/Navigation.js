@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/main/HomeScreen';
-import Library from '../screens/main/Library';
-import Series from '../screens/main/Series';
+import Downloads from '../screens/main/Downloads';
+
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -32,8 +32,7 @@ export default function App() {
         <Stack.Screen name="SignIn" component={Signin} />
         <Stack.Screen name="Otp" component={Otp} />
         <Stack.Screen name="Main" component={MyTabs} />
-        <Stack.Screen name="Search" component={Search} />
-        <Stack.Screen name="Profile" component={Profile} />
+
         <Stack.Screen name="Appsetting" component={AppSettings} />
         <Stack.Screen name="Subscription" component={Subscription} />
         <Stack.Screen name="Watch" component={WatchVideo} />
@@ -51,26 +50,37 @@ function MyTabs() {
       initialRouteName="Feed"
       screenOptions={{
         tabBarActiveTintColor: '#fff',
-        tabBarActiveBackgroundColor: '#004dfc',
-        tabBarLabelPosition: 'beside-icon',
+
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: 'black',
+          backgroundColor: '#2a3239',
           position: 'absolute',
           bottom: 0,
+          paddingHorizontal: wp(3),
         },
       }}>
       <Tab.Screen
-        name="Movies"
+        name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Movies',
+          tabBarLabel: 'Home',
+          headerShown: true,
+
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: 'white',
+            fontSize: hp(2.6),
+          },
+          headerStyle: {
+            padding: wp(3),
+          },
+          headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
             <Image
-              source={require('../assets/Icons/movie.png')}
+              source={require('../assets/Icons/home.png')}
               style={{
-                width: wp(6),
-                height: wp(6),
+                width: wp(4.5),
+                height: wp(4.5),
                 resizeMode: 'contain',
                 tintColor: 'white',
               }}
@@ -79,16 +89,26 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Series"
-        component={Series}
+        name="Search"
+        component={Search}
         options={{
-          tabBarLabel: 'Series',
+          tabBarLabel: 'Search',
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: 'white',
+            fontSize: hp(2.6),
+          },
+          headerStyle: {
+            padding: wp(3),
+          },
+          headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
             <Image
-              source={require('../assets/Icons/series.png')}
+              source={require('../assets/Icons/search.png')}
               style={{
-                width: wp(6.5),
-                height: wp(6.5),
+                width: wp(4.5),
+                height: wp(4.5),
                 resizeMode: 'contain',
                 tintColor: 'white',
               }}
@@ -97,16 +117,44 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Library"
-        component={Library}
+        name="Downloads"
+        component={Downloads}
         options={{
-          tabBarLabel: 'Library',
+          tabBarLabel: 'Downloads',
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: 'white',
+            fontSize: hp(2.6),
+          },
+          headerStyle: {
+            padding: wp(3),
+          },
+          headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
             <Image
-              source={require('../assets/Icons/video-files.png')}
+              source={require('../assets/Icons/Down.png')}
               style={{
-                width: wp(6),
-                height: wp(6),
+                width: wp(4.5),
+                height: wp(4.5),
+                resizeMode: 'contain',
+                tintColor: 'white',
+              }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: 'User',
+          tabBarIcon: ({color, size}) => (
+            <Image
+              source={require('../assets/Icons/user.png')}
+              style={{
+                width: wp(4.5),
+                height: wp(4.5),
                 resizeMode: 'contain',
                 tintColor: 'white',
               }}

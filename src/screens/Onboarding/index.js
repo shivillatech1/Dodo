@@ -9,8 +9,9 @@ import auth from '@react-native-firebase/auth';
 const Onboarding = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-      return subscriber; // unsubscribe on unmount
+      // const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+      // return subscriber; // unsubscribe on unmount
+      navigation.navigate('Main');
     }, 1000);
   }, [navigation]);
   useEffect(() => {}, []);
@@ -26,8 +27,7 @@ const Onboarding = ({navigation}) => {
   }
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, {color: '#14578b'}]}>DODO</Text>
-      <Text style={[styles.text, {color: '#fff'}]}>FLIX</Text>
+      <Text style={[styles.text, {color: '#14578b'}]}>DEMO</Text>
     </View>
   );
 };

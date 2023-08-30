@@ -94,12 +94,12 @@ const Profile = ({navigation}) => {
         style={{
           borderTopColor: '#fff',
           borderTopWidth: 1,
-          marginTop: hp(8),
+          marginTop: hp(1.8),
           paddingVertical: hp(1.5),
           paddingHorizontal: wp(3),
         }}>
         <TouchableOpacity
-          onPress={() => Signout()}
+          onPress={() => navigation.navigate('SignIn')}
           style={{
             justifyContent: 'center',
             alignItems: 'center',

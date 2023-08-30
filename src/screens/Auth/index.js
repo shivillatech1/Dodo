@@ -111,7 +111,7 @@ const Otp = ({navigation, route}) => {
         </Text>
         <TouchableOpacity
           style={[styles.button, {backgroundColor: '#100bfa'}]}
-          onPress={() => confirmCode()}>
+          onPress={() => navigation.navigate('Main')}>
           {loading ? (
             <ActivityIndicator
               size="small"

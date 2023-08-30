@@ -45,7 +45,7 @@ const Signin = ({navigation}) => {
     <ImageBackground
       source={require('../../assets/Images/bg.jpeg')}
       style={{width: '100%', height: '100%', flex: 1}}>
-      <View style={{position: 'absolute', top: hp(18), left: hp(15.8)}}>
+      <View style={{position: 'absolute', top: hp(22), left: hp(15.8)}}>
         <Text style={{color: '#4845f6', fontWeight: 'bold', fontSize: hp(3.5)}}>
           DODO<Text style={{color: 'white'}}>FLIX</Text>
         </Text>
@@ -61,7 +61,7 @@ const Signin = ({navigation}) => {
         </Text>
       </View>
       <View style={styles.container}>
-        <View style={{marginTop: hp(5)}}>
+        <View style={{marginTop: hp(2)}}>
           <Text style={styles.text}>
             <Text
               style={{color: 'white', fontWeight: 'bold', fontSize: hp(1.79)}}>
@@ -74,22 +74,29 @@ const Signin = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.containerText}>
-          <PhoneInput
+          <Image
+            source={require('../../assets/Icons/telephone.png')}
+            style={{
+              height: wp(3.5),
+              width: wp(3.5),
+              tintColor: 'white',
+              marginLeft: hp(0.8),
+            }}
+          />
+          <TextInput
+            style={styles.input}
             value={inputValue}
-            onChangePhoneNumber={handleInputValue}
-            selectedCountry={selectedCountry}
-            onChangeSelectedCountry={handleSelectedCountry}
-            inputStyle={styles.inputStyle}
-            containerStyle={styles.containerStyle}
-            flagContainerStyle={styles.flagContainerStyle}
-            placeholder="Enter Your Number"
+            onChangeText={handleInputValue}
+            placeholder="Mobile Number"
+            keyboardType="phone-pad"
+            maxLength={14}
           />
         </View>
 
-        <TouchableOpacity
+        {/**   <TouchableOpacity
           style={styles.button}
-          onPress={() => signInWithPhoneNumber()}
-          disabled={!inputValue}>
+          onPress={() => navigation.navigate('Otp')}
+         >
           {loading ? (
             <ActivityIndicator
               size="small"
@@ -113,7 +120,7 @@ const Signin = ({navigation}) => {
               />
             </>
           )}
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
       </View>
     </ImageBackground>
   );
@@ -124,11 +131,12 @@ export default Signin;
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: hp(30),
+    top: hp(33),
     left: hp(3.5),
-    height: hp(45),
+    height: hp(36),
     width: wp(86),
     backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: wp(3),
   },
   text: {
     fontSize: hp(1.7),
@@ -143,13 +151,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   containerText: {
-    padding: 16,
-    marginTop: hp(1.7),
+    marginTop: hp(3.5),
+    backgroundColor: '#1E1E1E',
+    borderRadius: 8,
+    width: wp(76),
+    marginLeft: hp(1.5),
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 8,
   },
   input: {
-    backgroundColor: '#1E1E1E',
-    padding: 10,
+    paddingHorizontal: 6,
     borderRadius: 8,
+    width: wp(75),
   },
   button: {
     backgroundColor: '#007be5',
