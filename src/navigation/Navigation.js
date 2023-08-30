@@ -35,7 +35,24 @@ export default function App() {
 
         <Stack.Screen name="Appsetting" component={AppSettings} />
         <Stack.Screen name="Subscription" component={Subscription} />
-        <Stack.Screen name="Watch" component={WatchVideo} />
+        <Stack.Screen
+          name="Watch"
+          component={WatchVideo}
+          options={{
+            headerShown: true,
+
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              color: 'white',
+              fontSize: hp(2.6),
+            },
+            headerStyle: {
+              padding: wp(3),
+              alignItems: 'center',
+            },
+            headerShadowVisible: false,
+          }}
+        />
         <Stack.Screen name="Video" component={VideoPlayerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -73,6 +90,7 @@ function MyTabs() {
           },
           headerStyle: {
             padding: wp(3),
+            alignItems: 'center',
           },
           headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
@@ -101,6 +119,7 @@ function MyTabs() {
           },
           headerStyle: {
             padding: wp(3),
+            alignItems: 'center',
           },
           headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
@@ -129,6 +148,7 @@ function MyTabs() {
           },
           headerStyle: {
             padding: wp(3),
+            alignItems: 'center',
           },
           headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (

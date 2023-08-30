@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -40,7 +41,7 @@ const HomeScreen = ({navigation}) => {
         </TouchableOpacity>
       ),
       headerRight: () => (
-        <TouchableOpacity onPress={() => console.log('Right Icon Pressed')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Search')}>
           <Image
             source={require('../../assets/Icons/search.png')}
             style={{
@@ -66,49 +67,32 @@ const HomeScreen = ({navigation}) => {
   const [activeIndex, setActiveIndex] = useState(0); // Set initial active index
 
   const texts = ['Home', 'All Videos', 'Topics'];
-
+  const renderItem = ({item}) => (
+    <View style={styles.slide}>
+      <Image
+        source={require('../../assets/Images/bg.jpeg')}
+        style={styles.slideImage}
+      />
+    </View>
+  );
   return (
     <>
       {activeIndex === 0 && (
         <View style={styles.container}>
-          <ScrollView
-            contentContainerStyle={{paddingHorizontal: wp(4)}}
+          <FlatList
+            data={dummyData1}
+            renderItem={renderItem}
             horizontal
-            style={{
-              flexDirection: 'row',
-              marginTop: hp(8),
-              marginBottom: hp(2),
-            }}>
-            <Image
-              source={require('../../assets/Images/bg.jpeg')}
-              style={{
-                height: wp(50),
-                width: wp(70),
-                resizeMode: 'cover',
-                borderRadius: hp(2),
-              }}
-            />
-            <Image
-              source={require('../../assets/Images/bg.jpeg')}
-              style={{
-                height: wp(50),
-                width: wp(70),
-                resizeMode: 'cover',
-                borderRadius: hp(2),
-              }}
-            />
-            <Image
-              source={require('../../assets/Images/bg.jpeg')}
-              style={{
-                height: wp(50),
-                width: wp(70),
-                resizeMode: 'cover',
-                borderRadius: hp(2),
-              }}
-            />
-          </ScrollView>
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingVertical: hp(8),
+              marginLeft: wp(3),
+            }}
+          />
 
           <ScrollView
+            style={{marginTop: hp(2)}}
             contentContainerStyle={{
               paddingBottom: hp(10),
               paddingHorizontal: hp(1.3),
@@ -326,7 +310,8 @@ const dummyData1 = [
     id: 1,
     title: 'Movie Funtush',
     image: require('../../assets/Images/bg.jpeg'),
-    description: 'A hilarious comedy that will keep you laughing.',
+    description:
+      'A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughingA hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing.',
     rating: 4.8,
     genres: ['Comedy', 'Adventure'],
     uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
@@ -406,6 +391,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#2a3239',
     top: 0,
     width: wp(100),
+  },
+  slide: {
+    width: Dimensions.get('window').width - 40,
+    height: hp(33),
+    marginRight: wp(4),
+  },
+  slideImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
 

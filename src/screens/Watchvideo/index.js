@@ -13,6 +13,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {useLayoutEffect} from 'react';
 
 const WatchVideo = ({navigation, route}) => {
   const {item} = route.params;
@@ -27,102 +28,106 @@ const WatchVideo = ({navigation, route}) => {
   const handleCategoryPress = index => {
     setActiveIndex(index);
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'Demo ',
+      headerStyle: {
+        backgroundColor: 'black',
+      },
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
+          <Image
+            source={require('../../assets/Icons/hamburger.png')}
+            style={{
+              height: wp(5.5),
+              width: wp(5.5),
+              resizeMode: 'contain',
+              tintColor: 'white',
+              marginLeft: hp(1.5),
+            }}
+          />
+        </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <TouchableOpacity onPress={() => console.log('Right Icon Pressed')}>
+          <Image
+            source={require('../../assets/Icons/search.png')}
+            style={{
+              height: wp(5.5),
+              width: wp(5.5),
+              resizeMode: 'contain',
+              tintColor: 'white',
+              marginRight: hp(1.8),
+            }}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
   return (
     <>
       <View style={styles.container}>
-        <Image
-          source={item.image}
-          style={[styles.moviePoster, {opacity: 0.7}]}
-        />
-        <LinearGradient
-          colors={['rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.8)']}
-          style={[styles.gradient, {opacity: 0.9}]}>
-          <View style={styles.movieInfoContainer}>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Video', {item: item})}
-                style={[styles.button, {backgroundColor: '#4845f6'}]}>
-                <Image
-                  source={require('../../assets/Icons/play.png')}
-                  style={{width: wp(5), height: wp(5), tintColor: '#fff'}}
-                />
-                <Text style={styles.buttonText}>Start Watching Now !</Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginTop: hp(1.3),
-                position: 'absolute',
-                top: hp(3.2),
-                gap: hp(4.6),
-              }}>
-              <Text style={styles.buttonText}>
-                {item.title.length > 10
-                  ? item.title.slice(0, 10) + '...'
-                  : item.title}
-              </Text>
-              <TouchableOpacity
-                style={{
-                  paddingVertical: 8,
-                  paddingHorizontal: 16,
-                  borderRadius: 5,
+        <Image source={item.image} style={[styles.moviePoster]} />
+        <View
+          style={{
+            flexDirection: 'Column',
+            alignItems: 'center',
 
-                  width: wp(50),
-
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                }}>
-                <Image
-                  source={require('../../assets/Icons/add.png')}
-                  style={{width: wp(5), height: wp(5), tintColor: '#fff'}}
-                />
-                <Text style={styles.buttonText}> Watch Later</Text>
-              </TouchableOpacity>
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: hp(1.6),
-                  fontWeight: 'bold',
-                }}>
-                {item.rating}
-              </Text>
-            </View>
+            marginTop: hp(1),
+            marginBottom: hp(0.6),
+          }}>
+          <Text style={styles.text}>{item.title}</Text>
+          <Text style={styles.text1}>{item.genres.join(',')}</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            marginTop: hp(1),
+          }}>
+          <TouchableOpacity
+            style={{
+              width: wp(35),
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'row',
+              gap: 5,
+              padding: wp(2),
+              backgroundColor: '#fe6a1f',
+              borderRadius: wp(1.5),
+            }}>
+            <Image
+              source={require('../../assets/Icons/play-button.png')}
+              style={{width: wp(5), height: wp(5), resizeMode: 'contain'}}
+            />
             <Text
-              numberOfLines={2}
-              style={{
-                width: wp(90),
-                color: '#fff',
-                fontSize: hp(1.6),
-                fontWeight: '300',
-                marginLeft: hp(1),
-                position: 'absolute',
-                top: hp(9),
-              }}>
-              {item.description}
+              style={{fontSize: hp(1.8), fontWeight: '600', color: 'black'}}>
+              Play
             </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                top: hp(16),
-                left: hp(1),
-                position: 'absolute',
-              }}>
-              <Text
-                style={{
-                  width: wp(90),
-                  color: '#fff',
-                  fontSize: hp(1.6),
-                  fontWeight: '300',
-                }}>
-                {item.genres.join(', ')}
-              </Text>
-            </View>
-          </View>
-        </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: wp(35),
+              alignItems: 'center',
+              flexDirection: 'row',
+              gap: 5,
+              justifyContent: 'center',
+              padding: wp(2),
+              backgroundColor: '#fff',
+              borderRadius: wp(1.5),
+            }}>
+            <Image
+              source={require('../../assets/Icons/download.png')}
+              style={{width: wp(5), height: wp(5), resizeMode: 'contain'}}
+            />
+            <Text
+              style={{fontSize: hp(1.8), fontWeight: '600', color: 'black'}}>
+              Download
+            </Text>
+          </TouchableOpacity>
+        </View>
         <View
           style={{
             flexDirection: 'row',
@@ -130,88 +135,95 @@ const WatchVideo = ({navigation, route}) => {
             marginLeft: hp(2),
             marginTop: hp(3.6),
           }}>
-          <View
+          <TouchableOpacity
             style={{
               flexDirection: 'column',
               alignItems: 'center',
               gap: hp(1),
             }}>
             <Image
-              source={require('../../assets/Icons/heart.png')}
-              style={{width: wp(5), height: wp(5), tintColor: 'white'}}
+              source={require('../../assets/Icons/add.png')}
+              style={{width: wp(6.8), height: wp(6.8), tintColor: 'white'}}
             />
             <Text
-              style={{fontSize: hp(1.4), fontWeight: '300', color: 'white'}}>
-              Favorite
+              style={{fontSize: hp(1.8), fontWeight: '300', color: 'white'}}>
+              Wishlist
             </Text>
-          </View>
-          <View
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
               flexDirection: 'column',
               alignItems: 'center',
               gap: hp(1),
-              marginLeft: hp(2),
+              marginLeft: hp(3),
             }}>
             <Image
-              source={require('../../assets/Icons/share.png')}
-              style={{width: wp(5), height: wp(5), tintColor: 'white'}}
+              source={require('../../assets/Icons/share1.png')}
+              style={{width: wp(6.8), height: wp(6.8), tintColor: 'white'}}
             />
             <Text
-              style={{fontSize: hp(1.4), fontWeight: '300', color: 'white'}}>
+              style={{fontSize: hp(1.8), fontWeight: '300', color: 'white'}}>
               Share
             </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: hp(1),
-              marginLeft: hp(2),
-            }}>
-            <Image
-              source={require('../../assets/Icons/question.png')}
-              style={{width: wp(5), height: wp(5), tintColor: 'white'}}
-            />
-            <Text
-              style={{fontSize: hp(1.4), fontWeight: '300', color: 'white'}}>
-              Report
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: hp(1),
-              marginLeft: hp(2),
-            }}>
-            <Image
-              source={require('../../assets/Icons/download.png')}
-              style={{width: wp(5), height: wp(5), tintColor: 'white'}}
-            />
-            <Text
-              style={{fontSize: hp(1.4), fontWeight: '300', color: 'white'}}>
-              Download
-            </Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View
           style={{
-            marginTop: hp(2.5),
+            marginTop: hp(1.5),
             marginLeft: hp(1.5),
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          {categories.map((item, index) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() => handleCategoryPress(index)}
-              style={[
-                styles.categoryButton,
-                index === activeIndex && styles.activeCategoryButton,
-              ]}>
-              <Text style={styles.categoryText}>{item.title}</Text>
-            </TouchableOpacity>
-          ))}
+          <Text style={styles.text2} numberOfLines={3}>
+            {item.description}
+          </Text>
+        </View>
+        <View
+          style={{
+            width: wp(85),
+            marginLeft: wp(8),
+            borderColor: 'white',
+            borderBottomWidth: 1.5,
+            marginTop: hp(1),
+          }}
+        />
+        <View
+          style={{
+            marginLeft: hp(1.5),
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: hp(2),
+            marginBottom: 8,
+          }}>
+          <TouchableOpacity
+            style={{flexDirection: 'row', gap: 8, alignItems: 'center'}}>
+            <Text
+              style={{fontSize: hp(1.6), fontWeight: '900', color: 'white'}}
+              numberOfLines={3}>
+              Season 1
+            </Text>
+            <Image
+              source={require('../../assets/Icons/down-arrow.png')}
+              style={{width: wp(4), height: wp(4), tintColor: '#fe6a1f'}}
+            />
+          </TouchableOpacity>
+          <View
+            style={{
+              height: hp(2.6),
+              borderColor: 'white',
+              borderWidth: 0.8,
+              marginLeft: hp(1),
+            }}
+          />
+          <Text
+            style={{
+              fontSize: hp(1.6),
+              fontWeight: '900',
+              color: 'white',
+              marginLeft: wp(2),
+            }}>
+            Episode 3
+          </Text>
         </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -219,82 +231,87 @@ const WatchVideo = ({navigation, route}) => {
             paddingVertical: hp(2),
             paddingHorizontal: hp(1.5),
           }}>
-          {activeIndex === 0 && (
-            <TouchableOpacity
-              style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                source={item.image}
-                style={{width: wp(30), height: wp(20), resizeMode: 'cover'}}
-              />
-              <Image
-                source={require('../../assets/Icons/play.png')}
+          {dummyData1.map((item, index) => {
+            return (
+              <View
+                key={index}
                 style={{
-                  width: wp(8),
-                  height: wp(8),
-                  resizeMode: 'cover',
-                  position: 'absolute',
-                  tintColor: 'white',
-                  left: hp(4.8),
-                }}
-              />
-
-              <View style={{marginLeft: 5}}>
-                <Text style={styles.categoryText}>{item.title}</Text>
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: wp(2.3),
+                  gap: 8,
+                }}>
+                <Image
+                  source={item.image}
+                  style={{width: wp(30), height: wp(20), borderRadius: wp(1)}}
+                />
                 <Text
-                  numberOfLines={2}
                   style={{
-                    color: '#fff',
-                    fontSize: hp(1.5),
-                    fontWeight: '300',
-                    width: wp(60),
-                  }}>
+                    fontSize: hp(1.3),
+                    fontWeight: '600',
+                    width: wp(54),
+                    color: 'white',
+                  }}
+                  numberOfLines={3}>
                   {item.description}
                 </Text>
+                <TouchableOpacity>
+                  <Image
+                    source={require('../../assets/Icons/download.png')}
+                    style={{
+                      width: wp(6.8),
+                      height: wp(6.8),
+                      borderRadius: wp(1),
+                      tintColor: '#fff',
+                      marginRight: wp(2),
+                    }}
+                  />
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-          )}
+            );
+          })}
         </ScrollView>
-      </View>
-      <View style={{position: 'absolute', top: hp(2), left: hp(3), flex: 1}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginTop: 5,
-            gap: 8,
-          }}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{
-              flexDirection: 'row',
-
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../../assets/Icons/back.png')}
-              style={{
-                height: wp(5),
-                width: wp(5),
-                resizeMode: 'contain',
-                tintColor: 'white',
-              }}
-            />
-          </TouchableOpacity>
-          <Text style={[styles.text, {color: '#14578b'}]}>
-            DODO<Text style={[styles.text, {color: '#fff'}]}>FLIX</Text>
-          </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Subscription')}>
-            <Image
-              source={require('../../assets/Icons/crown.png')}
-              style={{height: wp(6.5), width: wp(6.5), resizeMode: 'contain'}}
-            />
-          </TouchableOpacity>
-        </View>
       </View>
     </>
   );
 };
+const dummyData1 = [
+  {
+    id: 1,
+    title: 'Movie Funtush',
+    image: require('../../assets/Images/bg.jpeg'),
+    description:
+      'A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughingA hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing,A hilarious comedy that will keep you laughing.',
+    rating: 4.8,
+    genres: ['Comedy', 'Adventure'],
+    uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+  },
+  {
+    id: 2,
+    title: 'Movie Funtush',
+    image: require('../../assets/Images/bg.jpeg'),
+    description:
+      'An action-packed thriller that will keep you on the edge of your seat.',
+    rating: 4.5,
+    genres: ['Action', 'Drama'],
+  },
+  {
+    id: 3,
+    title: 'Movie Funtush',
+    image: require('../../assets/Images/bg.jpeg'),
+    description: 'A heartwarming romance that will touch your soul.',
+    rating: 4.7,
+    genres: ['Romance', 'Drama'],
+  },
+  {
+    id: 4,
+    title: 'Movie Funtush',
+    image: require('../../assets/Images/bg.jpeg'),
+    description: 'A mind-bending science fiction journey.',
+    rating: 4.9,
+    genres: ['Science Fiction', 'Mystery'],
+  },
+];
 
 const styles = StyleSheet.create({
   container: {
@@ -303,8 +320,9 @@ const styles = StyleSheet.create({
   },
   moviePoster: {
     width: '100%',
-    height: hp(55),
+    height: hp(25),
     resizeMode: 'cover',
+    marginTop: hp(3),
   },
   gradient: {
     position: 'absolute',
@@ -355,6 +373,21 @@ const styles = StyleSheet.create({
   text: {
     fontSize: hp(2.6),
     fontWeight: 'bold',
+    color: 'white',
+  },
+  text1: {
+    fontSize: hp(1.4),
+    fontWeight: '600',
+    color: 'white',
+  },
+  text2: {
+    fontSize: hp(1.4),
+    fontWeight: '400',
+    width: wp(93),
+    color: 'white',
+    lineHeight: hp(2.2),
+    marginBottom: 8,
+    marginLeft: wp(1.5),
   },
   dropdownButton: {
     padding: 10,
@@ -375,20 +408,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
-  },
-  categoryButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  activeCategoryButton: {
-    borderColor: '#3498db',
-    borderBottomWidth: 1.5,
-  },
-  categoryText: {
-    color: '#fff',
-    fontSize: hp(1.8),
   },
 });
 
