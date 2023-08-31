@@ -46,10 +46,7 @@ export default function App() {
               color: 'white',
               fontSize: hp(2.6),
             },
-            headerStyle: {
-              padding: wp(3),
-              alignItems: 'center',
-            },
+
             headerShadowVisible: false,
           }}
         />
@@ -90,7 +87,6 @@ function MyTabs() {
           },
           headerStyle: {
             padding: wp(3),
-            alignItems: 'center',
           },
           headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
@@ -119,7 +115,6 @@ function MyTabs() {
           },
           headerStyle: {
             padding: wp(3),
-            alignItems: 'center',
           },
           headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
@@ -148,7 +143,6 @@ function MyTabs() {
           },
           headerStyle: {
             padding: wp(3),
-            alignItems: 'center',
           },
           headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (

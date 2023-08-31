@@ -17,6 +17,8 @@ import {
 import {useLayoutEffect} from 'react';
 import AllVdieos from '../../components/AllVdieos';
 import Topics from '../../components/Topics';
+import SliderImages from '../../components/SliderImages';
+
 const HomeScreen = ({navigation}) => {
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -75,21 +77,12 @@ const HomeScreen = ({navigation}) => {
       />
     </View>
   );
+
   return (
     <>
       {activeIndex === 0 && (
         <View style={styles.container}>
-          <FlatList
-            data={dummyData1}
-            renderItem={renderItem}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              paddingVertical: hp(8),
-              marginLeft: wp(3),
-            }}
-          />
+          <SliderImages />
 
           <ScrollView
             style={{marginTop: hp(2)}}

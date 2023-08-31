@@ -93,7 +93,7 @@ const Search = ({navigation}) => {
             // placeholder="Search ..."
             placeholderTextColor="white"
           />
-          <TouchableOpacity onPress={() => console.log('pressed')}>
+          <TouchableOpacity onPress={() => setInput('')}>
             <Image
               source={require('../assets/Icons/close.png')}
               style={{
@@ -106,42 +106,102 @@ const Search = ({navigation}) => {
             />
           </TouchableOpacity>
         </View>
-        <View style={{marginTop: hp(4), paddingHorizontal: hp(1.6)}}>
-          <Text
-            style={{
-              fontSize: hp(2.3),
-              fontWeight: '700',
-              color: 'white',
-              marginBottom: 8,
-            }}>
-            Top Searches
-          </Text>
+        {Input.length === 0 && (
+          <View style={{marginTop: hp(4), paddingHorizontal: hp(1.6)}}>
+            <Text
+              style={{
+                fontSize: hp(2.3),
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: 8,
+              }}>
+              Top Searches
+            </Text>
 
-          <FlatList
-            data={dummyData1}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={item => item.id}
-            contentContainerStyle={styles.contentContainer}
-            renderItem={({item}) => (
-              <TouchableOpacity style={styles.itemContainer} key={item.id}>
-                <View style={styles.infoContainer}>
+            <FlatList
+              data={dummyData1}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={item => item.id}
+              contentContainerStyle={styles.contentContainer}
+              renderItem={({item}) => (
+                <TouchableOpacity style={styles.itemContainer} key={item.id}>
+                  <View style={styles.infoContainer}>
+                    <Image
+                      source={require('../assets/Images/bg.jpeg')}
+                      style={styles.image}
+                    />
+                    <Text style={styles.titleText} numberOfLines={2}>
+                      {item.title}
+                    </Text>
+                  </View>
+
+                  <Image
+                    source={require('../assets/Icons/play.png')}
+                    style={{width: wp(7), height: wp(7), tintColor: 'white'}}
+                  />
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        )}
+        {Input === 'Playlists' && (
+          <View style={{marginTop: hp(4), paddingHorizontal: hp(1.6)}}>
+            <Text
+              style={{
+                fontSize: hp(2.3),
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: 8,
+              }}>
+              Top Searches
+            </Text>
+
+            <FlatList
+              data={dummyData1}
+              showsVerticalScrollIndicator={false}
+              numColumns={3}
+              keyExtractor={item => item.id}
+              contentContainerStyle={styles.contentContainer}
+              renderItem={({item}) => (
+                <TouchableOpacity style={styles.itemContainer} key={item.id}>
                   <Image
                     source={require('../assets/Images/bg.jpeg')}
-                    style={styles.image}
+                    style={[styles.image1, {marginRight: hp(1)}]}
                   />
-                  <Text style={styles.titleText} numberOfLines={2}>
-                    {item.title}
-                  </Text>
-                </View>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        )}
+        {Input === 'Watch Later' && (
+          <View style={{marginTop: hp(4), paddingHorizontal: hp(1.6)}}>
+            <Text
+              style={{
+                fontSize: hp(2.3),
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: 8,
+              }}>
+              Top Searches
+            </Text>
 
-                <Image
-                  source={require('../assets/Icons/play.png')}
-                  style={{width: wp(7), height: wp(7), tintColor: 'white'}}
-                />
-              </TouchableOpacity>
-            )}
-          />
-        </View>
+            <FlatList
+              data={dummyData1}
+              showsVerticalScrollIndicator={false}
+              numColumns={3}
+              keyExtractor={item => item.id}
+              contentContainerStyle={styles.contentContainer}
+              renderItem={({item}) => (
+                <TouchableOpacity style={styles.itemContainer} key={item.id}>
+                  <Image
+                    source={require('../assets/Images/bg.jpeg')}
+                    style={[styles.image1, {marginRight: hp(1)}]}
+                  />
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -225,6 +285,13 @@ const styles = StyleSheet.create({
     width: wp(35),
     resizeMode: 'cover',
     borderRadius: hp(1),
+    marginBottom: wp(3),
+  },
+  image1: {
+    height: wp(21),
+    width: wp(28),
+    resizeMode: 'cover',
+    borderRadius: hp(0.8),
     marginBottom: wp(3),
   },
   infoContainer: {
