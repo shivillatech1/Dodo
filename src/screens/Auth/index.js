@@ -19,7 +19,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 const Otp = ({navigation, route}) => {
-  const CELL_COUNT = 6;
+  const CELL_COUNT = 4;
   const [value, setValue] = useState('');
   const [loading, SetLoading] = useState(false);
   console.log(value);

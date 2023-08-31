@@ -11,7 +11,7 @@ const Onboarding = ({navigation}) => {
     setTimeout(() => {
       // const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
       // return subscriber; // unsubscribe on unmount
-      navigation.navigate('Main');
+      navigation.navigate('SignIn');
     }, 1000);
   }, [navigation]);
   useEffect(() => {}, []);

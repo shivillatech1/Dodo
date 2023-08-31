@@ -41,13 +41,26 @@ const Signin = ({navigation}) => {
     setSelectedCountry(country);
   }
 
+  useEffect(() => {
+    setTimeout(() => {
+      // const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+      // return subscriber; // unsubscribe on unmount
+      navigation.navigate('Otp');
+    }, 3000);
+  }, [navigation]);
   return (
     <ImageBackground
       source={require('../../assets/Images/bg.jpeg')}
       style={{width: '100%', height: '100%', flex: 1}}>
       <View style={{position: 'absolute', top: hp(22), left: hp(15.8)}}>
-        <Text style={{color: '#4845f6', fontWeight: 'bold', fontSize: hp(3.5)}}>
-          DODO<Text style={{color: 'white'}}>FLIX</Text>
+        <Text
+          style={{
+            color: '#FFF',
+            fontWeight: 'bold',
+            fontSize: hp(4.5),
+            left: hp(3.2),
+          }}>
+          Demo
         </Text>
         <Text
           style={{

@@ -24,7 +24,7 @@ const Subscription = ({navigation}) => {
           Welcome to
         </Text>
         <Text style={{color: '#fff', fontWeight: 'bold', fontSize: hp(3.5)}}>
-          DODOFLiX Video
+          Demo Video
         </Text>
       </View>
       <View style={styles.container}>
@@ -34,7 +34,7 @@ const Subscription = ({navigation}) => {
               style={{color: 'white', fontWeight: '500', fontSize: hp(2.3)}}>
               Watch the latest Movies, Tv shows,
             </Text>
-            and award-Winining DODOFLIX
+            and award-Winining Demo
           </Text>
         </View>
         <TouchableOpacity style={styles.button}>
@@ -45,7 +45,7 @@ const Subscription = ({navigation}) => {
               textAlign: 'center',
               paddingHorizontal: 8,
             }}>
-            Join DODOFLIX $1499/Year
+            Join Demo $1499/Year
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
@@ -56,7 +56,7 @@ const Subscription = ({navigation}) => {
               textAlign: 'center',
               paddingHorizontal: 8,
             }}>
-            DODOFLIX Video Mobile Edition at $599/Year
+            Demo Video Mobile Edition at $599/Year
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
