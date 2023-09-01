@@ -58,41 +58,24 @@ const WatchVideo = ({navigation, route}) => {
             flexDirection: 'row',
           }}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text
+            <Image
+              source={require('../../assets/Icons/menu.png')}
               style={{
-                fontSize: hp(1.8),
-                fontWeight: 'bold',
-                color: 'white',
-                shadowColor: '#fff',
-                shadowOffset: {width: 0, height: 2},
-                shadowOpacity: 0.5,
-                shadowRadius: 5,
-                elevation: 5,
-              }}>
-              MEDIA
-            </Text>
-            <Text
-              style={{
-                fontSize: hp(1.6),
-                fontWeight: '400',
-                color: 'white',
-                shadowColor: '#fff',
-                shadowOffset: {width: 0, height: 2},
-                shadowOpacity: 0.5,
-                shadowRadius: 5,
-                elevation: 5,
-              }}>
-              CLINIQUE
-            </Text>
+                width: wp(8),
+                height: wp(8),
+                right: wp(3),
+                tintColor: '#D4af37',
+              }}
+            />
           </View>
-          <TouchableOpacity
+          {/**<TouchableOpacity
             onPress={() => navigation.navigate('Subscription')}
-            style={{left: wp(3)}}>
+            style={{left: wp(1)}}>
             <Image
               style={{width: wp(5), height: wp(5), resizeMode: 'cover'}}
               source={require('../../assets/Icons/crown.png')}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </TouchableOpacity>
       ),
       // headerRight: () => (

@@ -25,45 +25,45 @@ const HomeScreen = ({navigation}) => {
       headerTitle: '',
       headerStyle: {
         backgroundColor: '#000',
-        height: hp(10.3),
+        height: hp(2.6),
       },
 
-      headerLeft: () => (
-        <TouchableOpacity
-          onPress={() => console.log('Left Icon Pressed')}
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: wp(3),
-          }}>
-          <Text
-            style={{
-              fontSize: hp(1.8),
-              fontWeight: 'bold',
-              color: 'white',
-              shadowColor: '#fff',
-              shadowOffset: {width: 0, height: 2},
-              shadowOpacity: 0.5,
-              shadowRadius: 5,
-              elevation: 5,
-            }}>
-            MEDIA
-          </Text>
-          <Text
-            style={{
-              fontSize: hp(1.6),
-              fontWeight: '400',
-              color: 'white',
-              shadowColor: '#fff',
-              shadowOffset: {width: 0, height: 2},
-              shadowOpacity: 0.5,
-              shadowRadius: 5,
-              elevation: 5,
-            }}>
-            CLINIQUE
-          </Text>
-        </TouchableOpacity>
-      ),
+      // headerLeft: () => (
+      //   <TouchableOpacity
+      //     onPress={() => console.log('Left Icon Pressed')}
+      //     style={{
+      //       justifyContent: 'center',
+      //       alignItems: 'center',
+      //       marginLeft: wp(3),
+      //     }}>
+      //     <Text
+      //       style={{
+      //         fontSize: hp(1.8),
+      //         fontWeight: 'bold',
+      //         color: 'white',
+      //         shadowColor: '#fff',
+      //         shadowOffset: {width: 0, height: 2},
+      //         shadowOpacity: 0.5,
+      //         shadowRadius: 5,
+      //         elevation: 5,
+      //       }}>
+      //       MEDIA
+      //     </Text>
+      //     <Text
+      //       style={{
+      //         fontSize: hp(1.6),
+      //         fontWeight: '400',
+      //         color: 'white',
+      //         shadowColor: '#fff',
+      //         shadowOffset: {width: 0, height: 2},
+      //         shadowOpacity: 0.5,
+      //         shadowRadius: 5,
+      //         elevation: 5,
+      //       }}>
+      //       CLINIQUE
+      //     </Text>
+      //   </TouchableOpacity>
+      // ),
       // headerRight: () => (
       //   <TouchableOpacity onPress={() => navigation.navigate('Search')}>
       //     <Image
@@ -83,7 +83,7 @@ const HomeScreen = ({navigation}) => {
 
   const categories = [
     {id: '1', title: 'Continue Watching', all: 'See All'},
-    {id: '2', title: 'Latest on Demo', all: 'See All'},
+    {id: '2', title: 'Top Watches', all: 'See All'},
     {id: '3', title: 'Video List', all: 'See All'},
     {id: '4', title: 'Watch Later', all: 'See All'},
     {id: '5', title: 'Playlist', all: 'See All'},
@@ -121,6 +121,7 @@ const HomeScreen = ({navigation}) => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    paddingHorizontal: hp(0.3),
                   }}>
                   <Text style={styles.categoryLabel}>{category.title}</Text>
                   <Text style={styles.categoryLabel1}>{category.all}</Text>
@@ -143,7 +144,7 @@ const HomeScreen = ({navigation}) => {
                             height: hp(12.5),
                             width: wp(45),
                             resizeMode: 'cover',
-                            borderRadius: hp(2),
+                            borderRadius: hp(1),
                           }}
                         />
                         <View
@@ -165,7 +166,7 @@ const HomeScreen = ({navigation}) => {
                     ))}
                   </ScrollView>
                 ) : null}
-                {category.title === 'Latest on Demo' ? (
+                {category.title === 'Top Watches' ? (
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {dummyData1.map(item => (
                       <TouchableOpacity
@@ -293,6 +294,7 @@ const HomeScreen = ({navigation}) => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     padding: 2,
+                    marginTop: hp(1),
                   }}>
                   <Text
                     key={index}
@@ -321,6 +323,24 @@ const HomeScreen = ({navigation}) => {
           })}
         </View>
       </View>
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          zIndex: 44,
+          left: wp(1.2),
+          alignItems: 'center',
+          top: wp(2),
+        }}>
+        <Image
+          source={require('../../assets/Icons/menu.png')}
+          style={{
+            width: wp(8),
+            height: wp(8),
+
+            tintColor: '#D4af37',
+          }}
+        />
+      </TouchableOpacity>
     </>
   );
 };
@@ -386,6 +406,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#fff',
     marginVertical: 10,
+    backgroundColor: '#f57f01',
+    padding: 2,
+    paddingHorizontal: 3,
   },
   categoryLabel1: {
     fontSize: hp(1.6),

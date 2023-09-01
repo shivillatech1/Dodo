@@ -179,13 +179,13 @@ export default Signin;
 
 const styles = StyleSheet.create({
   container: {
-    height: hp(35),
+    height: hp(38),
     width: wp(90),
     marginBottom: hp(3),
     backgroundColor: 'rgb(51,58,68)',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: hp(2),
+    borderRadius: hp(1.5),
   },
   text: {
     fontSize: hp(1.7),

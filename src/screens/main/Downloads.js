@@ -39,32 +39,15 @@ const Library = ({navigation}) => {
             alignItems: 'center',
             marginLeft: wp(3),
           }}>
-          <Text
+          <Image
+            source={require('../../assets/Icons/menu.png')}
             style={{
-              fontSize: hp(1.8),
-              fontWeight: 'bold',
-              color: 'white',
-              shadowColor: '#fff',
-              shadowOffset: {width: 0, height: 2},
-              shadowOpacity: 0.5,
-              shadowRadius: 5,
-              elevation: 5,
-            }}>
-            MEDIA
-          </Text>
-          <Text
-            style={{
-              fontSize: hp(1.6),
-              fontWeight: '400',
-              color: 'white',
-              shadowColor: '#fff',
-              shadowOffset: {width: 0, height: 2},
-              shadowOpacity: 0.5,
-              shadowRadius: 5,
-              elevation: 5,
-            }}>
-            CLINIQUE
-          </Text>
+              width: wp(8),
+              height: wp(8),
+
+              tintColor: '#D4af37',
+            }}
+          />
         </TouchableOpacity>
       ),
       // headerRight: () => (

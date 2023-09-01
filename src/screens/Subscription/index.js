@@ -27,14 +27,40 @@ const Subscription = ({navigation}) => {
       }}>
       <View
         style={{
+          position: 'absolute',
+          top: hp(15),
+          borderColor: '#80797a',
+          borderWidth: 0.8,
+          height: hp(15),
+          width: wp(50),
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text style={{color: '#fff', fontWeight: '700', fontSize: hp(3.5)}}>
-          Welcome to
+        <Text
+          style={{
+            fontSize: hp(3.8),
+            fontWeight: 'bold',
+            color: 'white',
+            shadowColor: '#fff',
+            shadowOffset: {width: 0, height: 2},
+            shadowOpacity: 0.5,
+            shadowRadius: 5,
+            elevation: 5,
+          }}>
+          MEDIA
         </Text>
-        <Text style={{color: '#fff', fontWeight: '700', fontSize: hp(3.5)}}>
-          Demo Video
+        <Text
+          style={{
+            fontSize: hp(3.2),
+            fontWeight: '400',
+            color: 'white',
+            shadowColor: '#fff',
+            shadowOffset: {width: 0, height: 2},
+            shadowOpacity: 0.5,
+            shadowRadius: 5,
+            elevation: 5,
+          }}>
+          CLINIQUE
         </Text>
       </View>
       <View style={styles.container}>
@@ -50,7 +76,7 @@ const Subscription = ({navigation}) => {
         <TouchableOpacity style={styles.button}>
           <Text
             style={{
-              color: 'white',
+              color: '#1c15ee',
               fontWeight: '600',
               textAlign: 'center',
               paddingHorizontal: 8,
@@ -61,7 +87,7 @@ const Subscription = ({navigation}) => {
         <TouchableOpacity style={styles.button}>
           <Text
             style={{
-              color: 'white',
+              color: '#1c15ee',
               fontWeight: '600',
               textAlign: 'center',
               paddingHorizontal: 8,
@@ -72,7 +98,7 @@ const Subscription = ({navigation}) => {
         <TouchableOpacity style={styles.button}>
           <Text
             style={{
-              color: 'white',
+              color: '#1c15ee',
               fontWeight: '600',
               textAlign: 'center',
               paddingHorizontal: 8,
