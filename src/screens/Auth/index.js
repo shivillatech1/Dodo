@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   View,
+  ImageBackground,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {
@@ -39,7 +40,53 @@ const Otp = ({navigation, route}) => {
     }
   }
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      style={styles.container}
+      source={require('../../assets/Images/logo2.jpg')}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          top: hp(1.5),
+        }}>
+        <View
+          style={{
+            height: hp(15),
+            width: wp(50),
+            borderColor: '#80797a',
+            borderWidth: 0.8,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{
+              fontSize: hp(3.8),
+              fontWeight: 'bold',
+              color: 'white',
+              shadowColor: '#fff',
+              shadowOffset: {width: 0, height: 2},
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+              elevation: 5,
+            }}>
+            MEDIA
+          </Text>
+          <Text
+            style={{
+              fontSize: hp(3.2),
+              fontWeight: '400',
+              color: 'white',
+              shadowColor: '#fff',
+              shadowOffset: {width: 0, height: 2},
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+              elevation: 5,
+            }}>
+            CLINIQUE
+          </Text>
+        </View>
+      </View>
       <Image
         source={require('../../assets/Icons/back.png')}
         style={{
@@ -110,7 +157,7 @@ const Otp = ({navigation, route}) => {
           Do not share it with others.
         </Text>
         <TouchableOpacity
-          style={[styles.button, {backgroundColor: '#100bfa'}]}
+          style={[styles.button, {backgroundColor: '#d4af37'}]}
           onPress={() => navigation.navigate('Main')}>
           {loading ? (
             <ActivityIndicator
@@ -142,7 +189,7 @@ const Otp = ({navigation, route}) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -158,6 +205,7 @@ const styles = StyleSheet.create({
     fontSize: hp(3.8),
     fontWeight: 'bold',
     paddingHorizontal: hp(1.8),
+    right: wp(9),
   },
   smtext: {
     fontSize: hp(1.4),
@@ -168,10 +216,11 @@ const styles = StyleSheet.create({
   },
   main: {
     paddingHorizontal: hp(1.8),
-    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
-    marginTop: 40,
+    marginTop: hp(4),
 
     borderRadius: 10,
     padding: 16,
@@ -185,8 +234,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: hp(3),
-    marginBottom: hp(3),
+    marginTop: hp(1),
+    marginBottom: hp(1),
   },
 
   otpInput: {
@@ -204,15 +253,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   cell: {
-    width: hp(5),
-    height: wp(10),
+    width: wp(14),
+    height: wp(11.5),
     lineHeight: 38,
     fontSize: hp(2.8),
-    borderWidth: 2,
-    borderColor: '#fff',
+
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: wp(2),
+    backgroundColor: '#000',
   },
   focusCell: {
     borderColor: '#fff',

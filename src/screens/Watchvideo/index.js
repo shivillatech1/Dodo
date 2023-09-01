@@ -39,37 +39,62 @@ const WatchVideo = ({navigation, route}) => {
           }}
           source={require('../../assets/Images/logo.png')}
         />
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Subscription')}
-          style={{left: wp(3)}}>
-          <Image
-            style={{width: wp(5), height: wp(5), resizeMode: 'cover'}}
-            source={require('../../assets/Icons/crown.png')}
-          />
-        </TouchableOpacity>
       </View>
     );
   };
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: props => <LogoTitle {...props} />,
+      headerTitle: '',
       headerStyle: {
         backgroundColor: 'black',
       },
-      // headerLeft: () => (
-      //   <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
-      //     <Image
-      //       source={require('../../assets/Icons/hamburger.png')}
-      //       style={{
-      //         height: wp(5.5),
-      //         width: wp(5.5),
-      //         resizeMode: 'contain',
-      //         tintColor: 'white',
-      //         marginLeft: hp(1.5),
-      //       }}
-      //     />
-      //   </TouchableOpacity>
-      // ),
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => console.log('Left Icon Pressed')}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft: wp(3),
+            flexDirection: 'row',
+          }}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text
+              style={{
+                fontSize: hp(1.8),
+                fontWeight: 'bold',
+                color: 'white',
+                shadowColor: '#fff',
+                shadowOffset: {width: 0, height: 2},
+                shadowOpacity: 0.5,
+                shadowRadius: 5,
+                elevation: 5,
+              }}>
+              MEDIA
+            </Text>
+            <Text
+              style={{
+                fontSize: hp(1.6),
+                fontWeight: '400',
+                color: 'white',
+                shadowColor: '#fff',
+                shadowOffset: {width: 0, height: 2},
+                shadowOpacity: 0.5,
+                shadowRadius: 5,
+                elevation: 5,
+              }}>
+              CLINIQUE
+            </Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Subscription')}
+            style={{left: wp(3)}}>
+            <Image
+              style={{width: wp(5), height: wp(5), resizeMode: 'cover'}}
+              source={require('../../assets/Icons/crown.png')}
+            />
+          </TouchableOpacity>
+        </TouchableOpacity>
+      ),
       // headerRight: () => (
       //   <TouchableOpacity onPress={() => console.log('Right Icon Pressed')}>
       //     <Image

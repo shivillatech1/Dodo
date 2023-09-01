@@ -20,37 +20,50 @@ import Topics from '../../components/Topics';
 import SliderImages from '../../components/SliderImages';
 
 const HomeScreen = ({navigation}) => {
-  const LogoTitle = () => {
-    return (
-      <Image
-        style={{width: wp(15), height: wp(15), resizeMode: 'cover'}}
-        source={require('../../assets/Images/logo.png')}
-      />
-    );
-  };
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: props => <LogoTitle {...props} />,
+      headerTitle: '',
       headerStyle: {
         backgroundColor: '#000',
         height: hp(10.3),
       },
 
-      // headerLeft: () => (
-      //   <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
-      //     <Image
-      //       source={require('../../assets/Icons/hamburger.png')}
-      //       style={{
-      //         height: wp(5.5),
-      //         width: wp(5.5),
-      //         resizeMode: 'contain',
-      //         tintColor: 'white',
-      //         marginLeft: hp(1.8),
-      //       }}
-      //     />
-      //   </TouchableOpacity>
-      // ),
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => console.log('Left Icon Pressed')}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft: wp(3),
+          }}>
+          <Text
+            style={{
+              fontSize: hp(1.8),
+              fontWeight: 'bold',
+              color: 'white',
+              shadowColor: '#fff',
+              shadowOffset: {width: 0, height: 2},
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+              elevation: 5,
+            }}>
+            MEDIA
+          </Text>
+          <Text
+            style={{
+              fontSize: hp(1.6),
+              fontWeight: '400',
+              color: 'white',
+              shadowColor: '#fff',
+              shadowOffset: {width: 0, height: 2},
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+              elevation: 5,
+            }}>
+            CLINIQUE
+          </Text>
+        </TouchableOpacity>
+      ),
       // headerRight: () => (
       //   <TouchableOpacity onPress={() => navigation.navigate('Search')}>
       //     <Image
@@ -128,7 +141,7 @@ const HomeScreen = ({navigation}) => {
                           source={require('../../assets/Images/bg.jpeg')}
                           style={{
                             height: hp(12.5),
-                            width: wp(36),
+                            width: wp(45),
                             resizeMode: 'cover',
                             borderRadius: hp(2),
                           }}
@@ -264,10 +277,11 @@ const HomeScreen = ({navigation}) => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: wp(5),
             paddingVertical: wp(0.6),
+            gap: wp(5),
           }}>
           {texts.map((item, index) => {
             return (
@@ -286,14 +300,17 @@ const HomeScreen = ({navigation}) => {
                       {
                         fontSize: hp(1.8),
                         color: 'white',
-                        marginBottom: index === activeIndex ? wp(1) : 0,
                       },
                     ]}>
                     {item}
                   </Text>
                   <View
                     style={[
-                      {borderBottomColor: index === activeIndex ? 'white' : ''},
+                      {
+                        marginTop: wp(1),
+                        borderBottomColor:
+                          index === activeIndex ? '#D4AF37' : '',
+                      },
                       {borderWidth: index === activeIndex ? 1.5 : 0},
                       {width: index === activeIndex ? wp(12) : 0},
                     ]}
@@ -365,15 +382,15 @@ const styles = StyleSheet.create({
   },
 
   categoryLabel: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#803109',
+    fontSize: hp(2.1),
+    fontWeight: '700',
+    color: '#fff',
     marginVertical: 10,
   },
   categoryLabel1: {
-    fontSize: 16,
-    fontWeight: '800',
-    color: '#803109',
+    fontSize: hp(1.6),
+    fontWeight: '500',
+    color: '#fff',
     marginVertical: 10,
   },
   contentImage: {

@@ -50,7 +50,8 @@ const Signin = ({navigation}) => {
   }, [navigation]);
   return (
     <>
-      <View
+      <ImageBackground
+        source={require('../../assets/Images/logo2.jpg')}
         style={{
           width: '100%',
           height: '100%',
@@ -60,7 +61,7 @@ const Signin = ({navigation}) => {
           alignItems: 'center',
         }}>
         <View style={styles.container}>
-          <View>
+          <View style={{bottom: hp(3)}}>
             <Text style={styles.text}>
               <Text
                 style={{
@@ -112,24 +113,60 @@ const Signin = ({navigation}) => {
             <View style={styles.line} />
           </View>
         </View>
-      </View>
+      </ImageBackground>
       <View
         style={{
           position: 'absolute',
-          top: hp(12),
+          top: hp(3),
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Image
-          style={{width: wp(30), height: wp(30), resizeMode: 'cover'}}
-          source={require('../../assets/Images/logo.png')}
-        />
+        <View
+          style={{
+            height: hp(15),
+            width: wp(50),
+            borderColor: '#80797a',
+            borderWidth: 0.8,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: hp(4),
+            left: wp(3),
+          }}>
+          <Text
+            style={{
+              fontSize: hp(3.8),
+              fontWeight: 'bold',
+              color: 'white',
+              shadowColor: '#fff',
+              shadowOffset: {width: 0, height: 2},
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+              elevation: 5,
+            }}>
+            MEDIA
+          </Text>
+          <Text
+            style={{
+              fontSize: hp(3.2),
+              fontWeight: '400',
+              color: 'white',
+              shadowColor: '#fff',
+              shadowOffset: {width: 0, height: 2},
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+              elevation: 5,
+            }}>
+            CLINIQUE
+          </Text>
+        </View>
+
         <Text
           style={{
             color: '#fff',
-            fontWeight: '700',
+            fontWeight: '400',
             fontSize: hp(1.8),
             paddingVertical: 8,
+            left: wp(1.8),
           }}>
           Enjoy Over 100,000 Movies and Series Only On One Place.
         </Text>
@@ -142,7 +179,13 @@ export default Signin;
 
 const styles = StyleSheet.create({
   container: {
+    height: hp(35),
+    width: wp(90),
     marginBottom: hp(3),
+    backgroundColor: 'rgb(51,58,68)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: hp(2),
   },
   text: {
     fontSize: hp(1.7),
@@ -151,7 +194,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   footer: {
-    marginTop: hp(4),
+    marginTop: hp(3),
     flexDirection: 'row',
     alignItems: 'center',
     padding: hp(2),

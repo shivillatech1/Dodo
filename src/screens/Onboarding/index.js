@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, ImageBackground} from 'react-native';
 import React, {useEffect} from 'react';
 import {
   heightPercentageToDP as hp,
@@ -26,12 +26,15 @@ const Onboarding = ({navigation}) => {
     }
   }
   return (
-    <View style={styles.container}>
-      <Image
-        style={{width: wp(40), height: wp(40), resizeMode: 'cover'}}
-        source={require('../../assets/Images/logo.png')}
-      />
-    </View>
+    <ImageBackground
+      style={styles.container}
+      defaultSource={require('../../assets/Images/logo2.jpg')}
+      source={require('../../assets/Images/logo2.jpg')}>
+      <View style={styles.center}>
+        <Text style={styles.text}>MEDIA</Text>
+        <Text style={styles.text1}>CLINIQUE</Text>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -44,9 +47,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     flexDirection: 'row',
+    resizeMode: 'contain',
+  },
+  center: {
+    height: hp(30),
+    width: wp(90),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgb(51,58,68)',
   },
   text: {
     fontSize: hp(5.6),
     fontWeight: 'bold',
+    color: 'white',
+  },
+  text1: {
+    fontSize: hp(4.6),
+    fontWeight: '400',
+    color: 'white',
   },
 });

@@ -17,28 +17,31 @@ import {
 const Subscription = ({navigation}) => {
   return (
     <ImageBackground
-      source={require('../../assets/Images/bg.jpeg')}
-      style={{width: '100%', height: '100%', flex: 1}}>
+      source={require('../../assets/Images/logo2.jpg')}
+      style={{
+        width: '100%',
+        height: '100%',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <View
         style={{
-          position: 'absolute',
-          top: hp(25),
           justifyContent: 'center',
           alignItems: 'center',
-          left: hp(14),
         }}>
-        <Text style={{color: '#fff', fontWeight: 'bold', fontSize: hp(3.5)}}>
+        <Text style={{color: '#fff', fontWeight: '700', fontSize: hp(3.5)}}>
           Welcome to
         </Text>
-        <Text style={{color: '#fff', fontWeight: 'bold', fontSize: hp(3.5)}}>
+        <Text style={{color: '#fff', fontWeight: '700', fontSize: hp(3.5)}}>
           Demo Video
         </Text>
       </View>
       <View style={styles.container}>
-        <View style={{marginTop: hp(5), marginBottom: 13}}>
+        <View style={{marginTop: hp(3), marginBottom: hp(2)}}>
           <Text style={styles.text}>
             <Text
-              style={{color: 'white', fontWeight: '500', fontSize: hp(2.3)}}>
+              style={{color: 'white', fontWeight: '300', fontSize: hp(2.3)}}>
               Watch the latest Movies, Tv shows,
             </Text>
             and award-Winining Demo
@@ -86,15 +89,12 @@ export default Subscription;
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: hp(30),
-    left: hp(3.5),
-    height: hp(45),
-    width: wp(86),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     fontSize: hp(2.2),
-    fontWeight: '500',
+    fontWeight: '300',
     paddingTop: 16,
     paddingHorizontal: 16,
     color: 'white',
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   button: {
-    backgroundColor: '#ff6212',
+    backgroundColor: '#d4af37',
     padding: 15,
     width: wp(85),
     borderRadius: wp(1),
