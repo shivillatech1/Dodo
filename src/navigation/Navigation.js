@@ -32,7 +32,6 @@ export default function App() {
         <Stack.Screen name="SignIn" component={Signin} />
         <Stack.Screen name="Otp" component={Otp} />
         <Stack.Screen name="Main" component={MyTabs} />
-
         <Stack.Screen name="Appsetting" component={AppSettings} />
         <Stack.Screen name="Subscription" component={Subscription} />
         <Stack.Screen
@@ -40,14 +39,14 @@ export default function App() {
           component={WatchVideo}
           options={{
             headerShown: true,
-
             headerTitleAlign: 'center',
             headerTitleStyle: {
               color: 'white',
               fontSize: hp(2.6),
             },
-
             headerShadowVisible: false,
+            headerBackTitleVisible: false,
+            headerBackVisible: false,
           }}
         />
         <Stack.Screen name="Video" component={VideoPlayerScreen} />
@@ -61,10 +60,9 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: '#fff',
-
         headerShown: false,
         tabBarStyle: {
           backgroundColor: '#2a3239',
@@ -79,7 +77,6 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Home',
           headerShown: true,
-
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: 'white',

@@ -19,7 +19,14 @@ const Subscription = ({navigation}) => {
     <ImageBackground
       source={require('../../assets/Images/bg.jpeg')}
       style={{width: '100%', height: '100%', flex: 1}}>
-      <View style={{position: 'absolute', top: hp(25), left: hp(9)}}>
+      <View
+        style={{
+          position: 'absolute',
+          top: hp(25),
+          justifyContent: 'center',
+          alignItems: 'center',
+          left: hp(14),
+        }}>
         <Text style={{color: '#fff', fontWeight: 'bold', fontSize: hp(3.5)}}>
           Welcome to
         </Text>
@@ -108,7 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   button: {
-    backgroundColor: '#007be5',
+    backgroundColor: '#ff6212',
     padding: 15,
     width: wp(85),
     borderRadius: wp(1),

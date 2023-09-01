@@ -28,41 +28,62 @@ const WatchVideo = ({navigation, route}) => {
   const handleCategoryPress = index => {
     setActiveIndex(index);
   };
-
+  const LogoTitle = () => {
+    return (
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Image
+          style={{
+            width: wp(15),
+            height: wp(15),
+            resizeMode: 'cover',
+          }}
+          source={require('../../assets/Images/logo.png')}
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Subscription')}
+          style={{left: wp(3)}}>
+          <Image
+            style={{width: wp(5), height: wp(5), resizeMode: 'cover'}}
+            source={require('../../assets/Icons/crown.png')}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Demo ',
+      headerTitle: props => <LogoTitle {...props} />,
       headerStyle: {
         backgroundColor: 'black',
       },
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
-          <Image
-            source={require('../../assets/Icons/hamburger.png')}
-            style={{
-              height: wp(5.5),
-              width: wp(5.5),
-              resizeMode: 'contain',
-              tintColor: 'white',
-              marginLeft: hp(1.5),
-            }}
-          />
-        </TouchableOpacity>
-      ),
-      headerRight: () => (
-        <TouchableOpacity onPress={() => console.log('Right Icon Pressed')}>
-          <Image
-            source={require('../../assets/Icons/search.png')}
-            style={{
-              height: wp(5.5),
-              width: wp(5.5),
-              resizeMode: 'contain',
-              tintColor: 'white',
-              marginRight: hp(1.8),
-            }}
-          />
-        </TouchableOpacity>
-      ),
+      // headerLeft: () => (
+      //   <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
+      //     <Image
+      //       source={require('../../assets/Icons/hamburger.png')}
+      //       style={{
+      //         height: wp(5.5),
+      //         width: wp(5.5),
+      //         resizeMode: 'contain',
+      //         tintColor: 'white',
+      //         marginLeft: hp(1.5),
+      //       }}
+      //     />
+      //   </TouchableOpacity>
+      // ),
+      // headerRight: () => (
+      //   <TouchableOpacity onPress={() => console.log('Right Icon Pressed')}>
+      //     <Image
+      //       source={require('../../assets/Icons/search.png')}
+      //       style={{
+      //         height: wp(5.5),
+      //         width: wp(5.5),
+      //         resizeMode: 'contain',
+      //         tintColor: 'white',
+      //         marginRight: hp(1.8),
+      //       }}
+      //     />
+      //   </TouchableOpacity>
+      // ),
     });
   }, [navigation]);
   return (

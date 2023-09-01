@@ -16,42 +16,51 @@ import {
 import {useLayoutEffect} from 'react';
 
 const Search = ({navigation}) => {
+  const LogoTitle = () => {
+    return (
+      <Image
+        style={{width: wp(15), height: wp(15), resizeMode: 'cover'}}
+        source={require('../assets/Images/logo.png')}
+      />
+    );
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Demo',
+      headerTitle: props => <LogoTitle {...props} />,
       headerStyle: {
         backgroundColor: 'black',
         height: hp(10.5),
       },
 
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
-          <Image
-            source={require('../assets/Icons/hamburger.png')}
-            style={{
-              height: wp(5.5),
-              width: wp(5.5),
-              resizeMode: 'contain',
-              tintColor: 'white',
-              marginLeft: hp(1.8),
-            }}
-          />
-        </TouchableOpacity>
-      ),
-      headerRight: () => (
-        <TouchableOpacity onPress={() => console.log('Right Icon Pressed')}>
-          <Image
-            source={require('../assets/Icons/search.png')}
-            style={{
-              height: wp(5.5),
-              width: wp(5.5),
-              resizeMode: 'contain',
-              tintColor: 'white',
-              marginRight: hp(1.8),
-            }}
-          />
-        </TouchableOpacity>
-      ),
+      // headerLeft: () => (
+      //   <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
+      //     <Image
+      //       source={require('../assets/Icons/hamburger.png')}
+      //       style={{
+      //         height: wp(5.5),
+      //         width: wp(5.5),
+      //         resizeMode: 'contain',
+      //         tintColor: 'white',
+      //         marginLeft: hp(1.8),
+      //       }}
+      //     />
+      //   </TouchableOpacity>
+      // ),
+      // headerRight: () => (
+      //   <TouchableOpacity onPress={() => console.log('Right Icon Pressed')}>
+      //     <Image
+      //       source={require('../assets/Icons/search.png')}
+      //       style={{
+      //         height: wp(5.5),
+      //         width: wp(5.5),
+      //         resizeMode: 'contain',
+      //         tintColor: 'white',
+      //         marginRight: hp(1.8),
+      //       }}
+      //     />
+      //   </TouchableOpacity>
+      // ),
     });
   }, [navigation]);
 

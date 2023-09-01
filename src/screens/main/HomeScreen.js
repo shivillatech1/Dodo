@@ -20,42 +20,51 @@ import Topics from '../../components/Topics';
 import SliderImages from '../../components/SliderImages';
 
 const HomeScreen = ({navigation}) => {
+  const LogoTitle = () => {
+    return (
+      <Image
+        style={{width: wp(15), height: wp(15), resizeMode: 'cover'}}
+        source={require('../../assets/Images/logo.png')}
+      />
+    );
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Demo',
+      headerTitle: props => <LogoTitle {...props} />,
       headerStyle: {
-        backgroundColor: '#2a3239',
+        backgroundColor: '#000',
         height: hp(10.3),
       },
 
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
-          <Image
-            source={require('../../assets/Icons/hamburger.png')}
-            style={{
-              height: wp(5.5),
-              width: wp(5.5),
-              resizeMode: 'contain',
-              tintColor: 'white',
-              marginLeft: hp(1.8),
-            }}
-          />
-        </TouchableOpacity>
-      ),
-      headerRight: () => (
-        <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-          <Image
-            source={require('../../assets/Icons/search.png')}
-            style={{
-              height: wp(5.5),
-              width: wp(5.5),
-              resizeMode: 'contain',
-              tintColor: 'white',
-              marginRight: hp(1.8),
-            }}
-          />
-        </TouchableOpacity>
-      ),
+      // headerLeft: () => (
+      //   <TouchableOpacity onPress={() => console.log('Left Icon Pressed')}>
+      //     <Image
+      //       source={require('../../assets/Icons/hamburger.png')}
+      //       style={{
+      //         height: wp(5.5),
+      //         width: wp(5.5),
+      //         resizeMode: 'contain',
+      //         tintColor: 'white',
+      //         marginLeft: hp(1.8),
+      //       }}
+      //     />
+      //   </TouchableOpacity>
+      // ),
+      // headerRight: () => (
+      //   <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+      //     <Image
+      //       source={require('../../assets/Icons/search.png')}
+      //       style={{
+      //         height: wp(5.5),
+      //         width: wp(5.5),
+      //         resizeMode: 'contain',
+      //         tintColor: 'white',
+      //         marginRight: hp(1.8),
+      //       }}
+      //     />
+      //   </TouchableOpacity>
+      // ),
     });
   }, [navigation]);
 
@@ -276,6 +285,7 @@ const HomeScreen = ({navigation}) => {
                     style={[
                       {
                         fontSize: hp(1.8),
+                        color: 'white',
                         marginBottom: index === activeIndex ? wp(1) : 0,
                       },
                     ]}>
@@ -381,7 +391,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: hp(5),
     zIndex: 4,
-    backgroundColor: '#2a3239',
+    backgroundColor: '#000',
     top: 0,
     width: wp(100),
   },

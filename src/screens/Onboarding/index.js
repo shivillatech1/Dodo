@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import {
   heightPercentageToDP as hp,
@@ -27,7 +27,10 @@ const Onboarding = ({navigation}) => {
   }
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, {color: '#14578b'}]}>DEMO</Text>
+      <Image
+        style={{width: wp(40), height: wp(40), resizeMode: 'cover'}}
+        source={require('../../assets/Images/logo.png')}
+      />
     </View>
   );
 };

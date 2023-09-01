@@ -49,93 +49,92 @@ const Signin = ({navigation}) => {
     }, 3000);
   }, [navigation]);
   return (
-    <ImageBackground
-      source={require('../../assets/Images/bg.jpeg')}
-      style={{width: '100%', height: '100%', flex: 1}}>
-      <View style={{position: 'absolute', top: hp(22), left: hp(15.8)}}>
-        <Text
-          style={{
-            color: '#FFF',
-            fontWeight: 'bold',
-            fontSize: hp(4.5),
-            left: hp(3.2),
-          }}>
-          Demo
-        </Text>
+    <>
+      <View
+        style={{
+          width: '100%',
+          height: '100%',
+          flex: 1,
+          backgroundColor: 'black',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.text}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: hp(1.79),
+                }}>
+                Sign-in
+              </Text>{' '}
+              and Enjoy
+            </Text>
+            <Text style={styles.text1}>
+              thousands of Movies and Series from our library.
+            </Text>
+          </View>
+          <View style={styles.containerText}>
+            <Image
+              source={require('../../assets/Icons/telephone.png')}
+              style={{
+                height: wp(3.5),
+                width: wp(3.5),
+                tintColor: 'white',
+                marginLeft: hp(0.8),
+              }}
+            />
+            <TextInput
+              style={styles.input}
+              value={inputValue}
+              onChangeText={handleInputValue}
+              placeholder="Mobile Number"
+              keyboardType="phone-pad"
+              maxLength={14}
+              placeholderTextColor={'white'}
+            />
+          </View>
+
+          <View style={styles.footer}>
+            <View style={styles.line} />
+            <Text
+              style={{
+                fontSize: hp(1.3),
+                fontWeight: '400',
+                color: 'gray',
+                textAlign: 'center',
+                paddingHorizontal: hp(2),
+              }}>
+              New User ?
+            </Text>
+            <View style={styles.line} />
+          </View>
+        </View>
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          top: hp(12),
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Image
+          style={{width: wp(30), height: wp(30), resizeMode: 'cover'}}
+          source={require('../../assets/Images/logo.png')}
+        />
         <Text
           style={{
             color: '#fff',
-            fontWeight: 'bold',
+            fontWeight: '700',
             fontSize: hp(1.8),
             paddingVertical: 8,
-            right: hp(15),
           }}>
           Enjoy Over 100,000 Movies and Series Only On One Place.
         </Text>
       </View>
-      <View style={styles.container}>
-        <View style={{marginTop: hp(2)}}>
-          <Text style={styles.text}>
-            <Text
-              style={{color: 'white', fontWeight: 'bold', fontSize: hp(1.79)}}>
-              Sign-in
-            </Text>{' '}
-            and Enjoy
-          </Text>
-          <Text style={styles.text1}>
-            thousands of Movies and Series from our library.
-          </Text>
-        </View>
-        <View style={styles.containerText}>
-          <Image
-            source={require('../../assets/Icons/telephone.png')}
-            style={{
-              height: wp(3.5),
-              width: wp(3.5),
-              tintColor: 'white',
-              marginLeft: hp(0.8),
-            }}
-          />
-          <TextInput
-            style={styles.input}
-            value={inputValue}
-            onChangeText={handleInputValue}
-            placeholder="Mobile Number"
-            keyboardType="phone-pad"
-            maxLength={14}
-          />
-        </View>
-
-        {/**   <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Otp')}
-         >
-          {loading ? (
-            <ActivityIndicator
-              size="small"
-              color="#fff"
-              style={{justifyContent: 'center', alignItems: 'center'}}
-            />
-          ) : (
-            <>
-              <Text
-                style={{
-                  color: 'white',
-                  fontWeight: '600',
-                  textAlign: 'center',
-                  paddingHorizontal: 8,
-                }}>
-                Sign up
-              </Text>
-              <Image
-                source={require('../../assets/Icons/sign-in.png')}
-                style={{height: wp(5), width: wp(5), tintColor: 'white'}}
-              />
-            </>
-          )}
-        </TouchableOpacity>*/}
-      </View>
-    </ImageBackground>
+    </>
   );
 };
 
@@ -143,19 +142,24 @@ export default Signin;
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: hp(33),
-    left: hp(3.5),
-    height: hp(36),
-    width: wp(86),
-    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-    borderRadius: wp(3),
+    marginBottom: hp(3),
   },
   text: {
     fontSize: hp(1.7),
     fontWeight: '500',
     paddingTop: 16,
     paddingHorizontal: 16,
+  },
+  footer: {
+    marginTop: hp(4),
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: hp(2),
+  },
+  line: {
+    borderColor: 'gray',
+    width: wp(25),
+    borderBottomWidth: 1,
   },
   text1: {
     fontSize: hp(1.7),
@@ -205,3 +209,53 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+{
+  /** <View style={{position: 'absolute', top: hp(22), left: hp(15.8)}}>
+   <Image
+   style={{width: wp(40), height: wp(40), resizeMode: 'cover'}}
+   source={require('../../assets/Images/logo.png')}
+ />
+        <Text
+          style={{
+            color: '#fff',
+            fontWeight: 'bold',
+            fontSize: hp(1.8),
+            paddingVertical: 8,
+            right: hp(15),
+          }}>
+          Enjoy Over 100,000 Movies and Series Only On One Place.
+        </Text>
+      </View> */
+}
+
+{
+  /**   <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Otp')}
+         >
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              color="#fff"
+              style={{justifyContent: 'center', alignItems: 'center'}}
+            />
+          ) : (
+            <>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: '600',
+                  textAlign: 'center',
+                  paddingHorizontal: 8,
+                }}>
+                Sign up
+              </Text>
+              <Image
+                source={require('../../assets/Icons/sign-in.png')}
+                style={{height: wp(5), width: wp(5), tintColor: 'white'}}
+              />
+            </>
+          )}
+        </TouchableOpacity>*/
+}
