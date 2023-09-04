@@ -117,6 +117,7 @@ const WatchVideo = ({navigation, route}) => {
             marginTop: hp(1),
           }}>
           <TouchableOpacity
+            onPress={() => navigation.navigate('Video', {item: item})}
             style={{
               width: wp(35),
               alignItems: 'center',

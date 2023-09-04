@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 import Video from 'react-native-video';
 import {useFocusEffect} from '@react-navigation/native';
@@ -44,19 +45,33 @@ const VideoPlayerScreen = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Video
-        source={{uri: item.uri}}
-        style={styles.video}
-        controls
-        resizeMode="contain"
-        pictureInPicture={true}
-        fullscreen={true}
-        onEnd={() => navigation.goBack()}
-        onLoadStart={handleLoadStart}
-        onLoad={handleLoadEnd}
-        playInBackground={true}
-      />
-      {isLoading && (
+      {item.uri ? (
+        <Video
+          source={{uri: item.uri}}
+          style={styles.video}
+          controls
+          resizeMode="contain"
+          pictureInPicture={true}
+          fullscreen={true}
+          onEnd={() => navigation.goBack()}
+          onLoadStart={handleLoadStart}
+          onLoad={handleLoadEnd}
+          playInBackground={true}
+        />
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: hp(1.8),
+              color: 'white',
+              fontWeight: '800',
+            }}>
+            No Video Found
+          </Text>
+        </View>
+      )}
+      {item.uri && isLoading && (
         <ActivityIndicator
           size="large"
           color="#fff"
@@ -88,7 +103,7 @@ const styles = StyleSheet.create({
     top: hp(3),
     left: hp(3),
     padding: 10,
-    zIndex: 1,
+    zIndex: 44,
   },
   activityIndicator: {
     position: 'absolute',
