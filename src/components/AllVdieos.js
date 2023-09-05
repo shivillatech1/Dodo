@@ -1,12 +1,11 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Image,
   TouchableOpacity,
   FlatList,
-  ScrollView,
 } from 'react-native';
 
 import {
@@ -14,11 +13,12 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-const AllVdieos = () => {
+const AllVdieos = ({Allvideos}) => {
+  const navigation = useNavigation();
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <FlatList
-        data={dummyData1}
+        data={Allvideos}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         numColumns={2}
@@ -29,6 +29,7 @@ const AllVdieos = () => {
         }}
         renderItem={({item}) => (
           <TouchableOpacity
+            onPress={() => navigation.navigate('Watch', {item: item})}
             style={{
               marginRight: hp(2.2),
               position: 'relative',
@@ -36,7 +37,9 @@ const AllVdieos = () => {
             }}
             key={item.id}>
             <Image
-              source={require('../assets/Images/bg.jpeg')}
+              source={{
+                uri: `https://shivila.online/videoapp/public/uploads/${item?.poster_name}`,
+              }}
               style={styles.image}
             />
           </TouchableOpacity>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -18,8 +18,24 @@ import {useLayoutEffect} from 'react';
 import AllVdieos from '../../components/AllVdieos';
 import Topics from '../../components/Topics';
 import SliderImages from '../../components/SliderImages';
+import {onGetAllvideos} from '../../services/API';
 
 const HomeScreen = ({navigation}) => {
+  const [Allvideos, setAllVideos] = useState([]);
+  useEffect(() => {
+    GetAllVideos();
+  }, []);
+
+  const GetAllVideos = async () => {
+    try {
+      const response = await onGetAllvideos();
+      console.log(response.data.Video);
+      setAllVideos(response.data.Video);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -271,7 +287,7 @@ const HomeScreen = ({navigation}) => {
           </ScrollView>
         </View>
       )}
-      {activeIndex === 1 && <AllVdieos />}
+      {activeIndex === 1 && <AllVdieos Allvideos={Allvideos} />}
       {activeIndex === 2 && <Topics />}
 
       <View style={styles.container1}>

@@ -45,9 +45,11 @@ const VideoPlayerScreen = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      {item.uri ? (
+      {item?.video_name ? (
         <Video
-          source={{uri: item.uri}}
+          source={{
+            uri: `https://shivila.online/videoapp/public/uploads/${item?.video_name}`,
+          }}
           style={styles.video}
           controls
           resizeMode="contain"

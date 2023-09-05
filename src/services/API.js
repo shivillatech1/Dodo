@@ -1,24 +1,24 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 export default class Api {
-  //   static baseUrl = 'http://13.233.229.68:8008/';
+  static baseUrl = 'https://shivila.online/videoapp/public/';
 }
-// export const onGetUserApi = async () => {
-// //   const id = await AsyncStorage.getItem('token');
-//   const url = Api.baseUrl + `user/get/${id}`;
+export const onGetAllvideos = async () => {
+  //   const id = await AsyncStorage.getItem('token');
+  const url = Api.baseUrl + `api/videos`;
 
-//   return new Promise((resolve, reject) => {
-//     axios
-//       .get(url, {
-//         headers: {
-//           'Content-Type': 'application/json',
-//           Accept: 'application/json',
-//         },
-//       })
-//       .then(res => resolve(res))
-//       .catch(err => reject(err));
-//   });
-// };
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
 
 // export const LoginScreenApi = async responseData => {
 //   const url = Api.baseUrl + `user/login`;

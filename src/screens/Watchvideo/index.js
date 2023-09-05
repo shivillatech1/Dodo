@@ -14,6 +14,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useLayoutEffect} from 'react';
+import downloadVideo from '../../components/Download';
 
 const WatchVideo = ({navigation, route}) => {
   const {item} = route.params;
@@ -97,7 +98,12 @@ const WatchVideo = ({navigation, route}) => {
   return (
     <>
       <View style={styles.container}>
-        <Image source={item.image} style={[styles.moviePoster]} />
+        <Image
+          source={{
+            uri: `https://shivila.online/videoapp/public/uploads/${item?.poster_name}`,
+          }}
+          style={[styles.moviePoster]}
+        />
         <View
           style={{
             flexDirection: 'Column',
@@ -106,8 +112,8 @@ const WatchVideo = ({navigation, route}) => {
             marginTop: hp(1),
             marginBottom: hp(0.6),
           }}>
-          <Text style={styles.text}>{item.title}</Text>
-          <Text style={styles.text1}>{item.genres.join(',')}</Text>
+          <Text style={styles.text}>{item?.title}</Text>
+          <Text style={styles.text1}>{item?.name}</Text>
         </View>
         <View
           style={{
@@ -138,6 +144,7 @@ const WatchVideo = ({navigation, route}) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            // onPress={downloadVideo}
             style={{
               width: wp(35),
               alignItems: 'center',
@@ -205,7 +212,7 @@ const WatchVideo = ({navigation, route}) => {
             alignItems: 'center',
           }}>
           <Text style={styles.text2} numberOfLines={3}>
-            {item.description}
+            {item?.description}
           </Text>
         </View>
         <View
