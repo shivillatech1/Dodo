@@ -14,6 +14,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {API_IMG} from '../../utils/BaseImg';
 
 const VideoPlayerScreen = ({route, navigation}) => {
   const {item} = route.params;
@@ -48,7 +49,7 @@ const VideoPlayerScreen = ({route, navigation}) => {
       {item?.video_name ? (
         <Video
           source={{
-            uri: `https://shivila.online/videoapp/public/uploads/${item?.video_name}`,
+            uri: API_IMG + `${item?.video_name}`,
           }}
           style={styles.video}
           controls

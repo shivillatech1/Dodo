@@ -12,6 +12,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {API_IMG} from '../utils/BaseImg';
 
 const AllVdieos = ({Allvideos}) => {
   const navigation = useNavigation();
@@ -38,7 +39,7 @@ const AllVdieos = ({Allvideos}) => {
             key={item.id}>
             <Image
               source={{
-                uri: `https://shivila.online/videoapp/public/uploads/${item?.poster_name}`,
+                uri: API_IMG + `${item?.poster_name}`,
               }}
               style={styles.image}
             />

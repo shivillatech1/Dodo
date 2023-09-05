@@ -15,6 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import {useLayoutEffect} from 'react';
 import downloadVideo from '../../components/Download';
+import {API_IMG} from '../../utils/BaseImg';
 
 const WatchVideo = ({navigation, route}) => {
   const {item} = route.params;
@@ -100,7 +101,7 @@ const WatchVideo = ({navigation, route}) => {
       <View style={styles.container}>
         <Image
           source={{
-            uri: `https://shivila.online/videoapp/public/uploads/${item?.poster_name}`,
+            uri: API_IMG + `${item?.poster_name}`,
           }}
           style={[styles.moviePoster]}
         />
