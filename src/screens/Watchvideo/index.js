@@ -14,7 +14,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useLayoutEffect} from 'react';
-import downloadVideo from '../../components/Download';
+import {requestStoragePermission} from '../../components/Download';
 import {API_IMG} from '../../utils/BaseImg';
 
 const WatchVideo = ({navigation, route}) => {
@@ -145,7 +145,7 @@ const WatchVideo = ({navigation, route}) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            // onPress={downloadVideo}
+            onPress={() => requestStoragePermission(item?.video_name)}
             style={{
               width: wp(35),
               alignItems: 'center',

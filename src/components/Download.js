@@ -1,43 +1,65 @@
-import {PermissionsAndroid, Platform} from 'react-native';
-import RNFS from 'react-native-fs';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  PermissionsAndroid,
+} from 'react-native';
+import React, {useState} from 'react';
+import RNFetchBlob from 'rn-fetch-blob';
+import {API_IMG} from '../utils/BaseImg';
 
-const downloadVideo = async videourl => {
+const REMOTE_IMAGE_PATH =
+  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+export const requestStoragePermission = async video_name => {
   try {
-    // Define the video URL and destination path
-    const videoUrl =
-      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
-    const destinationPath = `${RNFS.ExternalDirectoryPath}/downloaded_video.mp4`;
-
-    // Request permission to write to external storage on Android
-    if (Platform.OS === 'android') {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        {
-          title: 'Storage Permission',
-          message: 'App needs access to storage to download the video.',
-        },
-      );
-      if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-        console.error('Permission denied');
-        return;
-      }
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      {
+        title: 'Downloader App Storage Permission',
+        message:
+          'Downloader App needs access to your storage ' +
+          'so you can download files',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      downloadFile(video_name);
+    } else {
+      console.log('storage permission denied');
     }
-
-    // Download the video using the fetch API
-    const response = await fetch(videoUrl);
-    const videoBuffer = await response.arrayBuffer();
-    const videoBase64 = Buffer.from(videoBuffer).toString('base64');
-    console.log(videoBase64);
-    // Ensure the directory exists
-    await RNFS.mkdir(RNFS.ExternalDirectoryPath);
-
-    // Write the video to the destination path
-    await RNFS.writeFile(destinationPath, videoBase64, 'base64');
-
-    console.log('Video downloaded successfully at:', destinationPath);
-  } catch (error) {
-    console.error('Error downloading video:', error);
+  } catch (err) {
+    console.warn(err);
   }
 };
 
-export default downloadVideo;
+const downloadFile = video_name => {
+  const {config, fs} = RNFetchBlob;
+  const date = new Date();
+  const fileDir = fs.dirs.DownloadDir;
+  config({
+    // add this option that makes response data to be stored as a file,
+    // this is much more performant.
+    fileCache: true,
+    addAndroidDownloads: {
+      useDownloadManager: true,
+      notification: true,
+      path:
+        fileDir +
+        '/download_' +
+        Math.floor(date.getDate() + date.getSeconds() / 2) +
+        '.mp4',
+      description: 'file download',
+    },
+  })
+    .fetch('GET', API_IMG + `${video_name}`, {
+      //some headers ..
+    })
+    .then(res => {
+      // the temp file path
+      console.log('The file saved to ', res.path());
+      alert('file downloaded successfully ');
+    });
+};

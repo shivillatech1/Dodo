@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,42 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useLayoutEffect} from 'react';
+import RNFetchBlob from 'rn-fetch-blob';
+import {useFocusEffect} from '@react-navigation/native';
 const Library = ({navigation}) => {
+  const [downloadedVideos, setDownloadedVideos] = useState([]);
+
+  // Use useEffect to load downloaded videos when the component mounts
+  const loadDownloadedVideos = () => {
+    const downloadDir = RNFetchBlob.fs.dirs.DownloadDir;
+
+    RNFetchBlob.fs
+      .ls(downloadDir)
+      .then(files => {
+        const videoFiles = files.filter(file => file.endsWith('.mp4'));
+        const videoFileURIs = videoFiles.map(
+          file => `file://${downloadDir}/${file}`,
+        );
+
+        setDownloadedVideos(videoFileURIs);
+        console.log(downloadedVideos);
+      })
+      .catch(error => {
+        console.error('Error reading directory:', error);
+      });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadDownloadedVideos();
+    }, []),
+  );
   const LogoTitle = () => {
     return (
       <Image
@@ -69,7 +98,7 @@ const Library = ({navigation}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={dummyData1}
+        data={downloadedVideos}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         numColumns={2}
@@ -86,10 +115,7 @@ const Library = ({navigation}) => {
               marginBottom: hp(1.8),
             }}
             key={item.id}>
-            <Image
-              source={require('../../assets/Images/bg.jpeg')}
-              style={styles.image}
-            />
+            <Image source={{uri: item}} style={styles.image} />
           </TouchableOpacity>
         )}
       />
