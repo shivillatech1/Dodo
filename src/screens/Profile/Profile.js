@@ -95,7 +95,7 @@ const Profile = ({navigation}) => {
           borderTopColor: '#fff',
           borderTopWidth: 1,
           marginTop: hp(1.8),
-          paddingVertical: hp(1.5),
+          paddingVertical: hp(0.9),
           paddingHorizontal: wp(3),
         }}>
         <TouchableOpacity
@@ -103,7 +103,7 @@ const Profile = ({navigation}) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            paddingVertical: hp(1.2),
+            paddingVertical: hp(0.8),
             backgroundColor: '#000',
             borderRadius: 10,
             flexDirection: 'row',

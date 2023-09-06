@@ -82,9 +82,7 @@ function MyTabs() {
             color: 'white',
             fontSize: hp(2.6),
           },
-          headerStyle: {
-            padding: wp(3),
-          },
+
           headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
             <Image
@@ -110,9 +108,7 @@ function MyTabs() {
             color: 'white',
             fontSize: hp(2.6),
           },
-          headerStyle: {
-            padding: wp(3),
-          },
+
           headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
             <Image
@@ -138,9 +134,7 @@ function MyTabs() {
             color: 'white',
             fontSize: hp(2.6),
           },
-          headerStyle: {
-            padding: wp(3),
-          },
+
           headerShadowVisible: false,
           tabBarIcon: ({color, size}) => (
             <Image
