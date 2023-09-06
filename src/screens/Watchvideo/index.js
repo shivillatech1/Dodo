@@ -218,6 +218,23 @@ const WatchVideo = ({navigation, route}) => {
               alignItems: 'center',
               gap: hp(1),
               marginLeft: hp(3),
+            }}
+            onPress={() => SavePlayList()}>
+            <Image
+              source={require('../../assets/Icons/media-player.png')}
+              style={{width: wp(6.5), height: wp(6.5), tintColor: 'white'}}
+            />
+            <Text
+              style={{fontSize: hp(1.8), fontWeight: '300', color: 'white'}}>
+              Playlist
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: hp(1),
+              marginLeft: hp(3),
             }}>
             <Image
               source={require('../../assets/Icons/share1.png')}
