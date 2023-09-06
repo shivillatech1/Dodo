@@ -15,11 +15,11 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-const Topics = () => {
+const Topics = ({topics}) => {
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <FlatList
-        data={dummyData1}
+        data={topics}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}
         numColumns={2}
@@ -65,7 +65,7 @@ const Topics = () => {
                   color: '#000',
                   textAlign: 'center',
                 }}>
-                {item.title}
+                {item?.topics_name}
               </Text>
             </View>
           </TouchableOpacity>

@@ -39,11 +39,11 @@ const Library = ({navigation}) => {
       });
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      loadDownloadedVideos();
-    }, []),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     loadDownloadedVideos();
+  //   }, []),
+  // );
   const LogoTitle = () => {
     return (
       <Image
@@ -98,7 +98,7 @@ const Library = ({navigation}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={downloadedVideos}
+        data={dummyData1}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         numColumns={2}
@@ -115,7 +115,7 @@ const Library = ({navigation}) => {
               marginBottom: hp(1.8),
             }}
             key={item.id}>
-            <Image source={{uri: item}} style={styles.image} />
+            <Image source={item.image} style={styles.image} />
           </TouchableOpacity>
         )}
       />

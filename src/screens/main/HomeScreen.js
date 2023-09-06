@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -18,19 +18,45 @@ import {useLayoutEffect} from 'react';
 import AllVdieos from '../../components/AllVdieos';
 import Topics from '../../components/Topics';
 import SliderImages from '../../components/SliderImages';
-import {onGetAllvideos} from '../../services/API';
+import {
+  onGetAllvideos,
+  onGetTopicsList,
+  onGetcategoriesList,
+} from '../../services/API';
 
 const HomeScreen = ({navigation}) => {
   const [Allvideos, setAllVideos] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [topics, setTopics] = useState([]);
   useEffect(() => {
     GetAllVideos();
+    GetAllCategoriesName();
+    GetAllTopicsName();
   }, []);
 
   const GetAllVideos = async () => {
     try {
       const response = await onGetAllvideos();
-      console.log(response.data.Video);
+      // console.log(response.data.Video);
       setAllVideos(response.data.Video);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const GetAllCategoriesName = async () => {
+    try {
+      const response = await onGetcategoriesList();
+      // console.log(response.data.category);
+      setCategories(response.data.category);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const GetAllTopicsName = async () => {
+    try {
+      const response = await onGetTopicsList();
+      // console.log(response.data.category);
+      setTopics(response.data.Topics);
     } catch (error) {
       console.log(error);
     }
@@ -43,68 +69,17 @@ const HomeScreen = ({navigation}) => {
         backgroundColor: '#000',
         height: hp(2.6),
       },
-
-      // headerLeft: () => (
-      //   <TouchableOpacity
-      //     onPress={() => console.log('Left Icon Pressed')}
-      //     style={{
-      //       justifyContent: 'center',
-      //       alignItems: 'center',
-      //       marginLeft: wp(3),
-      //     }}>
-      //     <Text
-      //       style={{
-      //         fontSize: hp(1.8),
-      //         fontWeight: 'bold',
-      //         color: 'white',
-      //         shadowColor: '#fff',
-      //         shadowOffset: {width: 0, height: 2},
-      //         shadowOpacity: 0.5,
-      //         shadowRadius: 5,
-      //         elevation: 5,
-      //       }}>
-      //       MEDIA
-      //     </Text>
-      //     <Text
-      //       style={{
-      //         fontSize: hp(1.6),
-      //         fontWeight: '400',
-      //         color: 'white',
-      //         shadowColor: '#fff',
-      //         shadowOffset: {width: 0, height: 2},
-      //         shadowOpacity: 0.5,
-      //         shadowRadius: 5,
-      //         elevation: 5,
-      //       }}>
-      //       CLINIQUE
-      //     </Text>
-      //   </TouchableOpacity>
-      // ),
-      // headerRight: () => (
-      //   <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-      //     <Image
-      //       source={require('../../assets/Icons/search.png')}
-      //       style={{
-      //         height: wp(5.5),
-      //         width: wp(5.5),
-      //         resizeMode: 'contain',
-      //         tintColor: 'white',
-      //         marginRight: hp(1.8),
-      //       }}
-      //     />
-      //   </TouchableOpacity>
-      // ),
     });
   }, [navigation]);
 
-  const categories = [
-    {id: '1', title: 'Continue Watching', all: 'See All'},
-    {id: '2', title: 'Top Watches', all: 'See All'},
-    {id: '3', title: 'Video List', all: 'See All'},
-    {id: '4', title: 'Watch Later', all: 'See All'},
-    {id: '5', title: 'Playlist', all: 'See All'},
-  ];
-  const [activeIndex, setActiveIndex] = useState(0); // Set initial active index
+  // const categories = [
+  //   {id: '1', title: 'Continue Watching', all: 'See All'},
+  //   {id: '2', title: 'Top Watches', all: 'See All'},
+  //   {id: '3', title: 'Video List', all: 'See All'},
+  //   {id: '4', title: 'Watch Later', all: 'See All'},
+  //   {id: '5', title: 'Playlist', all: 'See All'},
+  // ];
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const texts = ['Home', 'All Videos', 'Topics'];
   const renderItem = ({item}) => (
@@ -139,10 +114,12 @@ const HomeScreen = ({navigation}) => {
                     alignItems: 'center',
                     paddingHorizontal: hp(0.3),
                   }}>
-                  <Text style={styles.categoryLabel}>{category.title}</Text>
+                  <Text style={styles.categoryLabel}>
+                    {category?.category_name}
+                  </Text>
                   <Text style={styles.categoryLabel1}>{category.all}</Text>
                 </View>
-                {category.title === 'Continue Watching' ? (
+                {category?.category_name === 'test' ? (
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {dummyData1.map(item => (
                       <TouchableOpacity
@@ -288,7 +265,7 @@ const HomeScreen = ({navigation}) => {
         </View>
       )}
       {activeIndex === 1 && <AllVdieos Allvideos={Allvideos} />}
-      {activeIndex === 2 && <Topics />}
+      {activeIndex === 2 && <Topics topics={topics} />}
 
       <View style={styles.container1}>
         <View
@@ -424,7 +401,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: '#f57f01',
     padding: 2,
-    paddingHorizontal: 3,
+    paddingHorizontal: 15,
   },
   categoryLabel1: {
     fontSize: hp(1.6),
