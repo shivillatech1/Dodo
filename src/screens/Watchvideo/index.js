@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -16,34 +17,56 @@ import {
 import {useLayoutEffect} from 'react';
 import {requestStoragePermission} from '../../components/Download';
 import {API_IMG} from '../../utils/BaseImg';
+import {PlayListSave, WatchListSave} from '../../services/API';
 
 const WatchVideo = ({navigation, route}) => {
   const {item} = route.params;
   console.log(item);
-  const categories = [
-    {id: '1', title: 'Episodes'},
-    {id: '2', title: 'Trailers'},
-    {id: '3', title: 'More Like This'},
-  ];
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [watchlist, setWatchlist] = useState('');
+  const [playList, setPlaylist] = useState('');
 
-  const handleCategoryPress = index => {
-    setActiveIndex(index);
+  // useEffect(() => {
+  //   SavePlayList();
+  // }, []);
+
+  const SaveWatchLater = async itemid => {
+    var raw = JSON.stringify({
+      user_id: 1,
+      video_id: itemid,
+    });
+    try {
+      const response = await WatchListSave(raw);
+      console.log(response.data);
+      setWatchlist(response.data);
+      ToastAndroid.showWithGravity(
+        `${watchlist.message}`,
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const LogoTitle = () => {
-    return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Image
-          style={{
-            width: wp(15),
-            height: wp(15),
-            resizeMode: 'cover',
-          }}
-          source={require('../../assets/Images/logo.png')}
-        />
-      </View>
-    );
+
+  const SavePlayList = async itemid => {
+    var raw = JSON.stringify({
+      user_id: 1,
+      video_id: 1,
+    });
+    try {
+      const response = await PlayListSave(raw);
+      console.log(response.data);
+      setPlaylist(response.data);
+      ToastAndroid.showWithGravity(
+        `${playList?.message}`,
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -178,7 +201,8 @@ const WatchVideo = ({navigation, route}) => {
               flexDirection: 'column',
               alignItems: 'center',
               gap: hp(1),
-            }}>
+            }}
+            onPress={() => SaveWatchLater(item?.id)}>
             <Image
               source={require('../../assets/Icons/add.png')}
               style={{width: wp(6.8), height: wp(6.8), tintColor: 'white'}}

@@ -52,17 +52,66 @@ export const onGetTopicsList = async () => {
   });
 };
 
-// export const LoginScreenApi = async responseData => {
-//   const url = Api.baseUrl + `user/login`;
-//   return new Promise((resolve, reject) => {
-//     axios
-//       .post(url, responseData, {
-//         headers: {
-//           'Content-Type': 'application/json',
-//           Accept: 'application/json',
-//         },
-//       })
-//       .then(res => resolve(res))
-//       .catch(err => reject(err));
-//   });
-// };
+export const WatchListSave = async responseData => {
+  const url = Api.baseUrl + `api/watchLaterSave`;
+  return new Promise((resolve, reject) => {
+    axios
+      .post(url, responseData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
+
+export const onGetWatchList = async () => {
+  //   const id = await AsyncStorage.getItem('token');
+  const url = Api.baseUrl + `api/watchLaters/${1}`;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
+
+export const PlayListSave = async responseData => {
+  const url = Api.baseUrl + `api/playlistSave`;
+  return new Promise((resolve, reject) => {
+    axios
+      .post(url, responseData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
+
+export const onGetplaylist = async () => {
+  //   const id = await AsyncStorage.getItem('token');
+  const url = Api.baseUrl + `api/playlists/${1}`;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};

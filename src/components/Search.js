@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -14,15 +14,35 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useLayoutEffect} from 'react';
+import {onGetWatchList} from '../services/API';
+import {API_IMG} from '../utils/BaseImg';
 
 const Search = ({navigation}) => {
-  const LogoTitle = () => {
-    return (
-      <Image
-        style={{width: wp(15), height: wp(15), resizeMode: 'cover'}}
-        source={require('../assets/Images/logo.png')}
-      />
-    );
+  const [watchLater, setWatchLater] = useState([]);
+  const [Playlist, setPlayLists] = useState([]);
+
+  useEffect(() => {
+    GetAllWatchLater();
+    GetAllPlaylists();
+  }, []);
+
+  const GetAllWatchLater = async () => {
+    try {
+      const response = await onGetWatchList();
+      // console.log(response.data.todos);
+      setWatchLater(response.data.todos);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const GetAllPlaylists = async () => {
+    try {
+      const response = await onGetWatchList();
+      console.log(response.data.todos);
+      setPlayLists(response.data.todos);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useLayoutEffect(() => {
@@ -167,19 +187,22 @@ const Search = ({navigation}) => {
                 color: 'white',
                 marginBottom: 8,
               }}>
-              Top Searches
+              Playlists
             </Text>
 
             <FlatList
-              data={dummyData1}
+              data={Playlist}
               showsVerticalScrollIndicator={false}
               numColumns={3}
               keyExtractor={item => item.id}
               contentContainerStyle={styles.contentContainer}
               renderItem={({item}) => (
-                <TouchableOpacity style={styles.itemContainer} key={item.id}>
+                <TouchableOpacity
+                  style={styles.itemContainer}
+                  key={item.id}
+                  onPress={() => navigation.navigate('Watch', {item: item})}>
                   <Image
-                    source={require('../assets/Images/bg.jpeg')}
+                    source={{uri: API_IMG + item?.poster_name}}
                     style={[styles.image1, {marginRight: hp(1)}]}
                   />
                 </TouchableOpacity>
@@ -196,19 +219,22 @@ const Search = ({navigation}) => {
                 color: 'white',
                 marginBottom: 8,
               }}>
-              Top Searches
+              Watch Later
             </Text>
 
             <FlatList
-              data={dummyData1}
+              data={watchLater}
               showsVerticalScrollIndicator={false}
               numColumns={3}
               keyExtractor={item => item.id}
               contentContainerStyle={styles.contentContainer}
               renderItem={({item}) => (
-                <TouchableOpacity style={styles.itemContainer} key={item.id}>
+                <TouchableOpacity
+                  style={styles.itemContainer}
+                  key={item.id}
+                  onPress={() => navigation.navigate('Watch', {item: item})}>
                   <Image
-                    source={require('../assets/Images/bg.jpeg')}
+                    source={{uri: API_IMG + item?.poster_name}}
                     style={[styles.image1, {marginRight: hp(1)}]}
                   />
                 </TouchableOpacity>
