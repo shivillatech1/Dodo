@@ -21,17 +21,25 @@ import SliderImages from '../../components/SliderImages';
 import {
   onGetAllvideos,
   onGetTopicsList,
+  onGetWatchList,
   onGetcategoriesList,
+  onGetplaylist,
 } from '../../services/API';
+import {API_IMG} from '../../utils/BaseImg';
 
 const HomeScreen = ({navigation}) => {
   const [Allvideos, setAllVideos] = useState([]);
   const [categories, setCategories] = useState([]);
   const [topics, setTopics] = useState([]);
+  const [topicsImg, settopicsImg] = useState();
+  const [watchLater, setWatchLater] = useState([]);
+  const [Playlist, setPlayLists] = useState([]);
   useEffect(() => {
     GetAllVideos();
     GetAllCategoriesName();
     GetAllTopicsName();
+    GetAllWatchLater();
+    GetAllPlaylists();
   }, []);
 
   const GetAllVideos = async () => {
@@ -55,13 +63,32 @@ const HomeScreen = ({navigation}) => {
   const GetAllTopicsName = async () => {
     try {
       const response = await onGetTopicsList();
-      // console.log(response.data.category);
+      settopicsImg(response.data.poster_images);
+      // console.log(response.data.Topics);
       setTopics(response.data.Topics);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const GetAllWatchLater = async () => {
+    try {
+      const response = await onGetWatchList();
+      // console.log(response.data.todos);
+      setWatchLater(response.data.todos);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const GetAllPlaylists = async () => {
+    try {
+      const response = await onGetplaylist();
+      console.log(response.data.todos);
+      setPlayLists(response.data.todos);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -72,13 +99,10 @@ const HomeScreen = ({navigation}) => {
     });
   }, [navigation]);
 
-  // const categories = [
-  //   {id: '1', title: 'Continue Watching', all: 'See All'},
-  //   {id: '2', title: 'Top Watches', all: 'See All'},
-  //   {id: '3', title: 'Video List', all: 'See All'},
-  //   {id: '4', title: 'Watch Later', all: 'See All'},
-  //   {id: '5', title: 'Playlist', all: 'See All'},
-  // ];
+  const categories1 = [
+    {id: '4', title: 'Watchlist', all: 'See All'},
+    {id: '5', title: 'Playlist', all: 'See All'},
+  ];
   const [activeIndex, setActiveIndex] = useState(0);
 
   const texts = ['Home', 'All Videos', 'Topics'];
@@ -105,23 +129,23 @@ const HomeScreen = ({navigation}) => {
               paddingVertical: hp(2),
             }}
             showsVerticalScrollIndicator={false}>
-            {categories.map(category => (
-              <View key={category.id}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    paddingHorizontal: hp(0.3),
-                  }}>
-                  <Text style={styles.categoryLabel}>
-                    {category?.category_name}
-                  </Text>
-                  <Text style={styles.categoryLabel1}>{category.all}</Text>
-                </View>
-                {category?.category_name === 'test' ? (
+            {categories &&
+              Object.keys(categories).map(categoryName => (
+                <View key={categoryName}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      paddingHorizontal: hp(0.3),
+                    }}>
+                    <Text style={styles.categoryLabel}>{categoryName}</Text>
+                    <TouchableOpacity onPress={() => {}}>
+                      <Text style={{color: '#fff'}}>See All</Text>
+                    </TouchableOpacity>
+                  </View>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {dummyData1.map(item => (
+                    {categories[categoryName].map(item => (
                       <TouchableOpacity
                         onPress={() =>
                           navigation.navigate('Watch', {item: item})
@@ -132,10 +156,48 @@ const HomeScreen = ({navigation}) => {
                         }}
                         key={item.id}>
                         <Image
-                          source={require('../../assets/Images/bg.jpeg')}
+                          source={{uri: API_IMG + item?.poster_name}}
                           style={{
-                            height: hp(12.5),
-                            width: wp(45),
+                            height: hp(15),
+                            width: wp(30),
+                            resizeMode: 'cover',
+                            borderRadius: hp(1),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                </View>
+              ))}
+            {categories1.map(category => (
+              <View key={category.id}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingHorizontal: hp(0.3),
+                  }}>
+                  <Text style={styles.categoryLabel}>{category?.title}</Text>
+                  <Text style={styles.categoryLabel1}>{category.all}</Text>
+                </View>
+                {category?.title === 'Watchlist' ? (
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {watchLater.map(item => (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('Watch', {item: item})
+                        }
+                        style={{
+                          marginRight: 10,
+                          position: 'relative',
+                        }}
+                        key={item.id}>
+                        <Image
+                          source={{uri: API_IMG + item?.poster_name}}
+                          style={{
+                            height: hp(15),
+                            width: wp(30),
                             resizeMode: 'cover',
                             borderRadius: hp(1),
                           }}
@@ -159,20 +221,20 @@ const HomeScreen = ({navigation}) => {
                     ))}
                   </ScrollView>
                 ) : null}
-                {category.title === 'Top Watches' ? (
+                {category?.title === 'Playlist' ? (
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {dummyData1.map(item => (
+                    {Playlist.map(item => (
                       <TouchableOpacity
                         onPress={() =>
                           navigation.navigate('Watch', {item: item})
                         }
                         style={{
-                          marginRight: hp(1.5),
+                          marginRight: 10,
                           position: 'relative',
                         }}
                         key={item.id}>
                         <Image
-                          source={require('../../assets/Images/bg.jpeg')}
+                          source={{uri: API_IMG + item?.poster_name}}
                           style={{
                             height: hp(15),
                             width: wp(30),
@@ -180,81 +242,21 @@ const HomeScreen = ({navigation}) => {
                             borderRadius: hp(1),
                           }}
                         />
-                      </TouchableOpacity>
-                    ))}
-                  </ScrollView>
-                ) : null}
-                {category.title === 'Video List' ? (
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {dummyData1.map(item => (
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate('Watch', {item: item})
-                        }
-                        style={{
-                          marginRight: hp(1.5),
-                          position: 'relative',
-                        }}
-                        key={item.id}>
-                        <Image
-                          source={require('../../assets/Images/bg.jpeg')}
+                        <View
                           style={{
-                            height: hp(15),
-                            width: wp(30),
-                            resizeMode: 'cover',
-                            borderRadius: hp(1),
-                          }}
-                        />
-                      </TouchableOpacity>
-                    ))}
-                  </ScrollView>
-                ) : null}
-                {category.title === 'Watch Later' ? (
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {dummyData1.map(item => (
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate('Watch', {item: item})
-                        }
-                        style={{
-                          marginRight: hp(1.5),
-                          position: 'relative',
-                        }}
-                        key={item.id}>
-                        <Image
-                          source={require('../../assets/Images/bg.jpeg')}
-                          style={{
-                            height: hp(15),
-                            width: wp(30),
-                            resizeMode: 'cover',
-                            borderRadius: hp(1),
-                          }}
-                        />
-                      </TouchableOpacity>
-                    ))}
-                  </ScrollView>
-                ) : null}
-                {category.title === 'Playlist' ? (
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {dummyData1.map(item => (
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate('Watch', {item: item})
-                        }
-                        style={{
-                          marginRight: hp(1.5),
-                          position: 'relative',
-                        }}
-                        key={item.id}>
-                        <Image
-                          source={require('../../assets/Images/bg.jpeg')}
-                          style={{
-                            height: hp(15),
-                            width: wp(30),
-                            resizeMode: 'cover',
-                            borderRadius: hp(1),
-                          }}
-                        />
+                            position: 'absolute',
+                            right: hp(1),
+                            bottom: hp(1.5),
+                          }}>
+                          <Image
+                            source={require('../../assets/Icons/play.png')}
+                            style={{
+                              width: wp(6.5),
+                              height: wp(6.5),
+                              tintColor: '#fff',
+                            }}
+                          />
+                        </View>
                       </TouchableOpacity>
                     ))}
                   </ScrollView>
@@ -265,7 +267,7 @@ const HomeScreen = ({navigation}) => {
         </View>
       )}
       {activeIndex === 1 && <AllVdieos Allvideos={Allvideos} />}
-      {activeIndex === 2 && <Topics topics={topics} />}
+      {activeIndex === 2 && <Topics topics={topics} topicsImg={topicsImg} />}
 
       <View style={styles.container1}>
         <View
@@ -441,3 +443,106 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+{
+  /**      {category.title === 'Top Watches' ? (
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {dummyData1.map(item => (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('Watch', {item: item})
+                        }
+                        style={{
+                          marginRight: hp(1.5),
+                          position: 'relative',
+                        }}
+                        key={item.id}>
+                        <Image
+                          source={require('../../assets/Images/bg.jpeg')}
+                          style={{
+                            height: hp(15),
+                            width: wp(30),
+                            resizeMode: 'cover',
+                            borderRadius: hp(1),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                ) : null}
+                {category.title === 'Video List' ? (
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {dummyData1.map(item => (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('Watch', {item: item})
+                        }
+                        style={{
+                          marginRight: hp(1.5),
+                          position: 'relative',
+                        }}
+                        key={item.id}>
+                        <Image
+                          source={require('../../assets/Images/bg.jpeg')}
+                          style={{
+                            height: hp(15),
+                            width: wp(30),
+                            resizeMode: 'cover',
+                            borderRadius: hp(1),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                ) : null}
+                {category.title === 'Watch Later' ? (
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {dummyData1.map(item => (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('Watch', {item: item})
+                        }
+                        style={{
+                          marginRight: hp(1.5),
+                          position: 'relative',
+                        }}
+                        key={item.id}>
+                        <Image
+                          source={require('../../assets/Images/bg.jpeg')}
+                          style={{
+                            height: hp(15),
+                            width: wp(30),
+                            resizeMode: 'cover',
+                            borderRadius: hp(1),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                ) : null}
+                {category.title === 'Playlist' ? (
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {dummyData1.map(item => (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('Watch', {item: item})
+                        }
+                        style={{
+                          marginRight: hp(1.5),
+                          position: 'relative',
+                        }}
+                        key={item.id}>
+                        <Image
+                          source={require('../../assets/Images/bg.jpeg')}
+                          style={{
+                            height: hp(15),
+                            width: wp(30),
+                            resizeMode: 'cover',
+                            borderRadius: hp(1),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                ) : null} */
+}

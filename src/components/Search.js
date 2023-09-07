@@ -14,7 +14,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useLayoutEffect} from 'react';
-import {onGetWatchList} from '../services/API';
+import {onGetWatchList, onGetplaylist} from '../services/API';
 import {API_IMG} from '../utils/BaseImg';
 
 const Search = ({navigation}) => {
@@ -37,8 +37,8 @@ const Search = ({navigation}) => {
   };
   const GetAllPlaylists = async () => {
     try {
-      const response = await onGetWatchList();
-      console.log(response.data.todos);
+      const response = await onGetplaylist();
+      // console.log(response.data.todos);
       setPlayLists(response.data.todos);
     } catch (error) {
       console.log(error);
