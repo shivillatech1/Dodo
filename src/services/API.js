@@ -115,3 +115,20 @@ export const onGetplaylist = async () => {
       .catch(err => reject(err));
   });
 };
+
+export const OnGetBanner = async () => {
+  //   const id = await AsyncStorage.getItem('token');
+  const url = Api.baseUrl + `api/banner`;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};

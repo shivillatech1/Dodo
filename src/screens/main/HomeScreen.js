@@ -19,6 +19,7 @@ import AllVdieos from '../../components/AllVdieos';
 import Topics from '../../components/Topics';
 import SliderImages from '../../components/SliderImages';
 import {
+  OnGetBanner,
   onGetAllvideos,
   onGetTopicsList,
   onGetWatchList,
@@ -34,6 +35,7 @@ const HomeScreen = ({navigation}) => {
   const [topicsImg, settopicsImg] = useState([]);
   const [watchLater, setWatchLater] = useState([]);
   const [Playlist, setPlayLists] = useState([]);
+
   useEffect(() => {
     GetAllVideos();
     GetAllCategoriesName();
@@ -83,12 +85,13 @@ const HomeScreen = ({navigation}) => {
   const GetAllPlaylists = async () => {
     try {
       const response = await onGetplaylist();
-      console.log(response.data.todos);
+      // console.log(response.data.todos);
       setPlayLists(response.data.todos);
     } catch (error) {
       console.log(error);
     }
   };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
