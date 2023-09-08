@@ -31,7 +31,7 @@ const HomeScreen = ({navigation}) => {
   const [Allvideos, setAllVideos] = useState([]);
   const [categories, setCategories] = useState([]);
   const [topics, setTopics] = useState([]);
-  const [topicsImg, settopicsImg] = useState();
+  const [topicsImg, settopicsImg] = useState([]);
   const [watchLater, setWatchLater] = useState([]);
   const [Playlist, setPlayLists] = useState([]);
   useEffect(() => {
@@ -63,8 +63,8 @@ const HomeScreen = ({navigation}) => {
   const GetAllTopicsName = async () => {
     try {
       const response = await onGetTopicsList();
+
       settopicsImg(response.data.poster_images);
-      // console.log(response.data.Topics);
       setTopics(response.data.Topics);
     } catch (error) {
       console.log(error);
@@ -196,8 +196,8 @@ const HomeScreen = ({navigation}) => {
                         <Image
                           source={{uri: API_IMG + item?.poster_name}}
                           style={{
-                            height: hp(15),
-                            width: wp(30),
+                            height: hp(11.5),
+                            width: wp(32),
                             resizeMode: 'cover',
                             borderRadius: hp(1),
                           }}
@@ -236,8 +236,8 @@ const HomeScreen = ({navigation}) => {
                         <Image
                           source={{uri: API_IMG + item?.poster_name}}
                           style={{
-                            height: hp(15),
-                            width: wp(30),
+                            height: hp(11.5),
+                            width: wp(32),
                             resizeMode: 'cover',
                             borderRadius: hp(1),
                           }}
@@ -267,7 +267,9 @@ const HomeScreen = ({navigation}) => {
         </View>
       )}
       {activeIndex === 1 && <AllVdieos Allvideos={Allvideos} />}
-      {activeIndex === 2 && <Topics topics={topics} topicsImg={topicsImg} />}
+      {activeIndex === 2 && (
+        <Topics topics={topics} topicsImg={topicsImg} navigation={navigation} />
+      )}
 
       <View style={styles.container1}>
         <View

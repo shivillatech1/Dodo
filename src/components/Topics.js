@@ -14,62 +14,73 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {API_IMG} from '../utils/BaseImg';
 
-const Topics = ({topics}) => {
+const Topics = ({topics, topicsImg, navigation}) => {
+  const jsonData = JSON.stringify(topics);
+  const data = JSON.parse(jsonData);
+
+  const keys = Object.keys(data);
+
+  const renderItem = ({item}) => {
+    console.log('Img', topics[item]);
+    return (
+      <TouchableOpacity
+        style={{
+          marginRight: hp(2.2),
+
+          marginBottom: hp(1.8),
+        }}
+        // onPress={() => navigation.navigate('Watch', {item: topics[item]})}
+      >
+        <Image
+          source={{uri: API_IMG + topicsImg[item].Topics_poster_name}}
+          style={styles.image}
+        />
+        <LinearGradient
+          colors={['rgba(0, 0, 0, 0.4)', 'rgba(0,0,0,0.6)']}
+          style={{
+            position: 'absolute',
+            width: wp(46),
+            bottom: 0,
+            height: hp(15.5),
+          }}
+        />
+        <View
+          style={{
+            position: 'absolute',
+            bottom: hp(1.8),
+            backgroundColor: '#fff',
+            width: wp(35),
+            left: wp(5),
+            padding: wp(0.6),
+          }}>
+          <Text
+            style={{
+              fontSize: hp(1.6),
+              fontWeight: '800',
+              color: '#000',
+              textAlign: 'center',
+            }}>
+            {item}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <FlatList
-        data={topics}
+        data={keys}
         showsVerticalScrollIndicator={false}
-        keyExtractor={item => item.id.toString()}
         numColumns={2}
         contentContainerStyle={{
           paddingVertical: hp(8),
           paddingHorizontal: hp(1.6),
           paddingBottom: hp(6.5),
         }}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            style={{
-              marginRight: hp(2.2),
-
-              marginBottom: hp(1.8),
-            }}
-            key={item.id}>
-            <Image
-              source={require('../assets/Images/bg.jpeg')}
-              style={styles.image}
-            />
-            <LinearGradient
-              colors={['rgba(0, 0, 0, 0.4)', 'rgba(0,0,0,0.6)']}
-              style={{
-                position: 'absolute',
-                width: wp(46),
-                bottom: 0,
-                height: hp(15.5),
-              }}
-            />
-            <View
-              style={{
-                position: 'absolute',
-                bottom: hp(1.8),
-                backgroundColor: '#fff',
-                width: wp(35),
-                left: wp(5),
-                padding: wp(0.6),
-              }}>
-              <Text
-                style={{
-                  fontSize: hp(1.6),
-                  fontWeight: '800',
-                  color: '#000',
-                  textAlign: 'center',
-                }}>
-                {item?.topics_name}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        )}
+        renderItem={renderItem}
       />
     </View>
   );
@@ -146,3 +157,46 @@ const styles = StyleSheet.create({
     tintColor: '#fff',
   },
 });
+
+{
+  /**<TouchableOpacity
+            style={{
+              marginRight: hp(2.2),
+
+              marginBottom: hp(1.8),
+            }}
+            key={item.id}>
+            <Image
+              source={require('../assets/Images/bg.jpeg')}
+              style={styles.image}
+            />
+            <LinearGradient
+              colors={['rgba(0, 0, 0, 0.4)', 'rgba(0,0,0,0.6)']}
+              style={{
+                position: 'absolute',
+                width: wp(46),
+                bottom: 0,
+                height: hp(15.5),
+              }}
+            />
+            <View
+              style={{
+                position: 'absolute',
+                bottom: hp(1.8),
+                backgroundColor: '#fff',
+                width: wp(35),
+                left: wp(5),
+                padding: wp(0.6),
+              }}>
+              <Text
+                style={{
+                  fontSize: hp(1.6),
+                  fontWeight: '800',
+                  color: '#000',
+                  textAlign: 'center',
+                }}>
+                {item?.title}
+              </Text>
+            </View>
+          </TouchableOpacity> */
+}

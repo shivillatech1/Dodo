@@ -57,9 +57,63 @@ const Signin = ({navigation}) => {
           height: '100%',
           flex: 1,
           backgroundColor: 'black',
-          justifyContent: 'center',
-          alignItems: 'center',
+
+          position: 'relative',
         }}>
+        <View
+          style={{
+            top: hp(3),
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              height: hp(15),
+              width: wp(50),
+              borderColor: '#80797a',
+              borderWidth: 0.8,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: hp(4),
+            }}>
+            <Text
+              style={{
+                fontSize: hp(3.8),
+                fontWeight: 'bold',
+                color: 'white',
+                shadowColor: '#fff',
+                shadowOffset: {width: 0, height: 2},
+                shadowOpacity: 0.5,
+                shadowRadius: 5,
+                elevation: 5,
+              }}>
+              MEDIA
+            </Text>
+            <Text
+              style={{
+                fontSize: hp(3.2),
+                fontWeight: '400',
+                color: 'white',
+                shadowColor: '#fff',
+                shadowOffset: {width: 0, height: 2},
+                shadowOpacity: 0.5,
+                shadowRadius: 5,
+                elevation: 5,
+              }}>
+              CLINIQUE
+            </Text>
+          </View>
+
+          <Text
+            style={{
+              color: '#fff',
+              fontWeight: '400',
+              fontSize: hp(1.8),
+              paddingVertical: 8,
+            }}>
+            Enjoy Over 100,000 Movies and Series Only On One Place.
+          </Text>
+        </View>
         <View style={styles.container}>
           <View style={{bottom: hp(3)}}>
             <Text style={styles.text}>
@@ -114,63 +168,6 @@ const Signin = ({navigation}) => {
           </View>
         </View>
       </ImageBackground>
-      <View
-        style={{
-          position: 'absolute',
-          top: hp(3),
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <View
-          style={{
-            height: hp(15),
-            width: wp(50),
-            borderColor: '#80797a',
-            borderWidth: 0.8,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: hp(4),
-            left: wp(3),
-          }}>
-          <Text
-            style={{
-              fontSize: hp(3.8),
-              fontWeight: 'bold',
-              color: 'white',
-              shadowColor: '#fff',
-              shadowOffset: {width: 0, height: 2},
-              shadowOpacity: 0.5,
-              shadowRadius: 5,
-              elevation: 5,
-            }}>
-            MEDIA
-          </Text>
-          <Text
-            style={{
-              fontSize: hp(3.2),
-              fontWeight: '400',
-              color: 'white',
-              shadowColor: '#fff',
-              shadowOffset: {width: 0, height: 2},
-              shadowOpacity: 0.5,
-              shadowRadius: 5,
-              elevation: 5,
-            }}>
-            CLINIQUE
-          </Text>
-        </View>
-
-        <Text
-          style={{
-            color: '#fff',
-            fontWeight: '400',
-            fontSize: hp(1.8),
-            paddingVertical: 8,
-            left: wp(1.8),
-          }}>
-          Enjoy Over 100,000 Movies and Series Only On One Place.
-        </Text>
-      </View>
     </>
   );
 };
@@ -185,7 +182,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(51,58,68)',
     justifyContent: 'center',
     alignItems: 'center',
+    top: hp(30),
+    left: hp(2.5),
     borderRadius: hp(1.5),
+    position: 'absolute',
+    zIndex: 999,
   },
   text: {
     fontSize: hp(1.7),
