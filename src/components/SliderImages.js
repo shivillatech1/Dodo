@@ -40,6 +40,7 @@ const SliderImages = () => {
 
           borderRadius: hp(2),
         }}
+        imageLoadingColor="#fff"
       />
     </View>
   );

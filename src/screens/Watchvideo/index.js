@@ -18,6 +18,8 @@ import {useLayoutEffect} from 'react';
 import {requestStoragePermission} from '../../components/Download';
 import {API_IMG} from '../../utils/BaseImg';
 import {PlayListSave, WatchListSave} from '../../services/API';
+import {Share} from 'react-native';
+import {shareContent} from '../../components/Share';
 
 const WatchVideo = ({navigation, route}) => {
   const {item} = route.params;
@@ -235,7 +237,8 @@ const WatchVideo = ({navigation, route}) => {
               alignItems: 'center',
               gap: hp(1),
               marginLeft: hp(3),
-            }}>
+            }}
+            onPress={() => shareContent(item?.title)}>
             <Image
               source={require('../../assets/Icons/share1.png')}
               style={{width: wp(6.8), height: wp(6.8), tintColor: 'white'}}
