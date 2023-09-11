@@ -14,12 +14,13 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useLayoutEffect} from 'react';
-import {onGetWatchList, onGetplaylist} from '../services/API';
+import {SearchApi, onGetWatchList, onGetplaylist} from '../services/API';
 import {API_IMG} from '../utils/BaseImg';
 
 const Search = ({navigation}) => {
   const [watchLater, setWatchLater] = useState([]);
   const [Playlist, setPlayLists] = useState([]);
+  // const [input, setInput] = useState([]);
 
   useEffect(() => {
     GetAllWatchLater();
@@ -44,7 +45,23 @@ const Search = ({navigation}) => {
       console.log(error);
     }
   };
-
+  const Search = async () => {
+    var raw = JSON.stringify({
+      search: Input,
+    });
+    try {
+      const response = await SearchApi(raw);
+      console.log(response.data.Video);
+      setSearch(response.data.Video);
+      // ToastAndroid.showWithGravity(
+      //   `${watchlist.message}`,
+      //   ToastAndroid.SHORT,
+      //   ToastAndroid.CENTER,
+      // );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -90,6 +107,7 @@ const Search = ({navigation}) => {
   }, [navigation]);
 
   const [Input, setInput] = useState('');
+  const [search, setSearch] = useState([]);
 
   return (
     <View style={styles.container}>
@@ -104,7 +122,7 @@ const Search = ({navigation}) => {
 
             backgroundColor: '#111010',
           }}>
-          <TouchableOpacity onPress={() => console.log('pressed')}>
+          <TouchableOpacity onPress={() => Search()}>
             <Image
               source={require('../assets/Icons/search.png')}
               style={{
@@ -117,7 +135,9 @@ const Search = ({navigation}) => {
             />
           </TouchableOpacity>
           <TextInput
-            onChangeText={setInput}
+            onChangeText={text => {
+              setInput(text);
+            }}
             value={Input}
             style={{
               width: wp(75),
@@ -224,6 +244,38 @@ const Search = ({navigation}) => {
 
             <FlatList
               data={watchLater}
+              showsVerticalScrollIndicator={false}
+              numColumns={3}
+              keyExtractor={item => item.id}
+              contentContainerStyle={styles.contentContainer}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  style={styles.itemContainer}
+                  key={item.id}
+                  onPress={() => navigation.navigate('Watch', {item: item})}>
+                  <Image
+                    source={{uri: API_IMG + item?.poster_name}}
+                    style={[styles.image1, {marginRight: hp(1)}]}
+                  />
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        )}
+        {search.length > 0 && (
+          <View style={{marginTop: hp(4), paddingHorizontal: hp(1.6)}}>
+            <Text
+              style={{
+                fontSize: hp(2.3),
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: 8,
+              }}>
+              {Input}
+            </Text>
+
+            <FlatList
+              data={search}
               showsVerticalScrollIndicator={false}
               numColumns={3}
               keyExtractor={item => item.id}

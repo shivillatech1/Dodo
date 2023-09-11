@@ -132,3 +132,18 @@ export const OnGetBanner = async () => {
       .catch(err => reject(err));
   });
 };
+
+export const SearchApi = async responseData => {
+  const url = Api.baseUrl + `api/search`;
+  return new Promise((resolve, reject) => {
+    axios
+      .post(url, responseData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
