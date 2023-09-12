@@ -8,6 +8,7 @@ import {
   FlatList,
   ScrollView,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -35,6 +36,7 @@ const HomeScreen = ({navigation}) => {
   const [topicsImg, settopicsImg] = useState([]);
   const [watchLater, setWatchLater] = useState([]);
   const [Playlist, setPlayLists] = useState([]);
+  const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
     GetAllVideos();
@@ -46,28 +48,34 @@ const HomeScreen = ({navigation}) => {
 
   const GetAllVideos = async () => {
     try {
+      setLoading(true);
       const response = await onGetAllvideos();
       // console.log(response.data.Video);
       setAllVideos(response.data.Video);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
   const GetAllCategoriesName = async () => {
     try {
+      setLoading(true);
       const response = await onGetcategoriesList();
       // console.log(response.data.category);
       setCategories(response.data.category);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
   const GetAllTopicsName = async () => {
     try {
+      setLoading(true);
       const response = await onGetTopicsList();
 
       settopicsImg(response.data.poster_images);
       setTopics(response.data.Topics);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -122,68 +130,28 @@ const HomeScreen = ({navigation}) => {
     <>
       {activeIndex === 0 && (
         <View style={styles.container}>
-          <SliderImages />
-
-          <ScrollView
-            style={{marginTop: hp(2)}}
-            contentContainerStyle={{
-              paddingBottom: hp(10),
-              paddingHorizontal: hp(1.3),
-              paddingVertical: hp(2),
-            }}
-            showsVerticalScrollIndicator={false}>
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingHorizontal: hp(0.3),
-                }}>
-                <Text style={styles.categoryLabel}>Continue Watching</Text>
-                <Text style={styles.categoryLabel1}>See All </Text>
-              </View>
-
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {dummyData1.map(item => (
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('Watch', {item: item})}
-                    style={{
-                      marginRight: 10,
-                      position: 'relative',
-                    }}
-                    key={item.id}>
-                    <Image
-                      source={require('../../assets/Images/bg.jpeg')}
-                      style={{
-                        height: hp(12.5),
-                        width: wp(40),
-                        resizeMode: 'cover',
-                        borderRadius: hp(1),
-                      }}
-                    />
-                    <View
-                      style={{
-                        position: 'absolute',
-                        right: hp(1),
-                        bottom: hp(1.5),
-                      }}>
-                      <Image
-                        source={require('../../assets/Icons/play.png')}
-                        style={{
-                          width: wp(6.5),
-                          height: wp(6.5),
-                          tintColor: '#fff',
-                        }}
-                      />
-                    </View>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-            </View>
-            {categories &&
-              Object.keys(categories).map(categoryName => (
-                <View key={categoryName}>
+          {Loading ? (
+            <ActivityIndicator
+              size={34}
+              color={'white'}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: hp(10),
+              }}
+            />
+          ) : (
+            <>
+              <SliderImages />
+              <ScrollView
+                style={{marginTop: hp(2)}}
+                contentContainerStyle={{
+                  paddingBottom: hp(10),
+                  paddingHorizontal: hp(1.3),
+                  paddingVertical: hp(1),
+                }}
+                showsVerticalScrollIndicator={false}>
+                <View>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -191,13 +159,12 @@ const HomeScreen = ({navigation}) => {
                       alignItems: 'center',
                       paddingHorizontal: hp(0.3),
                     }}>
-                    <Text style={styles.categoryLabel}>{categoryName}</Text>
-                    <TouchableOpacity onPress={() => {}}>
-                      <Text style={{color: '#fff'}}>See All</Text>
-                    </TouchableOpacity>
+                    <Text style={styles.categoryLabel}>Continue Watching</Text>
+                    <Text style={styles.categoryLabel1}>See All </Text>
                   </View>
+
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {categories[categoryName].map(item => (
+                    {dummyData1.map(item => (
                       <TouchableOpacity
                         onPress={() =>
                           navigation.navigate('Watch', {item: item})
@@ -208,48 +175,10 @@ const HomeScreen = ({navigation}) => {
                         }}
                         key={item.id}>
                         <Image
-                          source={{uri: API_IMG + item?.poster_name}}
+                          source={require('../../assets/Images/bg.jpeg')}
                           style={{
-                            height: hp(15),
-                            width: wp(30),
-                            resizeMode: 'cover',
-                            borderRadius: hp(1),
-                          }}
-                        />
-                      </TouchableOpacity>
-                    ))}
-                  </ScrollView>
-                </View>
-              ))}
-            {categories1.map(category => (
-              <View key={category.id}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    paddingHorizontal: hp(0.3),
-                  }}>
-                  <Text style={styles.categoryLabel}>{category?.title}</Text>
-                  <Text style={styles.categoryLabel1}>{category.all}</Text>
-                </View>
-                {category?.title === 'Watchlist' ? (
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {watchLater.map(item => (
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate('Watch', {item: item})
-                        }
-                        style={{
-                          marginRight: 10,
-                          position: 'relative',
-                        }}
-                        key={item.id}>
-                        <Image
-                          source={{uri: API_IMG + item?.poster_name}}
-                          style={{
-                            height: hp(11.5),
-                            width: wp(32),
+                            height: hp(12.5),
+                            width: wp(40),
                             resizeMode: 'cover',
                             borderRadius: hp(1),
                           }}
@@ -272,53 +201,161 @@ const HomeScreen = ({navigation}) => {
                       </TouchableOpacity>
                     ))}
                   </ScrollView>
-                ) : null}
-                {category?.title === 'Playlist' ? (
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {Playlist.map(item => (
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate('Watch', {item: item})
-                        }
+                </View>
+                {categories &&
+                  Object.keys(categories).map(categoryName => (
+                    <View key={categoryName}>
+                      <View
                         style={{
-                          marginRight: 10,
-                          position: 'relative',
-                        }}
-                        key={item.id}>
-                        <Image
-                          source={{uri: API_IMG + item?.poster_name}}
-                          style={{
-                            height: hp(11.5),
-                            width: wp(32),
-                            resizeMode: 'cover',
-                            borderRadius: hp(1),
-                          }}
-                        />
-                        <View
-                          style={{
-                            position: 'absolute',
-                            right: hp(1),
-                            bottom: hp(1.5),
-                          }}>
-                          <Image
-                            source={require('../../assets/Icons/play.png')}
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          paddingHorizontal: hp(0.3),
+                        }}>
+                        <Text style={styles.categoryLabel}>{categoryName}</Text>
+                        <TouchableOpacity onPress={() => {}}>
+                          <Text style={{color: '#fff'}}>See All</Text>
+                        </TouchableOpacity>
+                      </View>
+                      <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}>
+                        {categories[categoryName].map(item => (
+                          <TouchableOpacity
+                            onPress={() =>
+                              navigation.navigate('Watch', {item: item})
+                            }
                             style={{
-                              width: wp(6.5),
-                              height: wp(6.5),
-                              tintColor: '#fff',
+                              marginRight: 10,
+                              position: 'relative',
                             }}
-                          />
-                        </View>
-                      </TouchableOpacity>
-                    ))}
-                  </ScrollView>
-                ) : null}
-              </View>
-            ))}
-          </ScrollView>
+                            key={item.id}>
+                            <Image
+                              source={{uri: API_IMG + item?.poster_name}}
+                              style={{
+                                height: hp(15),
+                                width: wp(30),
+                                resizeMode: 'cover',
+                                borderRadius: hp(1),
+                              }}
+                            />
+                          </TouchableOpacity>
+                        ))}
+                      </ScrollView>
+                    </View>
+                  ))}
+                {categories1.map(category => (
+                  <View key={category.id}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingHorizontal: hp(0.3),
+                      }}>
+                      <Text style={styles.categoryLabel}>
+                        {category?.title}
+                      </Text>
+                      <Text style={styles.categoryLabel1}>{category.all}</Text>
+                    </View>
+                    {category?.title === 'Watchlist' ? (
+                      <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}>
+                        {watchLater.map(item => (
+                          <TouchableOpacity
+                            onPress={() =>
+                              navigation.navigate('Watch', {item: item})
+                            }
+                            style={{
+                              marginRight: 10,
+                              position: 'relative',
+                            }}
+                            key={item.id}>
+                            <Image
+                              source={{uri: API_IMG + item?.poster_name}}
+                              style={{
+                                height: hp(11.5),
+                                width: wp(32),
+                                resizeMode: 'cover',
+                                borderRadius: hp(1),
+                              }}
+                            />
+                            <View
+                              style={{
+                                position: 'absolute',
+                                right: hp(1),
+                                bottom: hp(1.5),
+                              }}>
+                              <Image
+                                source={require('../../assets/Icons/play.png')}
+                                style={{
+                                  width: wp(6.5),
+                                  height: wp(6.5),
+                                  tintColor: '#fff',
+                                }}
+                              />
+                            </View>
+                          </TouchableOpacity>
+                        ))}
+                      </ScrollView>
+                    ) : null}
+                    {category?.title === 'Playlist' ? (
+                      <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}>
+                        {Playlist.map(item => (
+                          <TouchableOpacity
+                            onPress={() =>
+                              navigation.navigate('Watch', {item: item})
+                            }
+                            style={{
+                              marginRight: 10,
+                              position: 'relative',
+                            }}
+                            key={item.id}>
+                            <Image
+                              source={{uri: API_IMG + item?.poster_name}}
+                              style={{
+                                height: hp(11.5),
+                                width: wp(32),
+                                resizeMode: 'cover',
+                                borderRadius: hp(1),
+                              }}
+                            />
+                            <View
+                              style={{
+                                position: 'absolute',
+                                right: hp(1),
+                                bottom: hp(1.5),
+                              }}>
+                              <Image
+                                source={require('../../assets/Icons/play.png')}
+                                style={{
+                                  width: wp(6.5),
+                                  height: wp(6.5),
+                                  tintColor: '#fff',
+                                }}
+                              />
+                            </View>
+                          </TouchableOpacity>
+                        ))}
+                      </ScrollView>
+                    ) : null}
+                  </View>
+                ))}
+              </ScrollView>
+            </>
+          )}
         </View>
       )}
-      {activeIndex === 1 && <AllVdieos Allvideos={Allvideos} />}
+      {activeIndex === 1 && (
+        <AllVdieos
+          Allvideos={Allvideos}
+          setLoading={setLoading}
+          loading={Loading}
+        />
+      )}
       {activeIndex === 2 && (
         <Topics topics={topics} topicsImg={topicsImg} navigation={navigation} />
       )}

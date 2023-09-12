@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -16,7 +17,7 @@ import {
 } from 'react-native-responsive-screen';
 import {API_IMG} from '../utils/BaseImg';
 
-const Topics = ({topics, topicsImg, navigation}) => {
+const Topics = ({topics, topicsImg, navigation, Loading}) => {
   const jsonData = JSON.stringify(topics);
   const data = JSON.parse(jsonData);
 
@@ -71,17 +72,25 @@ const Topics = ({topics, topicsImg, navigation}) => {
 
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
-      <FlatList
-        data={keys}
-        showsVerticalScrollIndicator={false}
-        numColumns={2}
-        contentContainerStyle={{
-          paddingVertical: hp(8),
-          paddingHorizontal: hp(1.6),
-          paddingBottom: hp(6.5),
-        }}
-        renderItem={renderItem}
-      />
+      {Loading ? (
+        <ActivityIndicator
+          size={25}
+          color="white"
+          style={{marginTop: 8, justifyContent: 'center', alignItems: 'center'}}
+        />
+      ) : (
+        <FlatList
+          data={keys}
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          contentContainerStyle={{
+            paddingVertical: hp(8),
+            paddingHorizontal: hp(1.6),
+            paddingBottom: hp(6.5),
+          }}
+          renderItem={renderItem}
+        />
+      )}
     </View>
   );
 };

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 
 import {
@@ -14,38 +15,46 @@ import {
 } from 'react-native-responsive-screen';
 import {API_IMG} from '../utils/BaseImg';
 
-const AllVdieos = ({Allvideos}) => {
+const AllVdieos = ({Allvideos, Loading}) => {
   const navigation = useNavigation();
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
-      <FlatList
-        data={Allvideos}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={item => item.id}
-        numColumns={2}
-        contentContainerStyle={{
-          paddingVertical: hp(8),
-          paddingHorizontal: hp(1.6),
-          paddingBottom: hp(6.5),
-        }}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Watch', {item: item})}
-            style={{
-              marginRight: hp(2.2),
-              position: 'relative',
-              marginBottom: hp(1.8),
-            }}
-            key={item.id}>
-            <Image
-              source={{
-                uri: API_IMG + `${item?.poster_name}`,
+      {Loading ? (
+        <ActivityIndicator
+          size={25}
+          color="white"
+          style={{marginTop: 8, justifyContent: 'center', alignItems: 'center'}}
+        />
+      ) : (
+        <FlatList
+          data={Allvideos}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id}
+          numColumns={2}
+          contentContainerStyle={{
+            paddingVertical: hp(8),
+            paddingHorizontal: hp(1.6),
+            paddingBottom: hp(6.5),
+          }}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Watch', {item: item})}
+              style={{
+                marginRight: hp(2.2),
+                position: 'relative',
+                marginBottom: hp(1.8),
               }}
-              style={styles.image}
-            />
-          </TouchableOpacity>
-        )}
-      />
+              key={item.id}>
+              <Image
+                source={{
+                  uri: API_IMG + `${item?.poster_name}`,
+                }}
+                style={styles.image}
+              />
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </View>
   );
 };
