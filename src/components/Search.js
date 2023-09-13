@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -14,17 +15,25 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useLayoutEffect} from 'react';
-import {SearchApi, onGetWatchList, onGetplaylist} from '../services/API';
+import {
+  OnGetTopsearch,
+  SearchApi,
+  onGetWatchList,
+  onGetplaylist,
+} from '../services/API';
 import {API_IMG} from '../utils/BaseImg';
 
 const Search = ({navigation}) => {
   const [watchLater, setWatchLater] = useState([]);
   const [Playlist, setPlayLists] = useState([]);
-  // const [input, setInput] = useState([]);
+  const [topSearch, setTopsearch] = useState([]);
+  const [Loading, setLoading] = useState(false);
+  const [Loading1, setLoading1] = useState(false);
 
   useEffect(() => {
     GetAllWatchLater();
     GetAllPlaylists();
+    GetTopsearch();
   }, []);
 
   const GetAllWatchLater = async () => {
@@ -45,19 +54,27 @@ const Search = ({navigation}) => {
       console.log(error);
     }
   };
+  const GetTopsearch = async () => {
+    try {
+      setLoading(true);
+      const response = await OnGetTopsearch();
+      // console.log(response.data.todos);
+      setTopsearch(response.data.Video);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const Search = async () => {
     var raw = JSON.stringify({
       search: Input,
     });
     try {
+      setLoading1(true);
       const response = await SearchApi(raw);
       console.log(response.data.Video);
       setSearch(response.data.Video);
-      // ToastAndroid.showWithGravity(
-      //   `${watchlist.message}`,
-      //   ToastAndroid.SHORT,
-      //   ToastAndroid.CENTER,
-      // );
+      setLoading1(false);
     } catch (error) {
       console.log(error);
     }
@@ -147,7 +164,11 @@ const Search = ({navigation}) => {
             // placeholder="Search ..."
             placeholderTextColor="white"
           />
-          <TouchableOpacity onPress={() => setInput('')}>
+          <TouchableOpacity
+            onPress={() => {
+              setInput('');
+              setSearch([]);
+            }}>
             <Image
               source={require('../assets/Icons/close.png')}
               style={{
@@ -172,30 +193,42 @@ const Search = ({navigation}) => {
               Top Searches
             </Text>
 
-            <FlatList
-              data={dummyData1}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={item => item.id}
-              contentContainerStyle={styles.contentContainer}
-              renderItem={({item}) => (
-                <TouchableOpacity style={styles.itemContainer} key={item.id}>
-                  <View style={styles.infoContainer}>
-                    <Image
-                      source={require('../assets/Images/bg.jpeg')}
-                      style={styles.image}
-                    />
-                    <Text style={styles.titleText} numberOfLines={2}>
-                      {item.title}
-                    </Text>
-                  </View>
+            {Loading ? (
+              <ActivityIndicator
+                size="large"
+                color="white"
+                style={{marginTop: hp(5)}}
+              />
+            ) : (
+              <FlatList
+                data={topSearch}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={item => item.id}
+                contentContainerStyle={styles.contentContainer}
+                renderItem={({item}) => (
+                  <TouchableOpacity
+                    style={styles.itemContainer}
+                    key={item.id}
+                    onPress={() => navigation.navigate('Watch', {item: item})}
+                    activeOpacity={0.3}>
+                    <View style={styles.infoContainer}>
+                      <Image
+                        source={{uri: API_IMG + item?.poster_name}}
+                        style={styles.image}
+                      />
+                      <Text style={styles.titleText} numberOfLines={2}>
+                        {item?.title}
+                      </Text>
+                    </View>
 
-                  <Image
-                    source={require('../assets/Icons/play.png')}
-                    style={{width: wp(7), height: wp(7), tintColor: 'white'}}
-                  />
-                </TouchableOpacity>
-              )}
-            />
+                    <Image
+                      source={require('../assets/Icons/play.png')}
+                      style={{width: wp(7), height: wp(7), tintColor: 'white'}}
+                    />
+                  </TouchableOpacity>
+                )}
+              />
+            )}
           </View>
         )}
         {Input === 'Playlists' && (
@@ -262,7 +295,7 @@ const Search = ({navigation}) => {
             />
           </View>
         )}
-        {search.length > 0 && (
+        {search.length > 0 && Input.length > 0 && (
           <View style={{marginTop: hp(4), paddingHorizontal: hp(1.6)}}>
             <Text
               style={{
@@ -271,27 +304,33 @@ const Search = ({navigation}) => {
                 color: 'white',
                 marginBottom: 8,
               }}>
-              Showing Result : {Input}
+              Showing Result: {Input}
             </Text>
-
-            <FlatList
-              data={search}
-              showsVerticalScrollIndicator={false}
-              numColumns={3}
-              keyExtractor={item => item.id}
-              contentContainerStyle={styles.contentContainer}
-              renderItem={({item}) => (
-                <TouchableOpacity
-                  style={styles.itemContainer}
-                  key={item.id}
-                  onPress={() => navigation.navigate('Watch', {item: item})}>
-                  <Image
-                    source={{uri: API_IMG + item?.poster_name}}
-                    style={[styles.image1, {marginRight: hp(1)}]}
-                  />
-                </TouchableOpacity>
-              )}
-            />
+            {Loading1 ? (
+              <ActivityIndicator
+                size="large"
+                color="white"
+                style={{marginTop: hp(3)}}
+              />
+            ) : (
+              <FlatList
+                data={search}
+                showsVerticalScrollIndicator={false}
+                numColumns={3}
+                keyExtractor={item => item.id}
+                contentContainerStyle={styles.contentContainer}
+                renderItem={({item}) => (
+                  <TouchableOpacity
+                    style={styles.itemContainer}
+                    onPress={() => navigation.navigate('Watch', {item: item})}>
+                    <Image
+                      source={{uri: API_IMG + item?.poster_name}}
+                      style={[styles.image1, {marginRight: hp(1)}]}
+                    />
+                  </TouchableOpacity>
+                )}
+              />
+            )}
           </View>
         )}
       </View>

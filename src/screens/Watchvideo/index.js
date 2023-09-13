@@ -310,7 +310,7 @@ const WatchVideo = ({navigation, route}) => {
                 <Text
                   style={{fontSize: hp(1.6), fontWeight: '900', color: 'white'}}
                   numberOfLines={3}>
-                  {item?.season}.toUpperCase()
+                  {item?.season}
                 </Text>
                 <Image
                   source={require('../../assets/Icons/down-arrow.png')}

@@ -132,6 +132,22 @@ export const OnGetBanner = async () => {
       .catch(err => reject(err));
   });
 };
+export const OnGetTopsearch = async () => {
+  //   const id = await AsyncStorage.getItem('token');
+  const url = Api.baseUrl + `api/top-search`;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
 
 export const SearchApi = async responseData => {
   const url = Api.baseUrl + `api/search`;
