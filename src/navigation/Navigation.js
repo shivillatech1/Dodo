@@ -9,6 +9,7 @@ import {
 /* eslint-disable prettier/prettier */
 import {Image} from 'react-native';
 import Search from '../components/Search';
+import InternetSpeedChecker from '../components/InternetSpeed';
 import Profile from '../screens/Profile/Profile';
 import AppSettings from '../screens/Profile/AppSettings';
 import Subscription from '../screens/Subscription';
@@ -34,6 +35,16 @@ export default function App() {
         <Stack.Screen name="Main" component={MyTabs} />
         <Stack.Screen name="Appsetting" component={AppSettings} />
         <Stack.Screen name="Subscription" component={Subscription} />
+        <Stack.Screen
+          name="Internet"
+          component={InternetSpeedChecker}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+
         <Stack.Screen
           name="Watch"
           component={WatchVideo}

@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  FlatList,
   ScrollView,
   ToastAndroid,
 } from 'react-native';
@@ -269,90 +268,98 @@ const WatchVideo = ({navigation, route}) => {
             marginTop: hp(1),
           }}
         />
-        <View
-          style={{
-            marginLeft: hp(1.5),
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: hp(2),
-            marginBottom: 8,
-          }}>
-          <TouchableOpacity
-            style={{flexDirection: 'row', gap: 8, alignItems: 'center'}}>
-            <Text
-              style={{fontSize: hp(1.6), fontWeight: '900', color: 'white'}}
-              numberOfLines={3}>
-              Season 1
-            </Text>
-            <Image
-              source={require('../../assets/Icons/down-arrow.png')}
-              style={{width: wp(4), height: wp(4), tintColor: '#fe6a1f'}}
-            />
-          </TouchableOpacity>
-          <View
-            style={{
-              height: hp(2.6),
-              borderColor: 'white',
-              borderWidth: 0.8,
-              marginLeft: hp(1),
-            }}
-          />
-          <Text
-            style={{
-              fontSize: hp(1.6),
-              fontWeight: '900',
-              color: 'white',
-              marginLeft: wp(2),
-            }}>
-            Episode 3
-          </Text>
-        </View>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingVertical: hp(2),
-            paddingHorizontal: hp(1.5),
-          }}>
-          {dummyData1.map((item, index) => {
-            return (
-              <View
-                key={index}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginBottom: wp(2.3),
-                  gap: 8,
-                }}>
-                <Image
-                  source={item.image}
-                  style={{width: wp(30), height: wp(20), borderRadius: wp(1)}}
-                />
+        {item?.season ? (
+          <>
+            <View
+              style={{
+                marginLeft: hp(1.5),
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: hp(2),
+                marginBottom: 8,
+              }}>
+              <TouchableOpacity
+                style={{flexDirection: 'row', gap: 8, alignItems: 'center'}}>
                 <Text
-                  style={{
-                    fontSize: hp(1.3),
-                    fontWeight: '600',
-                    width: wp(54),
-                    color: 'white',
-                  }}
+                  style={{fontSize: hp(1.6), fontWeight: '900', color: 'white'}}
                   numberOfLines={3}>
-                  {item.description}
+                  {item?.season}.toUpperCase()
                 </Text>
-                <TouchableOpacity>
-                  <Image
-                    source={require('../../assets/Icons/download.png')}
+                <Image
+                  source={require('../../assets/Icons/down-arrow.png')}
+                  style={{width: wp(4), height: wp(4), tintColor: '#fe6a1f'}}
+                />
+              </TouchableOpacity>
+              <View
+                style={{
+                  height: hp(2.6),
+                  borderColor: 'white',
+                  borderWidth: 0.8,
+                  marginLeft: hp(1),
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: hp(1.6),
+                  fontWeight: '900',
+                  color: 'white',
+                  marginLeft: wp(2),
+                }}>
+                Episode 3
+              </Text>
+            </View>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                paddingVertical: hp(2),
+                paddingHorizontal: hp(1.5),
+              }}>
+              {dummyData1.map((item, index) => {
+                return (
+                  <View
+                    key={index}
                     style={{
-                      width: wp(6.8),
-                      height: wp(6.8),
-                      borderRadius: wp(1),
-                      tintColor: '#fff',
-                      marginRight: wp(2),
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-            );
-          })}
-        </ScrollView>
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginBottom: wp(2.3),
+                      gap: 8,
+                    }}>
+                    <Image
+                      source={item.image}
+                      style={{
+                        width: wp(30),
+                        height: wp(20),
+                        borderRadius: wp(1),
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontSize: hp(1.3),
+                        fontWeight: '600',
+                        width: wp(54),
+                        color: 'white',
+                      }}
+                      numberOfLines={3}>
+                      {item.description}
+                    </Text>
+                    <TouchableOpacity>
+                      <Image
+                        source={require('../../assets/Icons/download.png')}
+                        style={{
+                          width: wp(6.8),
+                          height: wp(6.8),
+                          borderRadius: wp(1),
+                          tintColor: '#fff',
+                          marginRight: wp(2),
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          </>
+        ) : null}
       </View>
     </>
   );

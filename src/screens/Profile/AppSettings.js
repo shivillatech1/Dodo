@@ -80,7 +80,9 @@ const AppSettings = ({navigation}) => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => navigation.navigate('Internet')}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
               source={require('../../assets/Icons/gauge.png')}

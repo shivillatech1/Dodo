@@ -271,7 +271,7 @@ const Search = ({navigation}) => {
                 color: 'white',
                 marginBottom: 8,
               }}>
-              {Input}
+              Showing Result : {Input}
             </Text>
 
             <FlatList

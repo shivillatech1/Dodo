@@ -130,19 +130,19 @@ const HomeScreen = ({navigation}) => {
     <>
       {activeIndex === 0 && (
         <View style={styles.container}>
+          <SliderImages />
           {Loading ? (
             <ActivityIndicator
-              size={34}
+              size={30}
               color={'white'}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: hp(10),
+                marginTop: hp(6),
               }}
             />
           ) : (
             <>
-              <SliderImages />
               <ScrollView
                 style={{marginTop: hp(2)}}
                 contentContainerStyle={{
