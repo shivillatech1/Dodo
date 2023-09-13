@@ -5,13 +5,14 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
 } from 'react-native';
-import React, {useState} from 'react';
+
 import RNFetchBlob from 'rn-fetch-blob';
 import {API_IMG} from '../utils/BaseImg';
 
-const REMOTE_IMAGE_PATH =
-  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
-export const requestStoragePermission = async video_name => {
+export const requestStoragePermission = async (
+  video_name,
+  {setLoading, loading},
+) => {
   try {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -26,7 +27,7 @@ export const requestStoragePermission = async video_name => {
       },
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      downloadFile(video_name);
+      downloadFile(video_name, {setLoading, loading});
     } else {
       console.log('storage permission denied');
     }
@@ -35,28 +36,51 @@ export const requestStoragePermission = async video_name => {
   }
 };
 
-const downloadFile = video_name => {
+const downloadFile = (video_name, {setLoading, loading}) => {
   const {config, fs} = RNFetchBlob;
   const date = new Date();
-  const fileDir = fs.dirs.DownloadDir;
-  config({
-    // add this option that makes response data to be stored as a file,
-    // this is much more performant.
-    fileCache: true,
-    addAndroidDownloads: {
-      useDownloadManager: true,
-      notification: true,
-      path:
-        fileDir +
-        '/download_' +
-        Math.floor(date.getDate() + date.getSeconds() / 2) +
-        '.mp4',
-      description: 'file download',
-    },
-  })
-    .fetch('GET', API_IMG + `${video_name}`, {})
-    .then(res => {
-      console.log('The file saved to ', res.path());
-      alert('file downloaded successfully ');
+  const rootDir = fs.dirs.DownloadDir;
+  const mediaCliniqueDir = 'Media Clinique';
+
+  const fileDir = `${rootDir}/${mediaCliniqueDir}`;
+
+  fs.exists(fileDir)
+    .then(exists => {
+      if (!exists) {
+        return fs.mkdir(fileDir);
+      }
+      return Promise.resolve(fileDir);
+    })
+    .then(() => {
+      setLoading(true)
+      config({
+        fileCache: true,
+        addAndroidDownloads: {
+          useDownloadManager: true,
+          notification: true,
+          path:
+            fileDir +
+            '/download_' +
+            Math.floor(date.getDate() + date.getSeconds() / 2) +
+            '.mp4',
+          description: 'file download',
+        },
+      })
+        .fetch('GET', API_IMG + `${video_name}`, {})
+
+        .then(res => {
+         
+          console.log('The file saved to ', res.path());
+          alert('File downloaded successfully');
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error downloading file:', error);
+          alert('File download failed');
+        });
+    })
+    .catch(error => {
+      console.error('Error creating directory:', error);
+      alert('Directory creation failed');
     });
 };

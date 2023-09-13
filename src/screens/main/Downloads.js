@@ -24,16 +24,20 @@ const Library = ({navigation}) => {
 
   const loadDownloadedVideos = () => {
     const downloadDir = RNFetchBlob.fs.dirs.DownloadDir;
+    const mediaCliniqueDir = 'Media Clinique'; // Name of the folder
 
     RNFetchBlob.fs
-      .ls(downloadDir)
+      .ls(`${downloadDir}/${mediaCliniqueDir}`)
       .then(files => {
         const videoFiles = files.filter(file => file.endsWith('.mp4'));
         const videoFileURIs = videoFiles.map(
-          file => `file://${downloadDir}/${file}`,
+          file => `file://${downloadDir}/${mediaCliniqueDir}/${file}`,
         );
 
+        // Update the state with the downloaded video URIs
         setDownloadedVideos(videoFileURIs);
+
+        // Log the downloadedVideos state to verify
         console.log(downloadedVideos);
       })
       .catch(error => {

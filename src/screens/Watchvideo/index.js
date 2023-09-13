@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ToastAndroid,
+  ActivityIndicator,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -25,6 +26,7 @@ const WatchVideo = ({navigation, route}) => {
   console.log(item);
   const [watchlist, setWatchlist] = useState('');
   const [playList, setPlaylist] = useState('');
+  const [Loading, setLoading] = useState(false);
 
   // useEffect(() => {
   //   SavePlayList();
@@ -169,7 +171,12 @@ const WatchVideo = ({navigation, route}) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => requestStoragePermission(item?.video_name)}
+            onPress={() =>
+              requestStoragePermission(item?.video_name, {
+                loading: Loading,
+                setLoading: setLoading,
+              })
+            }
             style={{
               width: wp(35),
               alignItems: 'center',
@@ -180,14 +187,34 @@ const WatchVideo = ({navigation, route}) => {
               backgroundColor: '#fff',
               borderRadius: wp(1.5),
             }}>
-            <Image
-              source={require('../../assets/Icons/download.png')}
-              style={{width: wp(5), height: wp(5), resizeMode: 'contain'}}
-            />
-            <Text
-              style={{fontSize: hp(1.8), fontWeight: '600', color: 'black'}}>
-              Download
-            </Text>
+            {Loading ? (
+              <>
+                <ActivityIndicator size="small" color="#000" />
+                <Text
+                  style={{
+                    fontSize: hp(1.8),
+                    fontWeight: '600',
+                    color: 'black',
+                  }}>
+                  Downloading...
+                </Text>
+              </>
+            ) : (
+              <>
+                <Image
+                  source={require('../../assets/Icons/download.png')}
+                  style={{width: wp(5), height: wp(5), resizeMode: 'contain'}}
+                />
+                <Text
+                  style={{
+                    fontSize: hp(1.8),
+                    fontWeight: '600',
+                    color: 'black',
+                  }}>
+                  Download
+                </Text>
+              </>
+            )}
           </TouchableOpacity>
         </View>
         <View
