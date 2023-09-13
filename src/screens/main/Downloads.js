@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  Linking,
 } from 'react-native';
-
+import Video from 'react-native-video';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -18,8 +19,9 @@ import RNFetchBlob from 'rn-fetch-blob';
 import {useFocusEffect} from '@react-navigation/native';
 const Library = ({navigation}) => {
   const [downloadedVideos, setDownloadedVideos] = useState([]);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
+  const [VideoSource, setVideoSource] = useState('');
 
-  // Use useEffect to load downloaded videos when the component mounts
   const loadDownloadedVideos = () => {
     const downloadDir = RNFetchBlob.fs.dirs.DownloadDir;
 
@@ -39,19 +41,12 @@ const Library = ({navigation}) => {
       });
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     loadDownloadedVideos();
-  //   }, []),
-  // );
-  const LogoTitle = () => {
-    return (
-      <Image
-        style={{width: wp(15), height: wp(15), resizeMode: 'cover'}}
-        source={require('../../assets/Images/logo.png')}
-      />
-    );
-  };
+  useFocusEffect(
+    useCallback(() => {
+      loadDownloadedVideos();
+    }, []),
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -95,10 +90,16 @@ const Library = ({navigation}) => {
       // ),
     });
   }, [navigation]);
+
+  const handleOpenVideo = videoURL => {
+    setIsVideoVisible(true);
+    setVideoSource(videoURL);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={dummyData1}
+        data={downloadedVideos}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         numColumns={2}
@@ -114,50 +115,15 @@ const Library = ({navigation}) => {
               position: 'relative',
               marginBottom: hp(1.8),
             }}
-            key={item.id}>
-            <Image source={item.image} style={styles.image} />
+            key={item.id}
+            onPress={() => navigation.navigate('Video', {item: item})}>
+            <Image source={{uri: item}} style={styles.image} />
           </TouchableOpacity>
         )}
       />
     </View>
   );
 };
-
-const dummyData1 = [
-  {
-    id: 1,
-    title: 'Movie Funtush',
-    image: require('../../assets/Images/bg.jpeg'),
-    description: 'A hilarious comedy that will keep you laughing.',
-    rating: 4.8,
-    genres: ['Comedy', 'Adventure'],
-  },
-  {
-    id: 2,
-    title: 'Movie 2',
-    image: require('../../assets/Images/bg.jpeg'),
-    description:
-      'An action-packed thriller that will keep you on the edge of your seat.',
-    rating: 4.5,
-    genres: ['Action', 'Drama'],
-  },
-  {
-    id: 3,
-    title: 'Movie 3',
-    image: require('../../assets/Images/bg.jpeg'),
-    description: 'A heartwarming romance that will touch your soul.',
-    rating: 4.7,
-    genres: ['Romance', 'Drama'],
-  },
-  {
-    id: 4,
-    title: 'Movie 4',
-    image: require('../../assets/Images/bg.jpeg'),
-    description: 'A mind-bending science fiction journey.',
-    rating: 4.9,
-    genres: ['Science Fiction', 'Mystery'],
-  },
-];
 
 export default Library;
 const styles = StyleSheet.create({

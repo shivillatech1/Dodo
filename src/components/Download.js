@@ -54,11 +54,8 @@ const downloadFile = video_name => {
       description: 'file download',
     },
   })
-    .fetch('GET', API_IMG + `${video_name}`, {
-      //some headers ..
-    })
+    .fetch('GET', API_IMG + `${video_name}`, {})
     .then(res => {
-      // the temp file path
       console.log('The file saved to ', res.path());
       alert('file downloaded successfully ');
     });

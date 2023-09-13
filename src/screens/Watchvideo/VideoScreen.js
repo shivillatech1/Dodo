@@ -46,10 +46,10 @@ const VideoPlayerScreen = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      {item?.video_name ? (
+      {item?.video_name || item ? (
         <Video
           source={{
-            uri: API_IMG + `${item?.video_name}`,
+            uri: item?.video_name ? API_IMG + `${item?.video_name}` : item,
           }}
           style={styles.video}
           controls

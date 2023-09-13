@@ -169,7 +169,7 @@ const WatchVideo = ({navigation, route}) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            // onPress={() => requestStoragePermission(item?.video_name)}
+            onPress={() => requestStoragePermission(item?.video_name)}
             style={{
               width: wp(35),
               alignItems: 'center',
