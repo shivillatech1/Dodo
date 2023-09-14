@@ -9,7 +9,7 @@ import {
   ToastAndroid,
   ActivityIndicator,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -17,20 +17,21 @@ import {
 import {useLayoutEffect} from 'react';
 import {requestStoragePermission} from '../../components/Download';
 import {API_IMG} from '../../utils/BaseImg';
-import {PlayListSave, WatchListSave} from '../../services/API';
-import {Share} from 'react-native';
+import {
+  PlayListSave,
+  WatchListSave,
+  AddContinueWatching,
+  OnGetContinueWatching,
+} from '../../services/API';
+
 import {shareContent} from '../../components/Share';
 
 const WatchVideo = ({navigation, route}) => {
   const {item} = route.params;
-  console.log(item);
+  console.log(item?.id);
   const [watchlist, setWatchlist] = useState('');
   const [playList, setPlaylist] = useState('');
   const [Loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   SavePlayList();
-  // }, []);
 
   const SaveWatchLater = async itemid => {
     var raw = JSON.stringify({
@@ -65,6 +66,18 @@ const WatchVideo = ({navigation, route}) => {
         ToastAndroid.SHORT,
         ToastAndroid.CENTER,
       );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const AddWatching = async itemid => {
+    var raw = JSON.stringify({
+      video_id: itemid,
+      user_id: 1,
+    });
+    try {
+      const response = await AddContinueWatching(raw);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -150,7 +163,10 @@ const WatchVideo = ({navigation, route}) => {
             marginTop: hp(1),
           }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Video', {item: item})}
+            onPress={() => {
+              navigation.navigate('Video', {item: item});
+              AddWatching(item?.id);
+            }}
             style={{
               width: wp(35),
               alignItems: 'center',

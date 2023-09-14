@@ -163,3 +163,34 @@ export const SearchApi = async responseData => {
       .catch(err => reject(err));
   });
 };
+export const AddContinueWatching = async responseData => {
+  const url = Api.baseUrl + `api/watching`;
+  return new Promise((resolve, reject) => {
+    axios
+      .post(url, responseData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
+
+export const OnGetContinueWatching = async () => {
+  //   const id = await AsyncStorage.getItem('token');
+  const url = Api.baseUrl + `api/watching/${1}`;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};

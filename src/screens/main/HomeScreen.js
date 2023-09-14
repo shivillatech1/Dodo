@@ -21,6 +21,7 @@ import Topics from '../../components/Topics';
 import SliderImages from '../../components/SliderImages';
 import {
   OnGetBanner,
+  OnGetContinueWatching,
   onGetAllvideos,
   onGetTopicsList,
   onGetWatchList,
@@ -28,6 +29,7 @@ import {
   onGetplaylist,
 } from '../../services/API';
 import {API_IMG} from '../../utils/BaseImg';
+import {useFocusEffect} from '@react-navigation/native';
 
 const HomeScreen = ({navigation}) => {
   const [Allvideos, setAllVideos] = useState([]);
@@ -37,15 +39,18 @@ const HomeScreen = ({navigation}) => {
   const [watchLater, setWatchLater] = useState([]);
   const [Playlist, setPlayLists] = useState([]);
   const [Loading, setLoading] = useState(false);
+  const [Continue, setContinue] = useState([]);
 
-  useEffect(() => {
-    GetAllVideos();
-    GetAllCategoriesName();
-    GetAllTopicsName();
-    GetAllWatchLater();
-    GetAllPlaylists();
-  }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      GetAllVideos();
+      GetAllCategoriesName();
+      GetAllTopicsName();
+      GetAllWatchLater();
+      GetAllPlaylists();
+      OnGetContinue();
+    }, []),
+  );
   const GetAllVideos = async () => {
     try {
       setLoading(true);
@@ -95,6 +100,16 @@ const HomeScreen = ({navigation}) => {
       const response = await onGetplaylist();
       // console.log(response.data.todos);
       setPlayLists(response.data.todos);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const OnGetContinue = async () => {
+    try {
+      const response = await OnGetContinueWatching();
+      const data = response.data.todos;
+      const reversedData = data.reverse().slice(0, 10);
+      setContinue(reversedData);
     } catch (error) {
       console.log(error);
     }
@@ -164,7 +179,7 @@ const HomeScreen = ({navigation}) => {
                   </View>
 
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {dummyData1.map(item => (
+                    {Continue.map(item => (
                       <TouchableOpacity
                         onPress={() =>
                           navigation.navigate('Watch', {item: item})
@@ -175,7 +190,7 @@ const HomeScreen = ({navigation}) => {
                         }}
                         key={item.id}>
                         <Image
-                          source={require('../../assets/Images/bg.jpeg')}
+                          source={{uri: API_IMG + item?.poster_name}}
                           style={{
                             height: hp(12.5),
                             width: wp(40),
