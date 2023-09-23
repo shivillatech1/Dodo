@@ -25,6 +25,7 @@ import {
 } from '../../services/API';
 
 import {shareContent} from '../../components/Share';
+import CustomDropdown from '../../components/DropDown';
 
 const WatchVideo = ({navigation, route}) => {
   const {item} = route.params;
@@ -32,7 +33,8 @@ const WatchVideo = ({navigation, route}) => {
   const [watchlist, setWatchlist] = useState('');
   const [playList, setPlaylist] = useState('');
   const [Loading, setLoading] = useState(false);
-
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isDownloaded, setIsDownloaded] = useState(false);
   const SaveWatchLater = async itemid => {
     var raw = JSON.stringify({
       user_id: 1,
@@ -82,6 +84,8 @@ const WatchVideo = ({navigation, route}) => {
       console.log(error);
     }
   };
+
+  const options = [item?.season];
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -187,12 +191,17 @@ const WatchVideo = ({navigation, route}) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() =>
-              requestStoragePermission(item?.video_name, {
-                loading: Loading,
-                setLoading: setLoading,
-              })
-            }
+            onPress={() => {
+              if (isDownloaded) {
+                console.log('Already downloaded');
+              } else {
+                requestStoragePermission(item?.video_name, {
+                  loading: Loading,
+                  setLoading: setLoading,
+                });
+                setIsDownloaded(true);
+              }
+            }}
             style={{
               width: wp(35),
               alignItems: 'center',
@@ -218,7 +227,13 @@ const WatchVideo = ({navigation, route}) => {
             ) : (
               <>
                 <Image
-                  source={require('../../assets/Icons/download.png')}
+                  source={
+                    isDownloaded
+                      ? {
+                          uri: 'https://cdn-icons-png.flaticon.com/128/709/709510.png',
+                        }
+                      : require('../../assets/Icons/download.png')
+                  }
                   style={{width: wp(5), height: wp(5), resizeMode: 'contain'}}
                 />
                 <Text
@@ -227,7 +242,7 @@ const WatchVideo = ({navigation, route}) => {
                     fontWeight: '600',
                     color: 'black',
                   }}>
-                  Download
+                  {isDownloaded ? 'Downloaded' : 'Download'}
                 </Text>
               </>
             )}
@@ -322,12 +337,13 @@ const WatchVideo = ({navigation, route}) => {
                 marginBottom: 8,
               }}>
               <TouchableOpacity
-                style={{flexDirection: 'row', gap: 8, alignItems: 'center'}}>
-                <Text
-                  style={{fontSize: hp(1.6), fontWeight: '900', color: 'white'}}
-                  numberOfLines={3}>
-                  {item?.season}
-                </Text>
+                style={{flexDirection: 'row', gap: 8, alignItems: 'center'}}
+                onPress={() => setShowDropdown(!showDropdown)}>
+                <CustomDropdown
+                  setShowDropdown={setShowDropdown}
+                  showDropdown={showDropdown}
+                  options={options}
+                />
                 <Image
                   source={require('../../assets/Icons/down-arrow.png')}
                   style={{width: wp(4), height: wp(4), tintColor: '#fe6a1f'}}

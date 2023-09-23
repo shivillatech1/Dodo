@@ -1,42 +1,80 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Modal} from 'react-native';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
-function MyDropdown() {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('');
-
-  const options = ['Option 1', 'Option 2', 'Option 3'];
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+const CustomDropdown = ({setShowDropdown, showDropdown, options}) => {
+  const [selectedOption, setSelectedOption] = useState(options);
 
   const handleOptionSelect = option => {
-    setSelectedValue(option);
-    toggleModal();
+    setSelectedOption(option);
+    setShowDropdown(false);
   };
+
+  console.log(options);
 
   return (
     <View>
-      <TouchableOpacity onPress={toggleModal}>
-        <Text>{selectedValue || 'Select an option'}</Text>
+      <TouchableOpacity>
+        <View style={styles.dropdownButton}>
+          <Text
+            style={{
+              fontSize: heightPercentageToDP(1.6),
+              fontWeight: '800',
+              color: 'white',
+            }}>
+            {selectedOption}
+          </Text>
+        </View>
       </TouchableOpacity>
-      <Modal visible={isModalVisible} transparent={true}>
-        <View>
-          {options.map((option, index) => (
+
+      <Modal
+        transparent={true}
+        visible={showDropdown}
+        animationType="slide"
+        onRequestClose={() => setShowDropdown(false)}>
+        <View style={styles.modalContainer}>
+          {options.map(option => (
             <TouchableOpacity
-              key={index}
+              key={option}
               onPress={() => handleOptionSelect(option)}>
-              <Text>{option}</Text>
+              <View style={styles.dropdownItem}>
+                <Text
+                  style={{
+                    fontSize: heightPercentageToDP(1.6),
+                    fontWeight: '600',
+                    color: 'white',
+                  }}>
+                  {option}
+                </Text>
+              </View>
             </TouchableOpacity>
           ))}
-          <TouchableOpacity onPress={toggleModal}>
-            <Text>Cancel</Text>
-          </TouchableOpacity>
         </View>
       </Modal>
     </View>
   );
-}
+};
 
-export default MyDropdown;
+const styles = {
+  dropdownButton: {
+    padding: 10,
+
+    borderRadius: 5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  dropdownItem: {
+    padding: 10,
+
+    width: widthPercentageToDP(20),
+  },
+};
+
+export default CustomDropdown;

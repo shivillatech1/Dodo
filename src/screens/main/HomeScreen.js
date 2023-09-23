@@ -43,14 +43,18 @@ const HomeScreen = ({navigation}) => {
 
   useFocusEffect(
     useCallback(() => {
-      GetAllVideos();
-      GetAllCategoriesName();
-      GetAllTopicsName();
-      GetAllWatchLater();
-      GetAllPlaylists();
       OnGetContinue();
     }, []),
   );
+
+  useEffect(() => {
+    GetAllVideos();
+    GetAllCategoriesName();
+    GetAllTopicsName();
+    GetAllWatchLater();
+    GetAllPlaylists();
+  }, []);
+
   const GetAllVideos = async () => {
     try {
       setLoading(true);
