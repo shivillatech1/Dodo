@@ -13,7 +13,7 @@ const CustomDropdown = ({setShowDropdown, showDropdown, options}) => {
     setShowDropdown(false);
   };
 
-  console.log(options);
+  // console.log(options);
 
   return (
     <View>

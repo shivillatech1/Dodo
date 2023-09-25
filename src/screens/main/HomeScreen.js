@@ -36,6 +36,7 @@ const HomeScreen = ({navigation}) => {
   const [categories, setCategories] = useState([]);
   const [topics, setTopics] = useState([]);
   const [topicsImg, settopicsImg] = useState([]);
+  const [season, setSeason] = useState([]);
   const [watchLater, setWatchLater] = useState([]);
   const [Playlist, setPlayLists] = useState([]);
   const [Loading, setLoading] = useState(false);
@@ -84,6 +85,7 @@ const HomeScreen = ({navigation}) => {
 
       settopicsImg(response.data.poster_images);
       setTopics(response.data.Topics);
+      setSeason(response.data.season);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -186,7 +188,10 @@ const HomeScreen = ({navigation}) => {
                     {Continue.map(item => (
                       <TouchableOpacity
                         onPress={() =>
-                          navigation.navigate('Watch', {item: item})
+                          navigation.navigate('Watch', {
+                            item: item,
+                            season: season,
+                          })
                         }
                         style={{
                           marginRight: 10,
@@ -376,7 +381,12 @@ const HomeScreen = ({navigation}) => {
         />
       )}
       {activeIndex === 2 && (
-        <Topics topics={topics} topicsImg={topicsImg} navigation={navigation} />
+        <Topics
+          topics={topics}
+          topicsImg={topicsImg}
+          navigation={navigation}
+          season={season}
+        />
       )}
 
       <View style={styles.container1}>

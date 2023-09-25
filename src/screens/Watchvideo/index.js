@@ -29,8 +29,9 @@ import CustomDropdown from '../../components/DropDown';
 import {useDownloadedVideos} from '../../Hooks/Download';
 
 const WatchVideo = ({navigation, route}) => {
-  const {item} = route.params;
-  // console.log(item?.id);
+  const {item, season} = route.params;
+  // console.log(season[item.name]?.season);
+  console.log(item);
   const {downloadedVideos} = useDownloadedVideos();
   const [watchlist, setWatchlist] = useState('');
   const [playList, setPlaylist] = useState('');
@@ -100,7 +101,7 @@ const WatchVideo = ({navigation, route}) => {
     });
 
     if (isVideoDownloaded) {
-      console.log('Downloeade');
+      // console.log('Downloeade');
       setDownloadStatus('Downloaded');
     } else {
       requestStoragePermission(item?.video_name, {
@@ -122,7 +123,7 @@ const WatchVideo = ({navigation, route}) => {
     });
 
     if (isVideoDownloaded) {
-      console.log('Downloeade');
+      // console.log('Downloeade');
       setDownloadStatus('Downloaded');
     } else {
       setDownloadStatus('Download');

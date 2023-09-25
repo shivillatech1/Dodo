@@ -17,14 +17,14 @@ import {
 } from 'react-native-responsive-screen';
 import {API_IMG} from '../utils/BaseImg';
 
-const Topics = ({topics, topicsImg, navigation, Loading}) => {
+const Topics = ({topics, topicsImg, navigation, Loading, season}) => {
   const jsonData = JSON.stringify(topics);
   const data = JSON.parse(jsonData);
 
   const keys = Object.keys(data);
 
   const renderItem = ({item}) => {
-    console.log('Img', topics[item]);
+    console.log('Img', season[item].season);
     return (
       <TouchableOpacity
         style={{
