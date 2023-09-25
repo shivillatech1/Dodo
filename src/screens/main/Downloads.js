@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import {
   View,
   Text,
@@ -9,48 +9,25 @@ import {
   ScrollView,
   Linking,
 } from 'react-native';
-import Video from 'react-native-video';
+
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useLayoutEffect} from 'react';
-import RNFetchBlob from 'rn-fetch-blob';
+
+import {useDownloadedVideos} from '../../Hooks/Download';
 import {useFocusEffect} from '@react-navigation/native';
 const Library = ({navigation}) => {
-  const [downloadedVideos, setDownloadedVideos] = useState([]);
-  const [isVideoVisible, setIsVideoVisible] = useState(false);
-  const [VideoSource, setVideoSource] = useState('');
+  const {downloadedVideos, loadDownloadedVideos} = useDownloadedVideos();
 
-  const loadDownloadedVideos = () => {
-    const downloadDir = RNFetchBlob.fs.dirs.DownloadDir;
-    const mediaCliniqueDir = 'Media Clinique'; // Name of the folder
-
-    RNFetchBlob.fs
-      .ls(`${downloadDir}/${mediaCliniqueDir}`)
-      .then(files => {
-        const videoFiles = files.filter(file => file.endsWith('.mp4'));
-        const videoFileURIs = videoFiles.map(
-          file => `file://${downloadDir}/${mediaCliniqueDir}/${file}`,
-        );
-
-        // Update the state with the downloaded video URIs
-        setDownloadedVideos(videoFileURIs);
-
-        // Log the downloadedVideos state to verify
-        console.log(downloadedVideos);
-      })
-      .catch(error => {
-        console.error('Error reading directory:', error);
-      });
-  };
+  console.log('Name is', downloadedVideos);
 
   useFocusEffect(
     useCallback(() => {
       loadDownloadedVideos();
     }, []),
   );
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -95,11 +72,6 @@ const Library = ({navigation}) => {
     });
   }, [navigation]);
 
-  const handleOpenVideo = videoURL => {
-    setIsVideoVisible(true);
-    setVideoSource(videoURL);
-  };
-
   return (
     <View style={styles.container}>
       <FlatList
@@ -120,7 +92,9 @@ const Library = ({navigation}) => {
               marginBottom: hp(1.8),
             }}
             key={item.id}
-            onPress={() => navigation.navigate('Video', {item: item})}>
+            onPress={() => {
+              navigation.navigate('Video', {item: item});
+            }}>
             <Image source={{uri: item}} style={styles.image} />
           </TouchableOpacity>
         )}

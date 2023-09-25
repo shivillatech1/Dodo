@@ -41,7 +41,10 @@ const downloadFile = (video_name, {setLoading, loading}) => {
   const date = new Date();
   const rootDir = fs.dirs.DownloadDir;
   const mediaCliniqueDir = 'Media Clinique';
-
+  const fileNameWithoutExtension = video_name.substring(
+    0,
+    video_name.length - 4,
+  );
   const fileDir = `${rootDir}/${mediaCliniqueDir}`;
 
   fs.exists(fileDir)
@@ -52,7 +55,7 @@ const downloadFile = (video_name, {setLoading, loading}) => {
       return Promise.resolve(fileDir);
     })
     .then(() => {
-      setLoading(true)
+      setLoading(true);
       config({
         fileCache: true,
         addAndroidDownloads: {
@@ -60,7 +63,9 @@ const downloadFile = (video_name, {setLoading, loading}) => {
           notification: true,
           path:
             fileDir +
-            '/download_' +
+            '/' +
+            fileNameWithoutExtension +
+            '_' +
             Math.floor(date.getDate() + date.getSeconds() / 2) +
             '.mp4',
           description: 'file download',
@@ -69,7 +74,6 @@ const downloadFile = (video_name, {setLoading, loading}) => {
         .fetch('GET', API_IMG + `${video_name}`, {})
 
         .then(res => {
-         
           console.log('The file saved to ', res.path());
           alert('File downloaded successfully');
           setLoading(false);

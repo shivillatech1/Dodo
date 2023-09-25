@@ -26,15 +26,18 @@ import {
 
 import {shareContent} from '../../components/Share';
 import CustomDropdown from '../../components/DropDown';
+import {useDownloadedVideos} from '../../Hooks/Download';
 
 const WatchVideo = ({navigation, route}) => {
   const {item} = route.params;
-  console.log(item?.id);
+  // console.log(item?.id);
+  const {downloadedVideos} = useDownloadedVideos();
   const [watchlist, setWatchlist] = useState('');
   const [playList, setPlaylist] = useState('');
   const [Loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isDownloaded, setIsDownloaded] = useState(false);
+  const [downloadStatus, setDownloadStatus] = useState('Download');
   const SaveWatchLater = async itemid => {
     var raw = JSON.stringify({
       user_id: 1,
@@ -87,6 +90,47 @@ const WatchVideo = ({navigation, route}) => {
 
   const options = [item?.season];
 
+  const handlePress = () => {
+    const isVideoDownloaded = downloadedVideos.some(downloadedVideo => {
+      const parts = downloadedVideo.split('/');
+      const filename = parts[parts.length - 1];
+      let video = filename.split('_');
+      let desiredFilename = video[0] + '.mp4';
+      return desiredFilename.toLowerCase() === item?.video_name.toLowerCase();
+    });
+
+    if (isVideoDownloaded) {
+      console.log('Downloeade');
+      setDownloadStatus('Downloaded');
+    } else {
+      requestStoragePermission(item?.video_name, {
+        loading: Loading,
+        setLoading: setLoading,
+      });
+      setIsDownloaded(true);
+      setDownloadStatus('Download');
+    }
+  };
+
+  const CheckStatus = () => {
+    const isVideoDownloaded = downloadedVideos.some(downloadedVideo => {
+      const parts = downloadedVideo.split('/');
+      const filename = parts[parts.length - 1];
+      let video = filename.split('_');
+      let desiredFilename = video[0] + '.mp4';
+      return desiredFilename.toLowerCase() === item?.video_name.toLowerCase();
+    });
+
+    if (isVideoDownloaded) {
+      console.log('Downloeade');
+      setDownloadStatus('Downloaded');
+    } else {
+      setDownloadStatus('Download');
+    }
+  };
+  useEffect(() => {
+    CheckStatus();
+  }, [item, downloadedVideos]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -190,18 +234,9 @@ const WatchVideo = ({navigation, route}) => {
               Play
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
-            onPress={() => {
-              if (isDownloaded) {
-                console.log('Already downloaded');
-              } else {
-                requestStoragePermission(item?.video_name, {
-                  loading: Loading,
-                  setLoading: setLoading,
-                });
-                setIsDownloaded(true);
-              }
-            }}
+            onPress={handlePress}
             style={{
               width: wp(35),
               alignItems: 'center',
@@ -228,7 +263,7 @@ const WatchVideo = ({navigation, route}) => {
               <>
                 <Image
                   source={
-                    isDownloaded
+                    downloadStatus === 'Downloaded' || isDownloaded
                       ? {
                           uri: 'https://cdn-icons-png.flaticon.com/128/709/709510.png',
                         }
@@ -242,7 +277,7 @@ const WatchVideo = ({navigation, route}) => {
                     fontWeight: '600',
                     color: 'black',
                   }}>
-                  {isDownloaded ? 'Downloaded' : 'Download'}
+                  {downloadStatus || isDownloaded ? 'Downloaded' : 'Download'}
                 </Text>
               </>
             )}
