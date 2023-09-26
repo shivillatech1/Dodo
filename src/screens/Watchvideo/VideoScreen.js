@@ -52,7 +52,6 @@ const VideoPlayerScreen = ({route, navigation}) => {
             uri: item?.video_name ? API_IMG + `${item?.video_name}` : item,
           }}
           style={styles.video}
-          controls
           resizeMode="contain"
           pictureInPicture={true}
           fullscreen={true}
@@ -60,6 +59,7 @@ const VideoPlayerScreen = ({route, navigation}) => {
           onLoadStart={handleLoadStart}
           onLoad={handleLoadEnd}
           playInBackground={true}
+          controls={true}
         />
       ) : (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
