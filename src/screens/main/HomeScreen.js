@@ -207,21 +207,6 @@ const HomeScreen = ({navigation}) => {
                             borderRadius: hp(1),
                           }}
                         />
-                        <View
-                          style={{
-                            position: 'absolute',
-                            right: hp(1),
-                            bottom: hp(1.5),
-                          }}>
-                          <Image
-                            source={require('../../assets/Icons/play.png')}
-                            style={{
-                              width: wp(6.5),
-                              height: wp(6.5),
-                              tintColor: '#fff',
-                            }}
-                          />
-                        </View>
                       </TouchableOpacity>
                     ))}
                   </ScrollView>

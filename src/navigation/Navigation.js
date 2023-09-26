@@ -15,6 +15,7 @@ import AppSettings from '../screens/Profile/AppSettings';
 import Subscription from '../screens/Subscription';
 import WatchVideo from '../screens/Watchvideo';
 import VideoPlayerScreen from '../screens/Watchvideo/VideoScreen';
+import Payment from '../screens/Subscription/Payment';
 const {NavigationContainer} = require('@react-navigation/native');
 const {createNativeStackNavigator} = require('@react-navigation/native-stack');
 const {default: Onboarding} = require('../screens/Onboarding');
@@ -35,6 +36,7 @@ export default function App() {
         <Stack.Screen name="Main" component={MyTabs} />
         <Stack.Screen name="Appsetting" component={AppSettings} />
         <Stack.Screen name="Subscription" component={Subscription} />
+        <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen
           name="Internet"
           component={InternetSpeedChecker}

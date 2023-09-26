@@ -15,6 +15,8 @@ import {
 } from 'react-native-responsive-screen';
 
 const Subscription = ({navigation}) => {
+  const Price = '$1499';
+  const Price1 = '$599';
   return (
     <ImageBackground
       source={require('../../assets/Images/logo2.jpg')}
@@ -73,7 +75,9 @@ const Subscription = ({navigation}) => {
             and award-Winining Demo
           </Text>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Payment', {price: Price})}>
           <Text
             style={{
               color: '#1c15ee',
@@ -81,10 +85,12 @@ const Subscription = ({navigation}) => {
               textAlign: 'center',
               paddingHorizontal: 8,
             }}>
-            Join Demo $1499/Year
+            Join Demo {Price}/Year
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Payment', {price: Price1})}>
           <Text
             style={{
               color: '#1c15ee',
@@ -92,7 +98,7 @@ const Subscription = ({navigation}) => {
               textAlign: 'center',
               paddingHorizontal: 8,
             }}>
-            Demo Video Mobile Edition at $599/Year
+            Demo Video Mobile Edition at {Price1}/Year
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
