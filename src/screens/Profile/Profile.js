@@ -14,6 +14,7 @@ import {
 } from 'react-native-responsive-screen';
 import Button from '../../components/Button';
 import auth from '@react-native-firebase/auth';
+import {WatchingClear} from '../../services/API';
 
 const Profile = ({navigation}) => {
   const handleButtonPress = buttonTitle => {
@@ -23,6 +24,14 @@ const Profile = ({navigation}) => {
     auth()
       .signOut()
       .then(() => navigation.replace('SignIn'));
+  };
+
+  const WatchClearing = async () => {
+    try {
+      await WatchingClear();
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -86,7 +95,7 @@ const Profile = ({navigation}) => {
         <Button
           title="Watch History"
           imageSource={require('../../assets/Icons/history.png')}
-          onPress={() => handleButtonPress('Watch History')}
+          onPress={() => WatchClearing()}
           clear="Clear"
         />
       </View>
@@ -99,7 +108,7 @@ const Profile = ({navigation}) => {
           paddingHorizontal: wp(3),
         }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('SignIn')}
+          // onPress={() => navigation.navigate('SignIn')}
           style={{
             justifyContent: 'center',
             alignItems: 'center',

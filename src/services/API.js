@@ -194,3 +194,23 @@ export const OnGetContinueWatching = async () => {
       .catch(err => reject(err));
   });
 };
+
+
+export const WatchingClear = async () => {
+  //   const id = await AsyncStorage.getItem('token');
+  const url = Api.baseUrl + `api/watchingClear/${1}`;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
+
+

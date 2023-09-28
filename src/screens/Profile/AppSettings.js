@@ -151,7 +151,7 @@ const AppSettings = ({navigation}) => {
           paddingHorizontal: wp(3),
         }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('SignIn')}
+          // onPress={() => navigation.navigate('SignIn')}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
