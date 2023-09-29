@@ -65,20 +65,7 @@ const Search = ({navigation}) => {
       console.log(error);
     }
   };
-  const Search = async () => {
-    var raw = JSON.stringify({
-      search: Input,
-    });
-    try {
-      setLoading1(true);
-      const response = await SearchApi(raw);
-      console.log(response.data.Video);
-      setSearch(response.data.Video);
-      setLoading1(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -125,6 +112,35 @@ const Search = ({navigation}) => {
 
   const [Input, setInput] = useState('');
   const [search, setSearch] = useState([]);
+  const [noResultsMessage, setNoResultsMessage] = useState(null);
+  const filterSearch = async text => {
+    setInput(text);
+
+    if (text.length > 0) {
+      try {
+        setLoading1(true);
+        const response = await SearchApi(JSON.stringify({search: text}));
+        const filteredResults = response.data.Video.filter(item =>
+          item.title.toLowerCase().includes(text.toLowerCase()),
+        );
+
+        setLoading1(false);
+
+        if (filteredResults.length === 0) {
+          setSearch([]);
+          setNoResultsMessage(`No results found for ${text}`);
+        } else {
+          setSearch(filteredResults);
+          setNoResultsMessage(null);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setSearch([]);
+      setNoResultsMessage(null);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -139,7 +155,7 @@ const Search = ({navigation}) => {
 
             backgroundColor: '#111010',
           }}>
-          <TouchableOpacity onPress={() => Search()}>
+          <TouchableOpacity>
             <Image
               source={require('../assets/Icons/search.png')}
               style={{
@@ -152,9 +168,7 @@ const Search = ({navigation}) => {
             />
           </TouchableOpacity>
           <TextInput
-            onChangeText={text => {
-              setInput(text);
-            }}
+            onChangeText={filterSearch}
             value={Input}
             style={{
               width: wp(75),
@@ -304,7 +318,7 @@ const Search = ({navigation}) => {
                 color: 'white',
                 marginBottom: 8,
               }}>
-              Showing Result: {Input}
+              {`Showing Result: ${Input}`}
             </Text>
             {Loading1 ? (
               <ActivityIndicator
@@ -331,6 +345,21 @@ const Search = ({navigation}) => {
                 )}
               />
             )}
+          </View>
+        )}
+
+        {/* Display a message when there are no results */}
+        {noResultsMessage && (
+          <View style={{marginTop: hp(4), paddingHorizontal: hp(1.6)}}>
+            <Text
+              style={{
+                fontSize: hp(2.3),
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: 8,
+              }}>
+              {noResultsMessage}
+            </Text>
           </View>
         )}
       </View>
